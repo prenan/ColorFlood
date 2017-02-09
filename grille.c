@@ -72,10 +72,21 @@ grille random(int size)
 	return plateau;
 }
 
+void free_space(grille plateau, int size)
+{
+	int i;
+	for (i=0 ; i<size ; i++)
+	{
+		free(plateau[i]);
+	}
+}
+
+
 int main()
 {
 	grille M;
 	M = random(5);
 	display(M, 5);
+	free_space(M,5);
 	return 0;
 }
