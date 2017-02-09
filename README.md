@@ -1,2 +1,2 @@
 # ColorFlood
-IPI2 projet (équipe Égalité)
+IPI2 projet (Thor)
