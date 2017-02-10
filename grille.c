@@ -81,12 +81,3 @@ void free_space(grille plateau, int size)
 	}
 }
 
-
-int main()
-{
-	grille M;
-	M = random(5);
-	display(M, 5);
-	free_space(M,5);
-	return 0;
-}
