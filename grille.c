@@ -72,6 +72,28 @@ grille random(int size)
 	return plateau;
 }
 
+grille change_color(int i,int j, char c, grille plateau)
+{
+       plateau[i][j]=c;
+       return plateau;
+       
+}
+
+bool if_win(grille plateau,int size)
+{     
+       int i,j; 
+       bool res;
+       for(i=0;i<size;i++)
+       {
+            for(j=0;j<size;j++)
+            {   
+                if(plateau[0][0]!=plateau[i][j])
+                res=0; 
+            }
+        }
+        return res;
+}
+
 void free_space(grille plateau, int size)
 {
 	int i;
@@ -81,12 +103,3 @@ void free_space(grille plateau, int size)
 	}
 }
 
-
-int main()
-{
-	grille M;
-	M = random(5);
-	display(M, 5);
-	free_space(M,5);
-	return 0;
-}
