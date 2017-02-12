@@ -72,22 +72,21 @@ grille random(int size)
 	return plateau;
 }
 
-grille change_color(int i,int j, char c, grille plateau)
+grille change_color(int i, int j, char c, grille plateau)
 {
-       plateau[i][j]=c;
+       plateau[i][j] = c;
        return plateau;
-       
 }
 
-bool if_win(grille plateau,int size)
+bool if_flood(grille plateau, int size)
 {     
-       int i,j; 
+       int i, j; 
        bool res;
-       for(i=0;i<size;i++)
+       for(i=0 ; i<size ; i++)
        {
-            for(j=0;j<size;j++)
+            for (j=0 ; j<size ; j++)
             {   
-                if(plateau[0][0]!=plateau[i][j])
+                if(plateau[0][0] != plateau[i][j])
                 res=0; 
             }
         }
