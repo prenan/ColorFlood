@@ -5,7 +5,7 @@
 
 int main()
 {
-	grille M=init_file(15,"fichier_grille.txt");
-	display(M,15);
+	grille M = init_file(15, "fichier_grille.txt");
+	display(M, 15);
 	return 0;
 }
