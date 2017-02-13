@@ -5,8 +5,7 @@
 
 int main()
 {
-	grille M = init_file(15, "fichier_grille.txt");
-	printf("Taille = %d\n", size_file("fichier_grille.txt"));
+	grille M = init_file(size_file("fichier_grille.txt"), "fichier_grille.txt");
 	display(M, 15);
 	printf("%d\n",if_flood(M, 15));       
 	M = change_color(0, 0, 'B', M);

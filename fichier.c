@@ -21,30 +21,33 @@ int size_file(char* file_name)
 	char text[601];
 	FILE* file;
 	file = open_file(file_name);
-	fgets(text, 601, file);
+	fread(text, 601, 1, file);	/*contenu du fichier dans text*/
 
-	while (text[nb_char] != '\0')
+	while (text[nb_char] != '\n')	/*compte le nb de caractères sur la 1ère ligne*/
+	{
+		nb_char_line1++;
+		nb_char++;
+	}
+	while (text[nb_char] != '\0')	/*compte le nb de caractères au total (sans le \0)
+									et le nb de lignes*/
 	{
 		if (text[nb_char] == '\n')
 		{
-			printf("%d\n",nb_lines);
 			nb_lines = nb_lines+1;
-		}
-		
-		while (text[nb_char] != '\n')
-		{
-			nb_char_line1 = nb_char_line1+1;
 		}
 		nb_char = nb_char+1;
 	}
 
-
-	if ((nb_char_line1 + 1)*nb_lines == nb_char)
+	if ((nb_char_line1 + 1)*nb_lines == nb_char+1)	/*si on a bien un carré, le fichier "est bien rédigé"*/
 	{
 		size = nb_char_line1;
 	}
-
 	else
+	{
+		size = -1;
+	}
+
+	if (size == -1)
 	{
 		printf("contenu du fichier %s erroné\n", file_name);
 		exit(1);
