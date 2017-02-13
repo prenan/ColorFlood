@@ -14,22 +14,23 @@ FILE* open_file(char const* file_name)
   	}
   	return file;
 }
-/* NE FONCTIONNE PAS ENCORE
+
 int size_file(char* file_name)
 {
 	int size, nb_char = 0, nb_char_line1 = 0, nb_lines = 1;
 	char text[601];
 	FILE* file;
 	file = open_file(file_name);
-
 	fgets(text, 601, file);
 
 	while (text[nb_char] != '\0')
 	{
 		if (text[nb_char] == '\n')
 		{
+			printf("%d\n",nb_lines);
 			nb_lines = nb_lines+1;
 		}
+		
 		while (text[nb_char] != '\n')
 		{
 			nb_char_line1 = nb_char_line1+1;
@@ -37,12 +38,13 @@ int size_file(char* file_name)
 		nb_char = nb_char+1;
 	}
 
+
 	if ((nb_char_line1 + 1)*nb_lines == nb_char)
 	{
 		size = nb_char_line1;
 	}
 
-	if (size == -1)
+	else
 	{
 		printf("contenu du fichier %s erroné\n", file_name);
 		exit(1);
@@ -50,7 +52,7 @@ int size_file(char* file_name)
 
 	return size;
 }
-*/
+
 grille init_file(int size, char* file_name)
 {
 	int i;
@@ -64,7 +66,7 @@ grille init_file(int size, char* file_name)
 		fseek(file, 1, SEEK_CUR);
 	}
 
-	/*close_file(file); NE FONCTIONNE PAS*/
+	close_file(file);
 
 	return plateau;
 }
@@ -72,7 +74,6 @@ grille init_file(int size, char* file_name)
 void close_file(FILE* file)
 {
 	fclose(file);
-	free(file);
 }
 
 int end_of_file(FILE* file)

@@ -12,6 +12,5 @@ int main()
 	M = change_color(0, 0, 'B', M);
 	display(M, 15);
 
-
 	return 0;
 }
