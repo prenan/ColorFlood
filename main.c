@@ -5,10 +5,10 @@
 
 int main()
 {
-	grille M=init_file(15,"fichier_grille.txt");
-	display(M,15);
-        printf("%d\n",if_flood(M,15));       
-        M=change_color(0,0,'a',M);
-        display(M,15);
+	grille M = init_file(15, "fichier_grille.txt");
+	display(M, 15);
+	printf("%d\n",if_flood(M, 15));       
+	M = change_color(0, 0, 'B', M);
+	display(M, 15);
 	return 0;
 }
