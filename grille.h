@@ -2,7 +2,15 @@
 #ifndef GRILLE_H
 #define GRILLE_H
 
-typedef char ** grille;
+struct element
+{
+	int appartenance;
+	char color;
+};
+
+typedef struct element element;
+
+typedef element ** grille;
 
 grille initialize(int size);
 void display(grille plateau, int size);

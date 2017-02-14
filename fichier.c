@@ -6,13 +6,13 @@
 FILE* open_file(char const* file_name)
 {
 	FILE* file = malloc(sizeof * file);
-  	file = fopen(file_name, "r");
-  	if (!file) 
-  	{
-	    printf("impossible d'ouvrir le fichier %s\n", file_name);
-	    exit(1);
-  	}
-  	return file;
+	file = fopen(file_name, "r");
+	if (!file) 
+	{
+		printf("impossible d'ouvrir le fichier %s\n", file_name);
+		exit(1);
+	}
+	return file;
 }
 
 int size_file(char* file_name)
@@ -58,14 +58,20 @@ int size_file(char* file_name)
 
 grille init_file(int size, char* file_name)
 {
-	int i;
+	int i,j;
+	char* buffer=calloc(size,sizeof(char));
 	FILE* file;
 	file = open_file(file_name);
 
 	grille plateau = initialize(size);
 	for (i=0 ; i<size ; i++)
 	{
-		fgets(plateau[i], size+1, file);
+		fgets(buffer,size+1,file);
+		for (j=0 ; j<size ; j++)
+		{
+			plateau[i][j].color = buffer[j];
+			plateau[i][j].appartenance =0;
+		}
 		fseek(file, 1, SEEK_CUR);
 	}
 
