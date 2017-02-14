@@ -43,28 +43,28 @@ grille random(int size)
 			switch (k)
 			{
 				case 0:
-					plateau[i][j] = 'B';
-					break;
+				plateau[i][j] = 'B';
+				break;
 
 				case 1:
-					plateau[i][j] = 'V';
-					break;
+				plateau[i][j] = 'V';
+				break;
 
 				case 2:
-					plateau[i][j] = 'R';
-					break;
+				plateau[i][j] = 'R';
+				break;
 
 				case 3:
-					plateau[i][j] = 'J';
-					break;
+				plateau[i][j] = 'J';
+				break;
 
 				case 4:
-					plateau[i][j] = 'M';
-					break;
+				plateau[i][j] = 'M';
+				break;
 
 				case 5:
-					plateau[i][j] = 'G';
-					break;
+				plateau[i][j] = 'G';
+				break;
 			}
 		}
 	}
@@ -74,23 +74,23 @@ grille random(int size)
 
 grille change_color(int i, int j, char c, grille plateau)
 {
-       plateau[i][j] = c;
-       return plateau;
+	plateau[i][j] = c;
+	return plateau;
 }
 
 bool if_flood(grille plateau, int size)
 {     
-       int i, j; 
-       bool res = 1;
-       for(i=0 ; i<size ; i++)
-       {
-            for (j=0 ; j<size ; j++)
-            {   
-                if(plateau[0][0] != plateau[i][j])
-                res = 0; 
-            }
-        }
-        return res;
+	int i, j; 
+	bool res = 1;
+	for(i=0 ; i<size ; i++)
+	{
+		for (j=0 ; j<size ; j++)
+		{   
+			if(plateau[0][0] != plateau[i][j])
+				return res = 0; 
+		}
+	}
+	return res;
 }
 
 void free_space(grille plateau, int size)
@@ -100,5 +100,6 @@ void free_space(grille plateau, int size)
 	{
 		free(plateau[i]);
 	}
+	free(plateau);
 }
 
