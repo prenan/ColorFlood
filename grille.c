@@ -87,7 +87,11 @@ bool if_flood(grille plateau, int size)
 		for (j=0 ; j<size ; j++)
 		{   
 			if(plateau[0][0] != plateau[i][j])
-				return res = 0; 
+			{
+				res = 0;
+				j = size;
+				i = size;
+			}
 		}
 	}
 	return res;
