@@ -6,8 +6,10 @@
 #include "grille.h"
 
 
-void extraire_fils(coordonnees pere, Pile P, char couleur_choisie, grille plateau, int size)
+Pile extraire_fils(coordonnees pere, Pile P, char couleur_choisie, grille plateau, int size) /* on met dans P tout "les fils" de "pere" */
 {
+	Pile res = P;
+
 	int i = pere.x;
 	int j = pere.y;
 	char c = plateau[i][j].color;
@@ -29,23 +31,25 @@ void extraire_fils(coordonnees pere, Pile P, char couleur_choisie, grille platea
 
 	if ( j != 0 && (plateau[i][j-1] == c || plateau[i][j-1] == couleur_choisie) )
 	{
-		P = empiler(P, fils_gauche);
+		res = empiler(res, fils_gauche);
 	}
 
 	if ( j != size && (plateau[i][j+1] == c || plateau[i][j+1] == couleur_choisie) )
 	{
-		P = empiler(P, fils_droite);
+		res = empiler(res, fils_droite);
 	}
 
 	if ( i != 0 && (plateau[i-1][j] == c || plateau[i-1][j] == couleur_choisie) )
 	{
-		P = empiler(P, fils_haut);
+		res = empiler(res, fils_haut);
 	}
 
 	if ( i != size && (plateau[i+1][j] == c || plateau[i+1][j] == couleur_choisie) )
 	{
-		P = empiler(P, fils_bas);
+		res = empiler(res, fils_bas);
 	}
+
+	return res;
 }
 
 Pile identifier_tache(grille plateau, char couleur_choisie, int size)
@@ -69,6 +73,6 @@ Pile identifier_tache(grille plateau, char couleur_choisie, int size)
 		resultat = empiler(resultat, pere); /* on la rajoute dans le resultat */
 		depiler(pile_des_fils); /* on la supprime de pile_des_fils */
 
-		extraire_fils(pere, pile_des_fils, couleur_choisie, plateau, size); /* on n'oublie pas d'extraire de ce "père" anciennement "fils" de nouveaux fils éventuels */
+		pile_des_fils = extraire_fils(pere, pile_des_fils, couleur_choisie, plateau, size); /* on n'oublie pas d'extraire de ce "père" anciennement "fils" de nouveaux fils éventuels */
 	}
 }
