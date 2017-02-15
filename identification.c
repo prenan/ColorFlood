@@ -2,14 +2,21 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "grille.h"
 
 /*************************************************************************************************************************/
 /*************************************************************************************************************************/
 /*LES FONCTIONS DE BASE POUR LES PILES IMPLÉMENTER À L'AIDE DE LISTES */
 
+typedef struct coordonnees
+{
+	int x;
+	int y;
+} coordonnees;
+
 typedef struct liste
 {
-    char tete;
+    coordonnees tete;
     struct liste *suivant;
 } Cellule, *Pile;  /* Pile est un pointeur sur la tete de la liste */
 
@@ -29,7 +36,7 @@ int pile_estVide(Pile P)
 
 
 /* Accéder au sommet de la pile */
-int pile_accederSommet(Pile P, char *sommet) /*on renvoie la valeur de l'élément au sommet à la variable sommet*/
+int pile_accederSommet(Pile P, coordonnees *sommet) /*on renvoie la valeur de l'élément au sommet à la variable sommet*/
 {
     if (pile_estVide(P))
         return 1; /* code d'erreur */
@@ -39,7 +46,7 @@ int pile_accederSommet(Pile P, char *sommet) /*on renvoie la valeur de l'éléme
 
 
 /* Empiler : ajout d'un élément au sommet */
-Pile empiler(Pile P, char elem)
+Pile empiler(Pile P, coordonnees elem)
 {
     Pile ret;
 
@@ -84,4 +91,74 @@ int pile_taille(Pile P)
         P = P->suivant;
     }
     return n;
+}
+
+
+/***************************************************************************************************************************/
+
+void extraire_fils(coordonnees pere, Pile P, char couleur_choisie, grille plateau, int size)
+{
+	int i = pere.x;
+	int j = pere.y;
+	char c = plateau[i][j].color;
+
+	coordonnees fils_gauche, fils_droite, fils_haut, fils_bas;
+
+	fils_gauche.x = i;
+	fils_gauche.y = j-1;
+
+	fils_droite.x = i;
+	fils_droite.y = j+1;
+
+	fils_haut.x = i-1;
+	fils_haut.y = j;
+
+	fils_bas.x = i+1;
+	fils_bas.y = j;
+
+
+	if ( j != 0 && (plateau[i][j-1] == c || plateau[i][j-1] == couleur_choisie) )
+	{
+		P = empiler(P, fils_gauche);
+	}
+
+	if ( j != size && (plateau[i][j+1] == c || plateau[i][j+1] == couleur_choisie) )
+	{
+		P = empiler(P, fils_droite);
+	}
+
+	if ( i != 0 && (plateau[i-1][j] == c || plateau[i-1][j] == couleur_choisie) )
+	{
+		P = empiler(P, fils_haut);
+	}
+
+	if ( i != size && (plateau[i+1][j] == c || plateau[i+1][j] == couleur_choisie) )
+	{
+		P = empiler(P, fils_bas);
+	}
+}
+
+Pile identifier_tache(grille plateau, char couleur_choisie, int size)
+{
+	Pile resultat, pile_des_fils;
+	coordonnees pere;
+
+	pere.x = 0; /* on initialise le pere à la case origine qui va donner naissance à tous les fils */
+	pere.y = 0;
+
+	resultat = pile_initialiser(); /* le résultat est une pile qui contient toutes les coordonnées des cases de la tâche connexe */
+
+	pile_des_fils = pile_initialiser(); /* un fils représente un chemin possible */
+	pile_des_fils = empiler(pile_des_fils, pere);
+
+	while( !pile_estVide(pile_des_fils) )
+	{
+		pere = pile_des_fils->tete;
+
+		(plateau[pere.x][pere.y]).appartenance = 1; /* on marque bien qu'on a visité cette case et qu'elle appartient dorénavant à la tache */
+		resultat = empiler(resultat, pere); /* on la rajoute dans le resultat */
+		depiler(pile_des_fils); /* on la supprime de pile_des_fils */
+
+		extraire_fils(pere, pile_des_fils, couleur_choisie, plateau, size); /* on n'oublie pas d'extraire de ce "père" anciennement "fils" de nouveaux fils éventuels */
+	}
 }
