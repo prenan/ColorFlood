@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "fichier.h"
 #include "grille.h"
 #include "pile.h"
@@ -8,7 +9,7 @@ int main()
 {
 	Pile tache=NULL;
 
-	grille M = init_file(size_file("fichier_grille_2.txt"), "fichier_grille_2.txt");
+	grille M = init_file(size_file("fichier_grille.txt"), "fichier_grille.txt");
 	display(M, 15);
 
 	tache = identifier_tache(M, 'R', 15);

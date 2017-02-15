@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include "pile.h"
 #include "grille.h"
@@ -29,22 +28,22 @@ Pile extraire_fils(coordonnees pere, Pile P, char couleur_choisie, grille platea
 	fils_bas.y = j;
 
 
-	if ( j != 0 && (plateau[i][j-1] == c || plateau[i][j-1] == couleur_choisie) )
+	if ( j != 0 && (plateau[i][j-1].color == c || plateau[i][j-1].color == couleur_choisie) )
 	{
 		res = empiler(res, fils_gauche);
 	}
 
-	if ( j != size && (plateau[i][j+1] == c || plateau[i][j+1] == couleur_choisie) )
+	if ( j != size && (plateau[i][j+1].color == c || plateau[i][j+1].color == couleur_choisie) )
 	{
 		res = empiler(res, fils_droite);
 	}
 
-	if ( i != 0 && (plateau[i-1][j] == c || plateau[i-1][j] == couleur_choisie) )
+	if ( i != 0 && (plateau[i-1][j].color == c || plateau[i-1][j].color == couleur_choisie) )
 	{
 		res = empiler(res, fils_haut);
 	}
 
-	if ( i != size && (plateau[i+1][j] == c || plateau[i+1][j] == couleur_choisie) )
+	if ( i != size && (plateau[i+1][j].color == c || plateau[i+1][j].color == couleur_choisie) )
 	{
 		res = empiler(res, fils_bas);
 	}
