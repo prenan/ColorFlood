@@ -80,3 +80,13 @@ int pile_taille(Pile P)
     }
     return n;
 }
+
+void pile_affichage(Pile P)
+{
+    while( !pile_estVide(P) )
+    {
+        printf("->[%d,%d]", (P->tete).x, (P->tete).y);
+        P = P->suivant;
+    }
+    printf("\n");
+}

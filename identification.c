@@ -75,4 +75,6 @@ Pile identifier_tache(grille plateau, char couleur_choisie, int size)
 
 		pile_des_fils = extraire_fils(pere, pile_des_fils, couleur_choisie, plateau, size); /* on n'oublie pas d'extraire de ce "père" anciennement "fils" de nouveaux fils éventuels */
 	}
+
+	return resultat;
 }

@@ -44,6 +44,9 @@ void pile_vider(Pile P);
 /* la taille de la pile */ 
 int pile_taille(Pile P);
 
+/*affichage*/
+void pile_affichage(Pile P);
+
 
 
 #endif
