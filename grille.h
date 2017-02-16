@@ -1,4 +1,6 @@
 #include <stdbool.h>
+#include "pile.h"
+
 #ifndef GRILLE_H
 #define GRILLE_H
 

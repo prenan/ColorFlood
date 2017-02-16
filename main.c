@@ -14,7 +14,7 @@ int main()
 
 	printf("\ndébut d'identification\n");
 
-	tache = identifier_tache(M, 'R', 15);
+	tache = identifier_tache(M, 'J', 15);
 
 	printf("fin d'identification\n \naffichage de pile finale \n");
 
