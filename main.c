@@ -8,15 +8,19 @@
 int main()
 {
 	Pile tache=NULL;
-
+	
 	grille M = init_file(size_file("fichier_grille.txt"), "fichier_grille.txt");
 	display(M, 15);
 
+	printf("\ndébut d'identification\n");
+
 	tache = identifier_tache(M, 'R', 15);
+
+	printf("fin d'identification\n \naffichage de pile finale \n");
 
 	pile_affichage(tache);
 
-	printf("%d\n", pile_taille(tache));
+	printf("\ntaille de la tache %d\n", pile_taille(tache));
 
 	/*
 	printf("%d\n",if_flood(M, 15));       
