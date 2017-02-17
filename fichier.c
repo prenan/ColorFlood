@@ -29,8 +29,8 @@ int size_file(char* file_name)
 {
 	int file_in, n, size, nb_char = 0, nb_char_line1 = 0, nb_lines = 1;
 	char text[601];
+
 	file_in = open_file(file_name);
-	
 	n = read(file_in, text, 601);
 
 	if (-1 == n)
@@ -74,11 +74,10 @@ int size_file(char* file_name)
 
 grille init_file(int size, char* file_name)
 {
-	int i, j, k = 0;
+	int i, j, k = 0, file_in, n;
 	char text[601];
-	int file_in, n;
-	file_in = open_file(file_name);
 
+	file_in = open_file(file_name);
 	n = read(file_in, text, 601);
 
 	if (-1 == n)
