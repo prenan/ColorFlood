@@ -10,6 +10,7 @@ int main()
 	char couleur;
 	grille M = init_file(size_file("fichier_grille.txt"), "fichier_grille.txt");
 	display(M,15);
+	export_file(M, 15);
 
 	while(if_flood(M,15)!=1)
 	{
