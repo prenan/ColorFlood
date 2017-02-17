@@ -10,7 +10,7 @@ COBJ=$(CSRC:.c=.o)
 	$(CC) $(CFLAGS) -c $*.c
 
 $(APPLI):	$(COBJ)
-	$(CC) -o $(APPLI) $(COBJ) -lncurses
+	$(CC) -o $(APPLI) $(COBJ)
 
 clean:
 	-rm *.o colorflood
