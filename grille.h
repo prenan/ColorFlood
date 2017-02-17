@@ -21,9 +21,6 @@ void free_space(grille plateau, int size);
 grille change_color(int i, int j, char c, grille plateau);  /* Change color with index and choosed color--HAO */
 bool if_flood(grille plateau, int size);  /* To see whether color flood */
 
-Pile extraire_fils(coordonnees pere, Pile P, char couleur_choisie, grille plateau, int size);
-Pile identifier_tache(grille plateau, char couleur_choisie, int size);
-
 int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie);
 void modif_color (char couleur_choisie, grille plateau, int size);
 
