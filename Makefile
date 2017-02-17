@@ -12,5 +12,8 @@ COBJ=$(CSRC:.c=.o)
 $(APPLI):	$(COBJ)
 	$(CC) -o $(APPLI) $(COBJ)
 
+valgrind:
+	valgrind --leak-check=yes colorflood
+
 clean:
 	-rm *.o colorflood
