@@ -19,7 +19,17 @@ Pile pile_initialiser()
 /*test pile vide ou pleine vrai = 1, faux = 0*/
 int pile_estVide(Pile P)
 {
-    return (P == NULL) ? 1:0 ;
+
+    if ( P == NULL )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+
+
 }
 
 
@@ -28,7 +38,7 @@ int pile_accederSommet(Pile P, coordonnees *sommet) /*on renvoie la valeur de l'
 {
     if (pile_estVide(P))
         return 1; /* code d'erreur */
-    *sommet = P->tete; 
+        *sommet = P->tete; 
     return 0; /* 0 renvoyé --> tout se passe bien ! */
 }
 
@@ -40,8 +50,8 @@ Pile empiler(Pile P, coordonnees elem)
 
     ret = (Pile)malloc(sizeof(Cellule));
 
-    ret->tete = elem;
     ret->suivant = P;
+    ret->tete = elem;
 
     return ret;
 }
@@ -51,7 +61,9 @@ Pile empiler(Pile P, coordonnees elem)
 Pile depiler(Pile P)
 {
     if (pile_estVide(P))
-        return NULL; /* on peut rien supprimer elle est déja vide */
+    {
+        perror("Pile vide");
+    }
     return P->suivant;
 }
 
@@ -65,7 +77,7 @@ void pile_vider(Pile P)
         P = P->suivant ; /* passage au suivant */
         free(ancienne_premiereCellule); /* destruction de la cellule mémorisée */
     }
-    
+
     P = NULL; /* pile vide */
 }
 
