@@ -76,6 +76,7 @@ grille init_file(int size, char* file_name)
 	}
 
 	close_file(file);
+	plateau[0][0].appartenance=1;
 
 	return plateau;
 }

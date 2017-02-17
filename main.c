@@ -7,26 +7,20 @@
 
 int main()
 {
-	Pile tache=NULL;
-	
+	char couleur;
 	grille M = init_file(size_file("fichier_grille.txt"), "fichier_grille.txt");
-	display(M, 15);
+	display(M,15);
 
-	printf("\ndébut d'identification\n");
+	while(if_flood(M,15)!=1)
+	{
+		scanf("%c",&couleur);
+		modif_color(couleur,M,15);
+		display(M,15);
+		scanf("%c",&couleur);
+		printf("\n");
 
-	tache = identifier_tache(M, 'J', 15);
+	}
 
-	printf("fin d'identification\n \naffichage de pile finale \n");
-
-	pile_affichage(tache);
-
-	printf("\ntaille de la tache %d\n", pile_taille(tache));
-
-	/*
-	printf("%d\n",if_flood(M, 15));       
-	M = change_color(0, 4, 'B', M);
-	display(M, 15);
-	printf("%d\n",if_flood(M, 15));       
-	*/
+	printf("Vous avez gagnez\n");
 	return 0;
 }
