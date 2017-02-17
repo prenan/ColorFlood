@@ -27,10 +27,6 @@ Pile pile_initialiser();
 int pile_estVide(Pile P);
 
 
-/* Accéder au sommet de la pile */
-int pile_accederSommet(Pile P, coordonnees *sommet); /*on renvoie la valeur de l'élément au sommet à la variable sommet*/
-
-
 /* Empiler : ajout d'un élément au sommet */
 Pile empiler(Pile P, coordonnees elem);
 
