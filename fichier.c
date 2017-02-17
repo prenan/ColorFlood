@@ -20,6 +20,11 @@ int open_file(char const* file_name)
 	return file_in;
 }
 
+void close_file(int file_in)
+{
+	close(file_in);
+}
+
 int size_file(char* file_name)
 {
 	int file_in, n, size, nb_char = 0, nb_char_line1 = 0, nb_lines = 1;
@@ -96,14 +101,4 @@ grille init_file(int size, char* file_name)
 	plateau[0][0].appartenance = 1;
 
 	return plateau;
-}
-
-void close_file(int file_in)
-{
-	close(file_in);
-}
-
-int end_of_file(FILE* file)
-{
-	return feof(file);
 }
