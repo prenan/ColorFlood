@@ -21,6 +21,7 @@ int main()
 
 	}
 
-	printf("Vous avez gagnez\n");
+	printf("Vous avez gagné\n");
+
 	return 0;
 }

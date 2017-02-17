@@ -1,42 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
+
 #include "fichier.h"
 
 
-FILE* open_file(char const* file_name)
+int open_file(char const* file_name)
 {
-	FILE* file = malloc(sizeof * file);
-	file = fopen(file_name, "r");
-	if (!file) 
+	int file_in;
+	file_in = open(file_name, O_RDONLY);
+	if (-1 == file_in) 
 	{
-		printf("impossible d'ouvrir le fichier %s\n", file_name);
+		perror("problème d'ouverture de fichier");
 		exit(1);
 	}
-	return file;
+	return file_in;
 }
 
 int size_file(char* file_name)
 {
-	int size, nb_char = 0, nb_char_line1 = 0, nb_lines = 1;
+	int file_in, n, size, nb_char = 0, nb_char_line1 = 0, nb_lines = 1;
 	char text[601];
-	FILE* file;
-	file = open_file(file_name);
-/*	fread(text, 601, 1, file);*/	/*contenu du fichier dans text*/
+	file_in = open_file(file_name);
+	
+	n = read(file_in, text, 601);
 
-
-	while (fread(text, 601, 1, file) != 0)	/*compte le nb de caractères au total (sans le \0)
-									et le nb de lignes*/
+	if (-1 == n)
 	{
-		if (text[nb_char] == '\n')
-		{
-			nb_lines = nb_lines+1;
-		}
-		nb_char = nb_char+1;
+		perror("problème de lecture de fichier");
 	}
 
 	while (text[nb_char] != '\n')	/*compte le nb de caractères sur la 1ère ligne*/
 	{
 		nb_char_line1++;
+		nb_char++;
+	}
+
+	while (text[nb_char])	/*compte le nb de caractères au total (sans le \0)
+									et le nb de lignes*/
+	{
+		if (text[nb_char] == '\n')
+		{
+			nb_lines++;
+		}
 		nb_char++;
 	}
 
@@ -60,32 +69,38 @@ int size_file(char* file_name)
 
 grille init_file(int size, char* file_name)
 {
-	int i,j;
-	char* buffer=calloc(size,sizeof(char));
-	FILE* file;
-	file = open_file(file_name);
+	int i, j, k = 0;
+	char text[601];
+	int file_in, n;
+	file_in = open_file(file_name);
+
+	n = read(file_in, text, 601);
+
+	if (-1 == n)
+	{
+		perror("problème de lecture de fichier");
+	}
 
 	grille plateau = initialize(size);
 	for (i=0 ; i<size ; i++)
 	{
-		fgets(buffer,size+1,file);
 		for (j=0 ; j<size ; j++)
 		{
-			plateau[i][j].color = buffer[j];
-			plateau[i][j].appartenance =0;
+			plateau[i][j].color = text[i*size + j + k];	/*le k sert à sauter les \n*/
+			plateau[i][j].appartenance = 0;
 		}
-		fseek(file, 1, SEEK_CUR);
+		k++;
 	}
 
-	close_file(file);
-	plateau[0][0].appartenance=1;
+	close_file(file_in);
+	plateau[0][0].appartenance = 1;
 
 	return plateau;
 }
 
-void close_file(FILE* file)
+void close_file(int file_in)
 {
-	fclose(file);
+	close(file_in);
 }
 
 int end_of_file(FILE* file)
