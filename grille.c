@@ -287,41 +287,41 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 		break;
 		case 1:
 		{
-			position_fils.x=position_pere.x-1;
-			position_fils.y=position_pere.y;
-			plateau[position_fils.x][position_fils.y].appartenance=1;
-			P=empiler(P,position_fils);
-			P=Deep(couleur_choisie, plateau, size, position_fils, P);
+			position_fils.x = position_pere.x-1;
+			position_fils.y = position_pere.y;
+			plateau[position_fils.x][position_fils.y].appartenance = 1;
+			P = empiler(P,position_fils);
+			P = Deep(couleur_choisie, plateau, size, position_fils, P);
 			break;
 		}
 
 		case 2:
 		{
-			position_fils.x=position_pere.x;
-			position_fils.y=position_pere.y+1;
+			position_fils.x = position_pere.x;
+			position_fils.y = position_pere.y+1;
 			plateau[position_fils.x][position_fils.y].appartenance=1;
-			P=empiler(P,position_fils);
-			P=Deep(couleur_choisie, plateau, size, position_fils, P);
+			P = empiler(P,position_fils);
+			P = Deep(couleur_choisie, plateau, size, position_fils, P);
 			break;
 		}
 
 		case 3:
 		{
-			position_fils.x=position_pere.x+1;
-			position_fils.y=position_pere.y;
-			plateau[position_fils.x][position_fils.y].appartenance=1;
-			P=empiler(P,position_fils);
-			P=Deep(couleur_choisie, plateau, size, position_fils, P);
+			position_fils.x = position_pere.x+1;
+			position_fils.y = position_pere.y;
+			plateau[position_fils.x][position_fils.y].appartenance = 1;
+			P = empiler(P,position_fils);
+			P = Deep(couleur_choisie, plateau, size, position_fils, P);
 			break;
 		}
 
 		case 4:
 		{
-			position_fils.x=position_pere.x;
-			position_fils.y=position_pere.y-1;
-			plateau[position_fils.x][position_fils.y].appartenance=1;
-			P=empiler(P,position_fils);
-			P=Deep(couleur_choisie, plateau, size, position_fils, P);
+			position_fils.x = position_pere.x;
+			position_fils.y = position_pere.y-1;
+			plateau[position_fils.x][position_fils.y].appartenance = 1;
+			P = empiler(P,position_fils);
+			P = Deep(couleur_choisie, plateau, size, position_fils, P);
 			break;
 		}
 	}
