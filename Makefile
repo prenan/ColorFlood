@@ -2,7 +2,7 @@ APPLI=colorflood
 CSRC= grille.c fichier.c pile.c main.c
 CC = gcc
 
-CFLAGS = -Wall -Wextra -ansi -I. 
+CFLAGS = -Wall -Wextra -I. 
 
 COBJ=$(CSRC:.c=.o)
 
