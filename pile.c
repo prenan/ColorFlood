@@ -1,15 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "pile.h"
 
-/*************************************************************************************************************************/
-/*************************************************************************************************************************/
-/*LES FONCTIONS DE BASE POUR LES PILES IMPLÉMENTÉES À L'AIDE DE LISTES */
-
-
-
-/*créer une pile vide */
 Pile pile_initialiser()
 {
     return NULL;

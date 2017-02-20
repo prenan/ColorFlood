@@ -1,25 +1,49 @@
-/*************************************************************************************************************************/
-/*************************************************************************************************************************/
-/*LES FONCTIONS DE BASE POUR LES PILES IMPLÉMENTÉES À L'AIDE DE LISTES */
+/**
+ * \file pile.h
+ * \brief Fonctions sur les piles et définition de structures
+ * \author THOR
+ * \date février 2017
+ */
 
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifndef PILE_H
 #define PILE_H
 
+/**
+ * \struct coordonnees
+ * \brief Structure d'une case du plateau
+ *
+ * Pour une case, on a sa position sur le plateau (x pour la ligne, j pour la colonne),
+ * (0, 0) correspond à la case dans le coin en-haut à gauche du plateau.
+ */
 typedef struct coordonnees
 {
 	int x;
 	int y;
 } coordonnees;
 
+/**
+ * \struct liste
+ * \brief Structure d'une liste
+ *
+ * Une liste est définie par un élément en tête (ici une case donc de type coordonnees),
+ * ainsi que par son reste.
+ */
 typedef struct liste
 {
     coordonnees tete;
     struct liste *suivant;
-} Cellule, *Pile;  /* Pile est un pointeur sur la tete de la liste */
+} Cellule, *Pile;
 
 
-/*créer une pile vide */
+/**
+ * \fn Pile pile_initialiser()
+ * \brief Fonction d'initialisation d'une pile.
+ *
+ * \return NULL.
+ */
 Pile pile_initialiser();
 
 
@@ -42,7 +66,6 @@ int pile_taille(Pile P);
 
 /*affichage*/
 void pile_affichage(Pile P);
-
 
 
 #endif
