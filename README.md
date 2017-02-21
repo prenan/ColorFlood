@@ -1,16 +1,20 @@
 # Color Flood (IPI2 - THOR)
 
-## Instructions d'installation (prérequis)
+## Instructions d'installation (pré-requis)
+
+Pour la documentation :
+```
+Doxygen
+```
 
 Pour l'interface :
-
 ```
 SDL
 ```
 
 ## Instructions d'utilisation
 
-Grâce au Makefile,
+Dans un terminal,
 * pour compiler
 
 ```
