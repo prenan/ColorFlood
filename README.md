@@ -1,7 +1,7 @@
-# ColorFlood
-IPI2 projet (THOR)
+# Color Flood
+Projet IPI2 (THOR)
 
-## Pré-requis
+## Instructions d'installation (prérequis)
 
 Pour l'interface :
 
@@ -9,17 +9,35 @@ Pour l'interface :
 SDL
 ```
 
-## Utilisation
+## Instructions d'utilisation
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+Grâce au Makefile,
+* pour compiler
 
 ```
-Give the example
+make
+```
+* pour tester l'absence de fuites de mémoire (Valgrind)
+
+```
+make valgrind
+```
+* pour les tests unitaires
+
+```
+make ??
+```
+* pour générer la documentation (Doxygen)
+
+```
+make doxygen
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+* pour nettoyer le répertoire
+```
+make clean
+```
+
 
 ## Tests
 
