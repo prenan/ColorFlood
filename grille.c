@@ -1,5 +1,5 @@
 #include "grille.h"
-#include "pile.h"
+
 
 
 grille initialize(int size)
@@ -29,7 +29,7 @@ void display(grille plateau, int size)
 	printf("\n");
 }
 
-grille random(int size)
+grille random_grille(int size)
 {
 	int i, j, k;
 	grille plateau = initialize(size);
@@ -110,48 +110,53 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 	int test=0;
 	int i=coord.x;
 	int j=coord.y;
+	if (i<0||j<0||i>size||j>size)
+	{
+		perror("Erreur coordonnees");
+		exit(1);
+	}
 	if (i!=0 && i!=size-1 && j!=0 && j!= size-1)
 	{
 		if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-			return test=1;
+			test=1;
 
 		if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-			return test=2;
+			test=2;
 
 		if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-			return test=3;
+			test=3;
 
 		if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-			return test=4;
+			test=4;
 	}
 	if (i==0)
 	{
 		if (j==0)
 		{
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 		}
 		if (j==size-1)
 		{
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 		if(j!=0 && j!= size-1)
 		{
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 	}
 	if (i==size-1)
@@ -159,29 +164,29 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 		if (j==0)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 		}
 		if (j==size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 		if (j !=0 && j!= size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 	}
 	if (j==0)
@@ -189,29 +194,29 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 		if (i==0)
 		{
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 		}
 		if (i==size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 		}
 		if (i!=0 && i!= size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
+				test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 		}
 	}
 	if (j==size-1)
@@ -219,32 +224,32 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 		if(i==0)
 		{
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 		if(i==size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 		if (i!=0 && i!=size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
+				test=1;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+				test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+				test=4;
 		}
 	}
-	return 0 ;
+	return test;
 }
 
 

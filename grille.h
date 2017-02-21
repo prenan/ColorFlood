@@ -52,13 +52,13 @@ grille initialize(int size);
 void display(grille plateau, int size);
 
 /**
- * \fn grille random(int size)
+ * \fn grille random_grille(int size)
  * \brief Fonction d'initialisation d'une grille aléatoire.
  *
  * \param size Taille du jeu (grille à initialiser size*size), doit être compris entre 8 et 24.
  * \return Grille aléatoire de taille size*size.
  */
-grille random(int size);
+grille random_grille(int size);
 
 /**
  * \fn void free_space(grille plateau, int size)
