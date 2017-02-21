@@ -4,16 +4,18 @@
 
 int main()
 {
-	char couleur;
 	grille M = init_file(size_file("fichier_grille.txt"), "fichier_grille.txt");
-	display(M,15);
-	export_file(M, 15);
+	char couleur=M[0][0].color;
 
-	while(if_flood(M,15)!=1)
+	display(M, size_file("fichier_grille.txt"));
+
+	export_file(M, size_file("fichier_grille.txt"));
+	modif_color(couleur,M,size_file("fichier_grille.txt"));
+	while(if_flood(M,size_file("fichier_grille.txt"))!=1)
 	{
 		scanf("%c",&couleur);
-		modif_color(couleur,M,15);
-		display(M,15);
+		modif_color(couleur,M,size_file("fichier_grille.txt"));
+		display(M,size_file("fichier_grille.txt"));
 		scanf("%c",&couleur);
 		printf("\n");
 

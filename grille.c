@@ -74,7 +74,10 @@ grille random_grille(int size)
 
 grille change_color(int i, int j, char c, grille plateau)
 {
-	plateau[i][j].color = c;
+	if (plateau[i][j].color!=c)
+	{
+		plateau[i][j].color = c;
+	}
 	return plateau;
 }
 
@@ -280,6 +283,7 @@ void modif_color(char couleur_choisie, grille plateau, int size)
 			}
 		}
 	}
+	free(P);
 
 }
 
