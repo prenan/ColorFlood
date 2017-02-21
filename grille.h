@@ -71,7 +71,7 @@ grille random_grille(int size);
 void free_space(grille plateau, int size);
 
 /**
- * \fn grille change_color(int i, int j, char c, grille plateau)
+ * \fn grille change_color(coordonnees coord, char c, grille plateau)
  * \brief Fonction de changement de la couleur d'une case donnée.
  *
  * \param coordonnees de la position.
