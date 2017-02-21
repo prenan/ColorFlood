@@ -72,8 +72,10 @@ grille random_grille(int size)
 	return plateau;
 }
 
-grille change_color(int i, int j, char c, grille plateau)
+grille change_color(coordonnees coord, char c, grille plateau)
 {
+	int i=coord.x;
+	int j=coord.y;
 	if (plateau[i][j].color!=c)
 	{
 		plateau[i][j].color = c;
@@ -272,7 +274,7 @@ void modif_color(char couleur_choisie, grille plateau, int size)
 			position.y = j;
 			if(plateau[i][j].appartenance==1)
 			{
-				change_color(i,j,couleur_choisie,plateau);
+				change_color(position,couleur_choisie,plateau);
 				P=empiler(P,position);
 				while(pile_estVide(P)!=1)
 				{
