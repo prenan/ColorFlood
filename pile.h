@@ -46,25 +46,54 @@ typedef struct liste
  */
 Pile pile_initialiser();
 
-
-/*test pile vide ou pleine vrai = 1, faux = 0*/
+/**
+ * \fn int pile_estVide(Pile P)
+ * \brief Fonction de test pour savoir si la pile est vide.
+ *
+ * \param P la pile que l'on test.
+ * \return 1 si elle est vide, 0 sinon.
+ */
 int pile_estVide(Pile P);
 
 
-/* Empiler : ajout d'un élément au sommet */
+/**
+ * \fn Pile empiler(Pile P, coordonnees elem)
+ * \brief Fonction qui empile une coordonnée dans une pile.
+ *
+ * \param P la pile qui va être enpilée.
+ * \param elem la coordonnée que l'on souaite empilée.
+ * \return la pile avec le nouvel element en tête.
+ */
 Pile empiler(Pile P, coordonnees elem);
 
-
-/* Depiler : la fonction permet de supprimer le sommet et le récupérer dans une autre variable */
+/**
+ * \fn Pile depiler(Pile P)
+ * \brief Fonction qui depile la pile.
+ *
+ * \param P la pile qui va être dépilée.
+ * \return la pile avec un élément de moins.
+ */
 Pile depiler(Pile P);
 
 /* vider la pile et détruire la liste pour libérer la mémoire */ 
 void pile_vider(Pile P);
 
-/* la taille de la pile */ 
+/**
+ * \fn int pile_taille(Pile P)
+ * \brief Fonction qui delivre la taille.
+ *
+ * \param P la pile dont on souhaite connaitre la taille.
+ * \return la taille de la pile.
+ */
 int pile_taille(Pile P);
 
-/*affichage*/
+/**
+ * \fn void pile_affichage(Pile P)
+ * \brief Fonction qu.i affiche la pile
+ *
+ * \param P la pile que l'on souhaite afficher.
+ * \return ??
+ */
 void pile_affichage(Pile P);
 
 
