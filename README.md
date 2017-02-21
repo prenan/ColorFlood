@@ -1,5 +1,4 @@
-# Color Flood
-Projet IPI2 (THOR)
+# Color Flood (IPI2 - THOR)
 
 ## Instructions d'installation (prérequis)
 
@@ -62,7 +61,7 @@ Give an example
 ## Équipe THOR
 
 
-* **ESTEOULLE Thomas** - *TPS*
-* **FAIQ Othman** - *ENSIIE*
-* **LIU Hao** - *ENSIIE*
-* **PINCEMIN Renan** - *TPS*
+* **ESTEOULLE Thomas** *(TPS)*
+* **FAIQ Othman** *(ENSIIE)*
+* **LIU Hao** *(ENSIIE)*
+* **PINCEMIN Renan** *(TPS)*
