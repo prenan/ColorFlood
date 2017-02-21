@@ -123,7 +123,7 @@ void modif_color (char couleur_choisie, grille plateau, int size);
  * \param size Taille du jeu (grille size*size).
  * \param coord Coordonnée de la case.
  * \param P Pile du parcours lors de la recherche en profondeur.
- * \return P, la pile avec un nouvel élément ou la pile sans modification.
+ * \return La pile P avec un nouvel élément ou la pile sans modification.
  */
 Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P);
 

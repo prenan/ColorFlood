@@ -11,7 +11,6 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-
 #include "grille.h"
 
 #ifndef FICHIER_H
@@ -42,8 +41,26 @@ void close_file(int file_in);
  * \param file_name Nom du fichier avec son extension.
  * \return -1 si erreur dans le contenu du fichier, la valeur de la taille sinon.
  */
-int size_file(char* file_name); /*check files content and return game size if ok*/
+int size_file(char* file_name);
+
+/**
+ * \fn grille init_file(int size, char* file_name)
+ * \brief Fonction qui initialise une grille à partir d'un fichier.
+ *
+ * \param size Taille du jeu (grille size*size).
+ * \param file_name Nom du fichier avec son extension.
+ * \return Grille de taille size*size.
+ */
 grille init_file(int size, char* file_name);
+
+/**
+ * \fn void export_file(grille plateau, int size)
+ * \brief Fonction d'exportation du plateau dans un fichier.
+ *
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \return Erreur si problème d'écriture de fichier, sinon créé le fichier.
+ */
 void export_file(grille plateau, int size);
 
 

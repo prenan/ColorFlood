@@ -1,7 +1,6 @@
 #include "grille.h"
 
 
-
 grille initialize(int size)
 {
 	int i;

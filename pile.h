@@ -60,30 +60,36 @@ int pile_estVide(Pile P);
  * \fn Pile empiler(Pile P, coordonnees elem)
  * \brief Fonction qui empile une coordonnée dans une pile.
  *
- * \param P la pile qui va être enpilée.
- * \param elem la coordonnée que l'on souaite empilée.
- * \return la pile avec le nouvel element en tête.
+ * \param P la pile qui va être empilée.
+ * \param elem la coordonnée que l'on souhaite empiler.
+ * \return La pile avec le nouvel élément en tête.
  */
 Pile empiler(Pile P, coordonnees elem);
 
 /**
  * \fn Pile depiler(Pile P)
- * \brief Fonction qui depile la pile.
+ * \brief Fonction qui dépile la pile.
  *
  * \param P la pile qui va être dépilée.
- * \return la pile avec un élément de moins.
+ * \return La pile avec un élément de moins.
  */
 Pile depiler(Pile P);
 
-/* vider la pile et détruire la liste pour libérer la mémoire */ 
+/**
+ * \fn void pile_vider(Pile P)
+ * \brief Fonction qui vide la pile et libère la mémoire.
+ *
+ * \param P la pile.
+ * \return ??.
+ */
 void pile_vider(Pile P);
 
 /**
  * \fn int pile_taille(Pile P)
- * \brief Fonction qui delivre la taille.
+ * \brief Fonction qui délivre la taille.
  *
- * \param P la pile dont on souhaite connaitre la taille.
- * \return la taille de la pile.
+ * \param P la pile dont on souhaite connaître la taille.
+ * \return La taille de la pile.
  */
 int pile_taille(Pile P);
 
@@ -92,7 +98,7 @@ int pile_taille(Pile P);
  * \brief Fonction qu.i affiche la pile
  *
  * \param P la pile que l'on souhaite afficher.
- * \return ??
+ * \return ??.
  */
 void pile_affichage(Pile P);
 

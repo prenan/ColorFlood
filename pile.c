@@ -1,19 +1,16 @@
 #include "pile.h"
 
+
 Pile pile_initialiser()
 {
     return NULL;
 }
 
-
-/*test pile vide ou pleine vrai = 1, faux = 0*/
 int pile_estVide(Pile P)
 {
     return (P == NULL) ? 1:0 ;
 }
 
-
-/* Empiler : ajout d'un élément au sommet */
 Pile empiler(Pile P, coordonnees elem)
 {
     Pile ret;
@@ -26,8 +23,6 @@ Pile empiler(Pile P, coordonnees elem)
     return ret;
 }
 
-
-/* Depiler : la fonction permet de supprimer le sommet et le récupérer dans une autre variable */
 Pile depiler(Pile P)
 {
     if (pile_estVide(P))
@@ -35,7 +30,6 @@ Pile depiler(Pile P)
     return P->suivant;
 }
 
-/* vider la pile et détruire la liste pour libérer la mémoire */ 
 void pile_vider(Pile P)
 {
     Pile ancienne_premiereCellule;
@@ -49,13 +43,12 @@ void pile_vider(Pile P)
     P = NULL; /* pile vide */
 }
 
-/* la taille de la pile */ 
 int pile_taille(Pile P)
 {
     int n = 0;
     while( !pile_estVide(P) )
     {
-        n = n + 1;
+        n++;
         P = P->suivant;
     }
     return n;
