@@ -15,10 +15,11 @@ SDL
 ## Instructions d'utilisation
 
 Dans un terminal,
-* pour compiler
+* pour compiler et exécuter
 
 ```
 make
+./colorflood
 ```
 * pour tester l'absence de fuites de mémoire (Valgrind)
 
