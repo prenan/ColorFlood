@@ -29,7 +29,7 @@ make valgrind
 * pour les tests unitaires
 
 ```
-make ??
+make -lcunit
 ```
 * pour générer la documentation (Doxygen)
 
