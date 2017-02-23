@@ -26,7 +26,10 @@ Pile empiler(Pile P, coordonnees elem)
 Pile depiler(Pile P)
 {
     if (pile_estVide(P))
-        return NULL; /* on peut rien supprimer elle est déja vide */
+        {
+			perror(" erreur : on ne peut pas dépiler une pile vide !");
+			exit(EXIT_FAILURE);
+		} 
     return P->suivant;
 }
 
