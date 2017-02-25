@@ -65,7 +65,7 @@ grille random_grille(int size)
 				plateau[i][j].color = 'G';
 				break;
 			}
-			plateau[i][j].appartenance=0;
+			plateau[i][j].appartenance = 0;
 		}
 	}
 	return plateau;

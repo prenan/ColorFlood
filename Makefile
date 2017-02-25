@@ -1,16 +1,19 @@
-APPLI=colorflood
-CSRC= grille.c fichier.c pile.c main.c
+APPLI = colorflood
+CSRC = grille.c fichier.c pile.c main.c
 CC = gcc
 
-CFLAGS = -Wall -Wextra -I. -lcunit
-
-COBJ=$(CSRC:.c=.o)
+CFLAGS = -Wall -Wextra
+COBJ = $(CSRC:.c=.o)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $*.c
 
 $(APPLI):	$(COBJ)
 	$(CC) -o $(APPLI) $(COBJ)
+
+
+test:
+	$(CC) $(CFLAGS) tests_unitaires.c -o test -lcunit
 
 valgrind:
 	valgrind --leak-check=yes ./colorflood
@@ -19,4 +22,4 @@ doxygen:
 	doxygen Doxyfile
 
 clean:
-	-rm *.o colorflood
+	-rm *.o colorflood test

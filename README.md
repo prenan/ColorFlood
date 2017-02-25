@@ -2,15 +2,15 @@
 
 ## Instructions d'installation (pré-requis)
 
-Pour la documentation :
+Pour la documentation avec Doxygen :
 ```
-Doxygen
+sudo apt install doxygen
+```
+Pour les tests unitaires avec CUnit :
+```
+sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
 ```
 
-Pour l'interface :
-```
-SDL
-```
 
 ## Instructions d'utilisation
 
@@ -29,12 +29,14 @@ make valgrind
 * pour les tests unitaires
 
 ```
-make -lcunit
+make test
+./test
 ```
 * pour générer la documentation (Doxygen)
 
 ```
 make doxygen
+ouvrir html/index.html
 ```
 
 * pour nettoyer le répertoire
@@ -42,26 +44,6 @@ make doxygen
 make clean
 ```
 
-
-## Tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Équipe THOR
 
