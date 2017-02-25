@@ -4,15 +4,17 @@
 #include <CUnit/CUnit.h>
 #include "CUnit/Basic.h"
 
-/*http://cunit.sourceforge.net/example.html*/
-
+/* README
+ * Here the functions init_suite1 and clean_suite1 
+ * are optional for us
+ * We can might need rewrite them and apply to the function
+ * CU_pSuite CU_add_suite(const char* strName,
+                         CU_InitializeFunc pInit,
+                         CU_CleanupFunc pClean);
+*/
 /* Pointer to the file used by the tests. */
 static FILE* temp_file = NULL;
-
-/* The suite initialization function.
- * Opens the temporary file used by the tests.
- * Returns zero on success, non-zero otherwise.
- */
+/* The suite initialization function. */
 int init_suite1(void)
 {
    if (NULL == (temp_file = fopen("temp.txt", "w+")))
@@ -25,10 +27,7 @@ int init_suite1(void)
    }
 }
 
-/* The suite cleanup function.
- * Closes the temporary file used by the tests.
- * Returns zero on success, non-zero otherwise.
- */
+/* The suite cleanup function. */
 int clean_suite1(void)
 {
    if (0 != fclose(temp_file))
@@ -69,6 +68,7 @@ void testFREAD(void)
 
    if (NULL != temp_file)
    {
+     /* Here rewind is equal to (void) fseek(File *stream, Long offset, SEEK_SET)*/
       rewind(temp_file);
       CU_ASSERT(9 == fread(buffer, sizeof(unsigned char), 20, temp_file));
       CU_ASSERT(0 == strncmp(buffer, "Q\ni1 = 10", 9));
@@ -77,24 +77,54 @@ void testFREAD(void)
 
 int main(void)
 {
-	CU_pSuite pSuite = NULL;
+	CU_pSuite pSuite_fichier = NULL;
+    CU_pSuite pSuite_grille = NULL;
+    CU_pSuite pSuite_pile = NULL;
 
    /* initialize the CUnit test registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
 		return CU_get_error();
 
-   /* add a suite to the registry */
-	pSuite = CU_add_suite("Suite_1", init_suite1, clean_suite1);
+   /* add three suites repectively for our three libaries */
+   /* It will make us more easily to test our functions */
+	pSuite_fichier = CU_add_suite("Suite_fichier");
+	if (NULL == pSuite)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+    pSuite_grille = CU_add_suite("Suite_grille");
+	if (NULL == pSuite)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+    pSuite_pile = CU_add_suite("Suite_pile");
 	if (NULL == pSuite)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 
-   /* add the tests to the suite */
-   /* NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() */
-	if ((NULL == CU_add_test(pSuite, "test of fprintf()", testFPRINTF)) ||
-		(NULL == CU_add_test(pSuite, "test of fread()", testFREAD)))
+   /* add the tests to the rightful suites */
+   /* We need to test them one by one */
+
+   /*Test all the functions of fichier.h here*/
+	if (NULL == CU_add_test(pSuite_fichier, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+   /*Test all the functions of grille.h here*/
+    if (NULL == CU_add_test(pSuite_grille, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+   /*Test all the functions of pile.h here*/
+    if (NULL == CU_add_test(pSuite_pile, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
