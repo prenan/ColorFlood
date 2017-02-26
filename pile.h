@@ -12,18 +12,8 @@
 #ifndef PILE_H
 #define PILE_H
 
-/**
- * \struct coordonnees
- * \brief représente les coordonnées d'une case du plateau
- *
- * Pour une case, on a sa position sur le plateau (x pour la ligne, y pour la colonne),
- * (0, 0) correspond à la case dans le coin en-haut à gauche du plateau.
- */
-typedef struct coordonnees
-{
-	int x;
-	int y;
-} coordonnees;
+#define type_element 'coordonnees' 
+
 
 /**
  * \struct liste
@@ -34,7 +24,7 @@ typedef struct coordonnees
  */
 typedef struct liste
 {
-    coordonnees tete;
+    type_element tete;
     struct liste *suivant;
 } Cellule, *Pile;
 
@@ -92,14 +82,6 @@ void pile_vider(Pile P);
  * \return La taille de la pile.
  */
 int pile_taille(Pile P);
-
-/**
- * \fn void pile_affichage(Pile P)
- * \brief afficher les élèments de la pile (fonction utile pour les tests)
- *
- * \param P la pile que l'on souhaite afficher.
- */
-void pile_affichage(Pile P);
 
 
 #endif

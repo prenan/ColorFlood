@@ -12,6 +12,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include "grille.h"
+#include "coordonnees.h"
 
 #ifndef FICHIER_H
 #define FICHIER_H

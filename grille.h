@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include "pile.h"
+#include "coordonnees.h"
 
 #ifndef GRILLE_H
 #define GRILLE_H

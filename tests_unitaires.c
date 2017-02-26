@@ -1,6 +1,7 @@
 #include "fichier.h"
 #include "grille.h"
 #include "pile.h"
+#include "coordonnees.h"
 #include <CUnit/CUnit.h>
 #include "CUnit/Basic.h"
 

@@ -336,3 +336,23 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 	}
 	return P;
 }
+
+/*******************************************************************/
+/***Tests unitaires ***/
+/******************************************************************/
+
+void test_test_neighbour(void)
+{
+	int size = size_file("fichier_grille.txt");
+	grille M = init_file(size, "fichier_grille.txt");
+
+	M[size-1][size-2].appartenance = 1; 
+	M[size-2][size-1].appartenance = 1;  
+
+	coordonnees position;
+	position.x = size -1;
+	position.y = size -1;
+
+	CU_ASSERT(test_neighbour(M, position, size, 'B') == 0); 
+	CU_ASSERT(test_neighbour(M, )) 
+}

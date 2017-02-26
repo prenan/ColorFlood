@@ -11,7 +11,7 @@ int pile_estVide(Pile P)
     return (P == NULL) ? 1:0 ;
 }
 
-Pile empiler(Pile P, coordonnees elem)
+Pile empiler(Pile P, type_element elem)
 {
     Pile ret;
 
@@ -57,20 +57,18 @@ int pile_taille(Pile P)
     return n;
 }
 
-void pile_affichage(Pile P)
-{
-    while( !pile_estVide(P) )
-    {
-        printf("->[%d,%d]", (P->tete).x, (P->tete).y);
-        P = P->suivant;
-    }
-    printf("\n");
-}
+
 
 /*******************************************************************/
 /***Tests unitaires ***/
 /******************************************************************/
 
+void test_est_vide(void)
+{
+    Pile P = NULL;
+
+    CU_ASSERT(pile_estVide(P) == 1);
+}
 
 void test_empiler(void)
 {
@@ -83,8 +81,6 @@ void test_empiler(void)
     empiler(P, couple1);
 
     CU_ASSERT((P->tete).x == couple1.x  &&  (P->tete).y == couple1.y);
-
-    pile_vider(P);
 }
 
 void test_depiler(void)
@@ -103,10 +99,6 @@ void test_depiler(void)
     P = depiler(P);
 
     CU_ASSERT((P->tete).x == couple2.x  &&  (P->tete).y == couple2.y);
-
-    pile_vider(P);
-
-    CU_ASSERT()
 }
 
 void test_pile_taille(void)
@@ -146,4 +138,3 @@ void test_pile_vider(void)
 
     CU_ASSERT_PTR_NULL(P);
 }
-
