@@ -13,7 +13,7 @@ $(APPLI):	$(COBJ)
 
 
 test:
-	$(CC) $(CFLAGS) grille.c coordonnees.c fichier.c pile.c tests_unitaires.c -o test -lcunit
+	$(CC) $(CFLAGS) $(CSRC) tests_unitaires.c -o test -lcunit
 
 valgrind:
 	valgrind --leak-check=yes ./colorflood
