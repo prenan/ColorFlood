@@ -13,12 +13,11 @@
 #ifndef PILE_H
 #define PILE_H
 
-<<<<<<< HEAD
+
 #define type_element coordonnees 
 
 
-=======
->>>>>>> master
+
 /**
  * \struct liste
  * \brief Structure d'une liste

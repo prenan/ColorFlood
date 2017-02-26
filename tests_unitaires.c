@@ -57,29 +57,33 @@ void test_if_flood(void)
 }
 
 /* All the functions of stack(pile)*/
+/*******************************************************************/
+/***Tests unitaires  ***/
+/******************************************************************/
+
+void test_est_vide(void)
+{
+    Pile P = NULL;
+
+    CU_ASSERT(pile_estVide(P) == 1);
+}
+
 void test_empiler(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1;
-    couple1.x = 1; couple1.y = 1;
-
+    coordonnees couple1 = coord_def(1, 1);
 
     empiler(P, couple1);
 
-    CU_ASSERT((P->tete).x == couple1.x  &&  (P->tete).y == couple1.y);
-
-    pile_vider(P);
+    CU_ASSERT(coord_compare(P->tete, couple1) == 1);
 }
 
 void test_depiler(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1, couple2, couple3;
-    couple1.x = 1; couple1.y = 1;
-    couple2.x = 2; couple2.y = 2;
-    couple3.x = 3; couple3.y = 3;
+    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3);
 
     P = empiler(P, couple1);
     P = empiler(P, couple2);
@@ -87,20 +91,14 @@ void test_depiler(void)
 
     P = depiler(P);
 
-    CU_ASSERT((P->tete).x == couple2.x  &&  (P->tete).y == couple2.y);
-
-    pile_vider(P);
-
+    CU_ASSERT(coord_compare(P->tete, couple2) == 1);
 }
 
 void test_pile_taille(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1, couple2, couple3;
-    couple1.x = 1; couple1.y = 1;
-    couple2.x = 2; couple2.y = 2;
-    couple3.x = 3; couple3.y = 3;
+    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3);
 
     P = empiler(P, couple1);
     P = empiler(P, couple2);
@@ -110,17 +108,14 @@ void test_pile_taille(void)
 
     pile_vider(P);
 
-    CU_ASSERT(pile_taille(P) == 0);
+    CU_ASSERT(pile_taille(P) == 0):
 }
 
 void test_pile_vider(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1, couple2, couple3;
-    couple1.x = 1; couple1.y = 1;
-    couple2.x = 2; couple2.y = 2;
-    couple3.x = 3; couple3.y = 3;
+    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3); 
 
     P = empiler(P, couple1);
     P = empiler(P, couple2);
@@ -131,12 +126,47 @@ void test_pile_vider(void)
     CU_ASSERT_PTR_NULL(P);
 }
 
+void test_test_neighbour(void)
+{
+	int size = size_file("fichier_grille.txt");
+	grille M = init_file(size, "fichier_grille.txt");
+
+	M[size-1][size-2].appartenance = 1; 
+	M[size-2][size-1].appartenance = 1;  
+
+	CU_ASSERT(test_neighbour(M, coord_def(size-1, size-1), size, 'B') == 0); /* car appartenance = 1 */
+	CU_ASSERT(test_neighbour(M, coord_def(size-1, size-1), size, 'V') == 0); /* car appartenance = 1 */
+
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'V') == 3); /* la couleur à la position (7,9) est 'J' ses voisins sont dans l'ordre 'V', 'R', 'V' et 'M' */
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'M') == 4);
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'R') == 2);
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'G') == 0); /* G n'existe pas au voisinage de la case (7,9) */
+}
+void test_coord_def(void)
+{
+	coordonnees A = coord_def(12, 27);
+
+	CU_ASSERT(A.x == 12 && A.y == 27);
+}
+
+void test_coord_compare(void)
+{
+	coordonnees A = coord_def(1,1);
+	coordonnees B = coord_def(1,1);
+	coordonnees C = coord_def(2,2);
+
+	CU_ASSERT(coord_compare(A, B) == 1);
+	CU_ASSERT(coord_compare(A, C) == 0);
+}
+/*fin des tests */
+
 
 int main(void)
 {
 	CU_pSuite pSuite_fichier = NULL;
     CU_pSuite pSuite_grille = NULL;
     CU_pSuite pSuite_pile = NULL;
+	CU_pSuite pSuite_coordonnees = NULL;
 
    /* initialize the CUnit test registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
@@ -152,12 +182,6 @@ int main(void)
 		return CU_get_error();
 	}
 	*/
-    pSuite_pile = CU_add_suite("Suite_pile",init_suite,clean_suite);
-	if (NULL == pSuite_pile)
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
 	
 
    /* add the tests to the rightful suites */
@@ -195,11 +219,21 @@ int main(void)
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+	if (NULL == CU_add_test(pSuite_grille, "test of test_neighbour", test_test_neighbour))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 
    /*
      *Test all the functions of pile.h here
    */
-
+    pSuite_pile = CU_add_suite("Suite_pile",init_suite,clean_suite);
+	if (NULL == pSuite_pile)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
    
     if (NULL == CU_add_test(pSuite_pile, "test of empiler", test_empiler))
 	{
@@ -219,14 +253,34 @@ int main(void)
 		return CU_get_error();
 	}
 
-	 if (NULL == CU_add_test(pSuite_pile, "test of pile_vider", test_pile_vider))
+	if (NULL == CU_add_test(pSuite_pile, "test of pile_vider", test_pile_vider))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
    
+    /*
+     *Test all the functions of coordonnees.h here
+    */
+    pSuite_pile = CU_add_suite("Suite_coordonnees",init_suite,clean_suite);
+	if (NULL == pSuite_pile)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+    
+	if (NULL == CU_add_test(pSuite_pile, "test of coord_def", test_coord_def))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 
-   /* Run all tests using the CUnit Basic interface */
+	if (NULL == CU_add_test(pSuite_pile, "test of coord_compare", test_coord_compare))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+    /* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
 	CU_cleanup_registry();
