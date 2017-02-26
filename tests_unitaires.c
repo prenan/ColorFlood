@@ -74,7 +74,7 @@ void test_empiler(void)
 
     coordonnees couple1 = coord_def(1, 1);
 
-    empiler(P, couple1);
+    P = empiler(P, couple1);
 
     CU_ASSERT(coord_compare(P->tete, couple1) == 1);
 }
