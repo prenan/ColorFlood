@@ -1,6 +1,6 @@
 /**
  * \file pile.h
- * \brief Stuctures + Fonctions de bases pour les piles (implémentation à l'aide des listes chainées)
+ * \brief Stucture de pile (implémentation à l'aide de liste chainée) + Fonctions de bases.
  * 															 
  * \author THOR
  * \date février 2017
@@ -12,7 +12,7 @@
 #ifndef PILE_H
 #define PILE_H
 
-#define type_element 'coordonnees' 
+#define type_element coordonnees 
 
 
 /**

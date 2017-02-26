@@ -1,3 +1,10 @@
+/**
+ * \file coordonnees.h
+ * \brief Stucture de couple de coordonnées et fonctions de manipulations 
+ * 															 
+ * \author THOR
+ * \date février 2017
+ */
 #include <stdio.h>
 #include <stdlib.h>
 

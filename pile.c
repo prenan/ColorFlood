@@ -74,23 +74,18 @@ void test_empiler(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1;
-    couple1.x = 1; couple1.y = 1;
-
+    coordonnees couple1 = coord_def(1, 1);
 
     empiler(P, couple1);
 
-    CU_ASSERT((P->tete).x == couple1.x  &&  (P->tete).y == couple1.y);
+    CU_ASSERT(coord_compare(P->tete, couple1) == 1);
 }
 
 void test_depiler(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1, couple2, couple3;
-    couple1.x = 1; couple1.y = 1;
-    couple2.x = 2; couple2.y = 2;
-    couple3.x = 3; couple3.y = 3;
+    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3);
 
     P = empiler(P, couple1);
     P = empiler(P, couple2);
@@ -98,17 +93,14 @@ void test_depiler(void)
 
     P = depiler(P);
 
-    CU_ASSERT((P->tete).x == couple2.x  &&  (P->tete).y == couple2.y);
+    CU_ASSERT(coord_compare(P->tete, couple2) == 1);
 }
 
 void test_pile_taille(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1, couple2, couple3;
-    couple1.x = 1; couple1.y = 1;
-    couple2.x = 2; couple2.y = 2;
-    couple3.x = 3; couple3.y = 3;
+    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3);
 
     P = empiler(P, couple1);
     P = empiler(P, couple2);
@@ -125,10 +117,7 @@ void test_pile_vider(void)
 {
     Pile P = NULL;
 
-    coordonnees couple1, couple2, couple3;
-    couple1.x = 1; couple1.y = 1;
-    couple2.x = 2; couple2.y = 2;
-    couple3.x = 3; couple3.y = 3;
+    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3); 
 
     P = empiler(P, couple1);
     P = empiler(P, couple2);

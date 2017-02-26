@@ -349,10 +349,11 @@ void test_test_neighbour(void)
 	M[size-1][size-2].appartenance = 1; 
 	M[size-2][size-1].appartenance = 1;  
 
-	coordonnees position;
-	position.x = size -1;
-	position.y = size -1;
+	CU_ASSERT(test_neighbour(M, coord_def(size-1, size-1), size, 'B') == 0); /* car appartenance = 1 */
+	CU_ASSERT(test_neighbour(M, coord_def(size-1, size-1), size, 'V') == 0); /* car appartenance = 1 */
 
-	CU_ASSERT(test_neighbour(M, position, size, 'B') == 0); 
-	CU_ASSERT(test_neighbour(M, )) 
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'V') == 3); /* la couleur à la position (7,9) est 'J' ses voisins sont dans l'ordre 'V', 'R', 'V' et 'M' */
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'M') == 4);
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'R') == 2);
+	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'G') == 0); /* G n'existe pas au voisinage de la case (7,9) */
 }
