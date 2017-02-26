@@ -5,8 +5,8 @@
 #include "CUnit/Basic.h"
 
 /* README
- * Here the functions init_suite1 and clean_suite1 
- * are optional for us
+ * Here the functions init_suite and clean_suite
+ * are optional for us. They don't do anything in this example
  * We can might need rewrite them and apply to the function
  * CU_pSuite CU_add_suite(const char* strName,
                          CU_InitializeFunc pInit,
@@ -15,30 +15,17 @@
 /* Pointer to the file used by the tests. */
 static FILE* temp_file = NULL;
 /* The suite initialization function. */
-int init_suite1(void)
+int init_suite(void)
 {
-   if (NULL == (temp_file = fopen("temp.txt", "w+")))
-   {
-      return -1;
-   }
-   else
-   {
+  
       return 0;
-   }
 }
 
 /* The suite cleanup function. */
-int clean_suite1(void)
+int clean_suite(void)
 {
-   if (0 != fclose(temp_file))
-   {
-      return -1;
-   }
-   else
-   {
-      temp_file = NULL;
       return 0;
-   }
+
 }
 
 /* Simple test of fprintf().
@@ -87,19 +74,19 @@ int main(void)
 
    /* add three suites repectively for our three libaries */
    /* It will make us more easily to test our functions */
-	pSuite_fichier = CU_add_suite("Suite_fichier");
+	pSuite_fichier = CU_add_suite("Suite_fichier",init_suite,clean_suite);
 	if (NULL == pSuite)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-    pSuite_grille = CU_add_suite("Suite_grille");
+    pSuite_grille = CU_add_suite("Suite_grille",init_suite,clean_suite);
 	if (NULL == pSuite)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-    pSuite_pile = CU_add_suite("Suite_pile");
+    pSuite_pile = CU_add_suite("Suite_pile",init_suite,clean_suite);
 	if (NULL == pSuite)
 	{
 		CU_cleanup_registry();
