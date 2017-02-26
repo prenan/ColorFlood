@@ -1,5 +1,5 @@
 #include "pile.h"
-
+#include "coordonnees.h"
 
 Pile pile_initialiser()
 {
@@ -57,6 +57,7 @@ int pile_taille(Pile P)
     return n;
 }
 
+<<<<<<< HEAD
 
 
 /*******************************************************************/
@@ -127,3 +128,14 @@ void test_pile_vider(void)
 
     CU_ASSERT_PTR_NULL(P);
 }
+=======
+void pile_affichage(Pile P)
+{
+    while( !pile_estVide(P) )
+    {
+        printf("->[%d,%d]", (P->tete).x, (P->tete).y);
+        P = P->suivant;
+    }
+    printf("\n");
+}
+>>>>>>> master

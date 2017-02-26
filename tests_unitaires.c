@@ -56,6 +56,82 @@ void test_if_flood(void)
 	CU_ASSERT_FALSE_FATAL(!if_flood(M2, size));
 }
 
+/* All the functions of stack(pile)*/
+void test_empiler(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1;
+    couple1.x = 1; couple1.y = 1;
+
+
+    empiler(P, couple1);
+
+    CU_ASSERT((P->tete).x == couple1.x  &&  (P->tete).y == couple1.y);
+
+    pile_vider(P);
+}
+
+void test_depiler(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1, couple2, couple3;
+    couple1.x = 1; couple1.y = 1;
+    couple2.x = 2; couple2.y = 2;
+    couple3.x = 3; couple3.y = 3;
+
+    P = empiler(P, couple1);
+    P = empiler(P, couple2);
+    P = empiler(P, couple3);
+
+    P = depiler(P);
+
+    CU_ASSERT((P->tete).x == couple2.x  &&  (P->tete).y == couple2.y);
+
+    pile_vider(P);
+
+}
+
+void test_pile_taille(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1, couple2, couple3;
+    couple1.x = 1; couple1.y = 1;
+    couple2.x = 2; couple2.y = 2;
+    couple3.x = 3; couple3.y = 3;
+
+    P = empiler(P, couple1);
+    P = empiler(P, couple2);
+    P = empiler(P, couple3);
+
+    CU_ASSERT( pile_taille(P) == 3);
+
+    pile_vider(P);
+
+    CU_ASSERT(pile_taille(P) == 0);
+}
+
+void test_pile_vider(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1, couple2, couple3;
+    couple1.x = 1; couple1.y = 1;
+    couple2.x = 2; couple2.y = 2;
+    couple3.x = 3; couple3.y = 3;
+
+    P = empiler(P, couple1);
+    P = empiler(P, couple2);
+    P = empiler(P, couple3);
+
+    pile_vider(P);
+
+    CU_ASSERT_PTR_NULL(P);
+}
+
+
 int main(void)
 {
 	CU_pSuite pSuite_fichier = NULL;
@@ -75,14 +151,14 @@ int main(void)
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-	
+	*/
     pSuite_pile = CU_add_suite("Suite_pile",init_suite,clean_suite);
 	if (NULL == pSuite_pile)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-	*/
+	
 
    /* add the tests to the rightful suites */
    /* We need to test them one by one */
@@ -124,13 +200,31 @@ int main(void)
      *Test all the functions of pile.h here
    */
 
-   /*
-    if (NULL == CU_add_test(pSuite_pile, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
+   
+    if (NULL == CU_add_test(pSuite_pile, "test of empiler", test_empiler))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-   */
+
+    if (NULL == CU_add_test(pSuite_pile, "test of depiler", test_depiler))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+    if (NULL == CU_add_test(pSuite_pile, "test of pile_taille", test_pile_taille))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+	 if (NULL == CU_add_test(pSuite_pile, "test of pile_vider", test_pile_vider))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+   
 
    /* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);

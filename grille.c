@@ -1,4 +1,5 @@
 #include "grille.h"
+#include "coordonnees.h"
 
 
 grille initialize(int size)
