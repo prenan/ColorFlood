@@ -358,3 +358,5 @@ void test_test_neighbour(void)
 	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'R') == 2);
 	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'G') == 0); /* G n'existe pas au voisinage de la case (7,9) */
 }
+
+/*fin*/

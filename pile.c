@@ -57,8 +57,6 @@ int pile_taille(Pile P)
     return n;
 }
 
-<<<<<<< HEAD
-
 
 /*******************************************************************/
 /***Tests unitaires ***/
@@ -128,14 +126,5 @@ void test_pile_vider(void)
 
     CU_ASSERT_PTR_NULL(P);
 }
-=======
-void pile_affichage(Pile P)
-{
-    while( !pile_estVide(P) )
-    {
-        printf("->[%d,%d]", (P->tete).x, (P->tete).y);
-        P = P->suivant;
-    }
-    printf("\n");
-}
->>>>>>> master
+
+/*fin des tests */
