@@ -12,8 +12,7 @@
                          CU_InitializeFunc pInit,
                          CU_CleanupFunc pClean);
 */
-/* Pointer to the file used by the tests. */
-static FILE* temp_file = NULL;
+
 /* The suite initialization function. */
 int init_suite(void)
 {
@@ -28,38 +27,32 @@ int clean_suite(void)
 
 }
 
-/* Simple test of fprintf().
- * Writes test data to the temporary file and checks
- * whether the expected number of bytes were written.
- */
-void testFPRINTF(void)
+void test_change_color(void)
 {
-   int i1 = 10;
+	int size;
+	char c='B';
+	coordonnees co;
+	co.x=0;
+	co.y=0;
+    
+	size = size_file("fichier_grille.txt");
+	grille M = init_file(size, "fichier_grille.txt");
+	grille plateau=M;
+	plateau[0][0].color = c;
 
-   if (NULL != temp_file)
-   {
-      CU_ASSERT(0 == fprintf(temp_file, ""));
-      CU_ASSERT(2 == fprintf(temp_file, "Q\n"));
-      CU_ASSERT(7 == fprintf(temp_file, "i1 = %d", i1));
-   }
+    CU_ASSERT_EQUAL_FATAL(change_color(co, c, M), plateau);
 }
 
-/* Simple test of fread().
- * Reads the data previously written by testFPRINTF()
- * and checks whether the expected characters are present.
- * Must be run after testFPRINTF().
- */
-void testFREAD(void)
+void test_if_flood(void)
 {
-   unsigned char buffer[20];
-
-   if (NULL != temp_file)
-   {
-     /* Here rewind is equal to (void) fseek(File *stream, Long offset, SEEK_SET)*/
-      rewind(temp_file);
-      CU_ASSERT(9 == fread(buffer, sizeof(unsigned char), 20, temp_file));
-      CU_ASSERT(0 == strncmp(buffer, "Q\ni1 = 10", 9));
-   }
+	int size;
+	size = size_file("fichier_grille.txt");
+	grille M1 = init_file(size, "fichier_grille.txt");
+	CU_ASSERT_FALSE_FATAL(if_flood(M1, size));
+		
+	size = size_file("fichier_grille_2.txt");
+	grille M2 = init_file(size, "fichier_grille_2.txt");
+	CU_ASSERT_FALSE_FATAL(!if_flood(M2, size));
 }
 
 int main(void)
@@ -74,48 +67,69 @@ int main(void)
 
    /* add three suites repectively for our three libaries */
    /* It will make us more easily to test our functions */
+   /*
 	pSuite_fichier = CU_add_suite("Suite_fichier",init_suite,clean_suite);
-	if (NULL == pSuite)
+	if (NULL == pSuite_fichier)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-    pSuite_grille = CU_add_suite("Suite_grille",init_suite,clean_suite);
-	if (NULL == pSuite)
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	
     pSuite_pile = CU_add_suite("Suite_pile",init_suite,clean_suite);
-	if (NULL == pSuite)
+	if (NULL == pSuite_pile)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+	*/
 
    /* add the tests to the rightful suites */
    /* We need to test them one by one */
 
-   /*Test all the functions of fichier.h here*/
+   /*
+     *Test all the functions of fichier.h here
+   */
+
+   /*
 	if (NULL == CU_add_test(pSuite_fichier, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+   */
+
 
    /*Test all the functions of grille.h here*/
-    if (NULL == CU_add_test(pSuite_grille, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
+   
+    pSuite_grille = CU_add_suite("Suite_grille",init_suite,clean_suite);
+	if (NULL == pSuite_grille)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 
-   /*Test all the functions of pile.h here*/
+    if (NULL == CU_add_test(pSuite_grille, "test of change_color", test_change_color))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_grille, "test of if_flood", test_if_flood))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+   /*
+     *Test all the functions of pile.h here
+   */
+
+   /*
     if (NULL == CU_add_test(pSuite_pile, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+   */
 
    /* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
