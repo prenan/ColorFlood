@@ -8,22 +8,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "coordonnees.h"
 
 #ifndef PILE_H
 #define PILE_H
-
-/**
- * \struct coordonnees
- * \brief représente les coordonnées d'une case du plateau
- *
- * Pour une case, on a sa position sur le plateau (x pour la ligne, y pour la colonne),
- * (0, 0) correspond à la case dans le coin en-haut à gauche du plateau.
- */
-typedef struct coordonnees
-{
-	int x;
-	int y;
-} coordonnees;
 
 /**
  * \struct liste
