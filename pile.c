@@ -66,3 +66,84 @@ void pile_affichage(Pile P)
     }
     printf("\n");
 }
+
+/*******************************************************************/
+/***Tests unitaires ***/
+/******************************************************************/
+
+
+void test_empiler(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1;
+    couple1.x = 1; couple1.y = 1;
+
+
+    empiler(P, couple1);
+
+    CU_ASSERT((P->tete).x == couple1.x  &&  (P->tete).y == couple1.y);
+
+    pile_vider(P);
+}
+
+void test_depiler(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1, couple2, couple3;
+    couple1.x = 1; couple1.y = 1;
+    couple2.x = 2; couple2.y = 2;
+    couple3.x = 3; couple3.y = 3;
+
+    P = empiler(P, couple1);
+    P = empiler(P, couple2);
+    P = empiler(P, couple3);
+
+    P = depiler(P);
+
+    CU_ASSERT((P->tete).x == couple2.x  &&  (P->tete).y == couple2.y);
+
+    pile_vider(P);
+
+    CU_ASSERT()
+}
+
+void test_pile_taille(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1, couple2, couple3;
+    couple1.x = 1; couple1.y = 1;
+    couple2.x = 2; couple2.y = 2;
+    couple3.x = 3; couple3.y = 3;
+
+    P = empiler(P, couple1);
+    P = empiler(P, couple2);
+    P = empiler(P, couple3);
+
+    CU_ASSERT( pile_taille(P) == 3);
+
+    pile_vider(P);
+
+    CU_ASSERT(pile_taille(P) == 0):
+}
+
+void test_pile_vider(void)
+{
+    Pile P = NULL;
+
+    coordonnees couple1, couple2, couple3;
+    couple1.x = 1; couple1.y = 1;
+    couple2.x = 2; couple2.y = 2;
+    couple3.x = 3; couple3.y = 3;
+
+    P = empiler(P, couple1);
+    P = empiler(P, couple2);
+    P = empiler(P, couple3);
+
+    pile_vider(P);
+
+    CU_ASSERT_PTR_NULL(P);
+}
+

@@ -75,10 +75,9 @@ grille change_color(coordonnees coord, char c, grille plateau)
 {
 	int i=coord.x;
 	int j=coord.y;
-	if (plateau[i][j].color!=c)
-	{
-		plateau[i][j].color = c;
-	}
+
+	plateau[i][j].color = c;
+
 	return plateau;
 }
 
