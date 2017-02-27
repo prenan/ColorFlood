@@ -30,13 +30,12 @@ int clean_suite(void)
 
 void test_change_color(void)
 {
-	int size;
+	int size = 15;
 	char c='B';
 	coordonnees co;
 	co.x=0;
 	co.y=0;
     
-	size = size_file("fichier_grille.txt");
 	grille M = init_file(size, "fichier_grille.txt");
 	grille plateau=M;
 	plateau[0][0].color = c;
@@ -46,12 +45,10 @@ void test_change_color(void)
 
 void test_if_flood(void)
 {
-	int size;
-	size = size_file("fichier_grille.txt");
+	int size = 15;
 	grille M1 = init_file(size, "fichier_grille.txt");
 	CU_ASSERT_FALSE_FATAL(if_flood(M1, size));
 		
-	size = size_file("fichier_grille_2.txt");
 	grille M2 = init_file(size, "fichier_grille_2.txt");
 	CU_ASSERT_FALSE_FATAL(!if_flood(M2, size));
 }
@@ -97,6 +94,7 @@ void test_depiler(void)
 void test_pile_taille(void)
 {
     Pile P = NULL;
+    Pile P2 = NULL;
 
     coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3);
 
@@ -106,9 +104,7 @@ void test_pile_taille(void)
 
     CU_ASSERT( pile_taille(P) == 3);
 
-    pile_vider(P);
-
-    CU_ASSERT(pile_taille(P) == 0);
+    CU_ASSERT(pile_taille(P2) == 0);
 }
 
 void test_pile_vider(void)
