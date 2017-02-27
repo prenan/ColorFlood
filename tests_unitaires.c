@@ -11,13 +11,12 @@ int init_suite(void)
     return 0;
 }
 
-/* The suite cleanup function. */
 int clean_suite(void)
 {
       return 0;
-
 }
 
+/*DÉBUT DES TESTS*/
 void test_change_color(void)
 {
 	int size = 15;
@@ -40,11 +39,6 @@ void test_if_flood(void)
 	grille M2 = init_file(size, "fichier_grille_2.txt");
 	CU_ASSERT_FALSE_FATAL(!if_flood(M2, size));
 }
-
-/* All the functions of stack(pile)*/
-/*******************************************************************/
-/***Tests unitaires  ***/
-/******************************************************************/
 
 void test_est_vide(void)
 {
@@ -81,16 +75,16 @@ void test_depiler(void)
 
 void test_pile_taille(void)
 {
-    Pile P = NULL;
+    Pile P1 = NULL;
     Pile P2 = NULL;
 
     coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3);
 
-    P = empiler(P, couple1);
-    P = empiler(P, couple2);
-    P = empiler(P, couple3);
+    P1 = empiler(P1, couple1);
+    P1 = empiler(P1, couple2);
+    P1 = empiler(P1, couple3);
 
-    CU_ASSERT( pile_taille(P) == 3);
+    CU_ASSERT(pile_taille(P1) == 3);
 
     CU_ASSERT(pile_taille(P2) == 0);
 }
@@ -126,6 +120,7 @@ void test_test_neighbour(void)
 	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'R') == 2);
 	CU_ASSERT(test_neighbour(M, coord_def(7,9), size, 'G') == 0); /* G n'existe pas au voisinage de la case (7,9) */
 }
+
 void test_coord_def(void)
 {
 	coordonnees A = coord_def(12, 27);
@@ -157,7 +152,7 @@ void test_size_file(void)
 
 void test_init_file(void)
 {
-	int size = 15, i, j;
+	int i, j, size = 15;
 	grille M1 = initialize(15);
 
 	for (i=0 ; i<size ; i++)
@@ -183,7 +178,7 @@ void test_export_file(void)
 {
 	int size = 4, i, j;
 	grille M1 = random_grille(size);
-	export_file(M1, size);
+	export_file(M1, size);	/*export vers un fichier plateau.txt*/
 	grille M2 = init_file(size, "plateau.txt");
 
 	for (i=0 ; i<size ; i++)
@@ -236,52 +231,30 @@ void test_Deep(void)
 		}
 	}
 }
-/*fin des tests */
+/*FIN DES TESTS*/
 
 
 int main(void)
 {
 	CU_pSuite pSuite_fichier = NULL;
-    CU_pSuite pSuite_grille = NULL;
-    CU_pSuite pSuite_pile = NULL;
+	CU_pSuite pSuite_grille = NULL;
+	CU_pSuite pSuite_pile = NULL;
 	CU_pSuite pSuite_coordonnees = NULL;
 
-   /* initialize the CUnit test registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
-		return CU_get_error();
-
-   /* add three suites repectively for our three libaries */
-   /* It will make us more easily to test our functions */
-
-
-	
-
-   /* add the tests to the rightful suites */
-   /* We need to test them one by one */
-
-   /*
-     *Test all the functions of fichier.h here
-   */
-
-   /*
-	if (NULL == CU_add_test(pSuite_fichier, "test of YOUR_FUNCTION()", YOUR_FUNCTION)
 	{
-		CU_cleanup_registry();
 		return CU_get_error();
 	}
-   */
 
-
-   /*Test all the functions of grille.h here*/
-   
-    pSuite_grille = CU_add_suite("Suite_grille",init_suite,clean_suite);
+	/*Tests des fonctions de grille.c*/
+	pSuite_grille = CU_add_suite("Suite_grille", init_suite, clean_suite);
 	if (NULL == pSuite_grille)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 
-    if (NULL == CU_add_test(pSuite_grille, "test of change_color", test_change_color))
+	if (NULL == CU_add_test(pSuite_grille, "test of change_color", test_change_color))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
@@ -307,69 +280,65 @@ int main(void)
 		return CU_get_error();
 	}
 
-   /*
-     *Test all the functions of pile.h here
-   */
-    pSuite_pile = CU_add_suite("Suite_pile",init_suite,clean_suite);
+
+	/*Tests des fonctions de pile.c*/
+	pSuite_pile = CU_add_suite("Suite_pile", init_suite, clean_suite);
 	if (NULL == pSuite_pile)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-   
-    if (NULL == CU_add_test(pSuite_pile, "test of empiler", test_empiler))
+
+	if (NULL == CU_add_test(pSuite_pile, "test of empiler", test_empiler))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-
-    if (NULL == CU_add_test(pSuite_pile, "test of depiler", test_depiler))
+	if (NULL == CU_add_test(pSuite_pile, "test of depiler", test_depiler))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-
-    if (NULL == CU_add_test(pSuite_pile, "test of pile_taille", test_pile_taille))
+	if (NULL == CU_add_test(pSuite_pile, "test of pile_taille", test_pile_taille))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-
 	if (NULL == CU_add_test(pSuite_pile, "test of pile_vider", test_pile_vider))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-   
-    /*
-     *Test all the functions of coordonnees.h here
-    */
-    pSuite_coordonnees = CU_add_suite("Suite_coordonnees",init_suite,clean_suite);
+
+
+	/*Tests des fonctions de coordonnees.c*/
+	pSuite_coordonnees = CU_add_suite("Suite_coordonnees", init_suite, clean_suite);
 	if (NULL == pSuite_coordonnees)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-    
+
 	if (NULL == CU_add_test(pSuite_coordonnees, "test of coord_def", test_coord_def))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-
-	if (NULL == CU_add_test(pSuite_coordonnees
-		, "test of coord_compare", test_coord_compare))
+	if (NULL == CU_add_test(pSuite_coordonnees, "test of coord_compare", test_coord_compare))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 
+
+	/*Tests des fonctions de fichier.c*/
 	pSuite_fichier = CU_add_suite("Suite_fichier",init_suite,clean_suite);
 	if (NULL == pSuite_fichier)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+
 	if (NULL == CU_add_test(pSuite_fichier, "test of init_file", test_init_file))
 	{
 		CU_cleanup_registry();
@@ -392,7 +361,7 @@ int main(void)
 	}
 
 
-    /* Run all tests using the CUnit Basic interface */
+	/*Exécute tous les tests en utilisant l'interface CUnit Basic*/
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
 	CU_cleanup_registry();

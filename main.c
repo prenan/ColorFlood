@@ -3,18 +3,6 @@
 #include "pile.h"
 #include "coordonnees.h"
 
-
-void pile_affichage(Pile P) /* Attention : cette fonction est conçue seulement pour type_element 'coordonnees' */
-											/* déjà elle n'est utile que pour les tests */
-{
-    while( !pile_estVide(P) )
-    {
-        printf("->[%d,%d]", (P->tete).x, (P->tete).y);
-        P = P->suivant;
-    }
-    printf("\n");
-}
-
 int main()
 {
 	int i, size = 4;
