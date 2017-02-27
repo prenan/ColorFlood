@@ -128,7 +128,7 @@ void test_pile_vider(void)
 
 void test_test_neighbour(void)
 {
-	int size = size_file("fichier_grille.txt");
+	int size = 15;
 	grille M = init_file(size, "fichier_grille.txt");
 
 	M[size-1][size-2].appartenance = 1; 
