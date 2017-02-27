@@ -37,7 +37,7 @@ typedef element ** grille;
  * \fn grille initialize(int size)
  * \brief Fonction d'initialisation d'une grille.
  *
- * \param size Taille du jeu (grille à initialiser size*size), doit être compris entre 8 et 24.
+ * \param size Taille du jeu (grille à initialiser size*size), doit être compris entre 4 et 24.
  * \return Grille de taille size*size.
  */
 grille initialize(int size);
