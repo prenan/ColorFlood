@@ -154,6 +154,33 @@ void test_coord_compare(void)
 	CU_ASSERT(coord_compare(A, B) == 1);
 	CU_ASSERT(coord_compare(A, C) == 0);
 }
+
+void test_open_file(void)
+{
+	CU_ASSERT(open_file("fichier_grille.txt") != -1);
+	CU_ASSERT(open_file("fichier_inexistant.txt") == -1);
+}
+
+void test_size_file(void)
+{
+	CU_ASSERT(size_file("fichier_grille.txt") == 15);
+	CU_ASSERT(size_file("fichier_grille_2.txt") == 15);
+}
+
+void test_init_file(void)
+{
+	int size = 15, i, j;
+	grille M1 = random_grille(size);
+	export_file(M1, size);
+	grille M2 = init_file(size, "plateau.txt");
+	for (i=0 ; i<size ; i++)
+	{
+		for (j=0 ; i<size ; j++)
+		{
+			CU_ASSERT(M1[i][j].color == M2[i][j].color);
+		}
+	}
+}
 /*fin des tests */
 
 
@@ -170,14 +197,8 @@ int main(void)
 
    /* add three suites repectively for our three libaries */
    /* It will make us more easily to test our functions */
-   /*
-	pSuite_fichier = CU_add_suite("Suite_fichier",init_suite,clean_suite);
-	if (NULL == pSuite_fichier)
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	*/
+
+
 	
 
    /* add the tests to the rightful suites */
@@ -276,6 +297,30 @@ int main(void)
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+
+	pSuite_fichier = CU_add_suite("Suite_fichier",init_suite,clean_suite);
+	if (NULL == pSuite_fichier)
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_fichier, "test of init_file", test_init_file))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_fichier, "test of open_file", test_open_file))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_fichier, "test of size_file", test_size_file))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+
     /* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
