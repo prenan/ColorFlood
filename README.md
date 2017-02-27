@@ -2,6 +2,10 @@
 
 ## Instructions d'installation (pré-requis)
 
+Pour décompresser l'archive dans un terminal :
+```
+unzip ColorFlood_THOR.zip 
+```
 Pour la documentation avec Doxygen :
 ```
 sudo apt install doxygen
