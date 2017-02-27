@@ -116,7 +116,7 @@ void modif_color (char couleur_choisie, grille plateau, int size);
 
 /**
  * \fn Pile Deep(char couleur_choisie, grille plateau, int size,coordonnees position_pere, Pile P)
- * \brief Fonction recursive qui cherche à aller au plus loins possible avec une couleur.
+ * \brief Fonction recursive qui avance afin de chercher de nouveaux éléments de la même couleur, comme un parcours d'arbre en profondeur.
  *
  * \param couleur_choisie Couleur choisie.
  * \param plateau Grille en cours.
