@@ -20,14 +20,15 @@ Pile empiler(Pile P, type_element elem)
 
     ret->tete = elem;
     ret->suivant = P;
-    pile_vider(P);
+    Pile_vider(P);
     P=ret;
-    free(ret);
-    ret=NULL;
+    pile_vider(ret);
 
     return P;
 }
 */
+
+
 Pile empiler(Pile P, type_element elem)
 {
     Pile ret=NULL;
@@ -39,7 +40,7 @@ Pile empiler(Pile P, type_element elem)
 
     return ret;
 }
-
+/*
 Pile depiler(Pile P)
 {
     if (pile_estVide(P))
@@ -48,6 +49,25 @@ Pile depiler(Pile P)
 			exit(EXIT_FAILURE);
 		} 
     return P->suivant;
+}
+*/
+Pile depiler(Pile P)
+{
+    if(P == NULL)
+    {
+        printf("la pile est vide ");
+        return NULL;
+    }
+    if(P->suivant == NULL)
+    {
+        free(P);
+        return NULL;
+    }
+    /* on fait stocker l'avant dernier dans une variable temporaire
+     * et puis on libert le sommet */
+    Pile nvSommet = P->suivant;
+    free(P);
+    return nvSommet;
 }
 
 void pile_vider(Pile P)

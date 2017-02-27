@@ -43,6 +43,8 @@ int main()
 		free(M[i]);
 		M[i]=NULL;
 	}
+	free(M);
+	M=NULL;
 	printf("Vous avez gagné\n");
 
 	return 0;
