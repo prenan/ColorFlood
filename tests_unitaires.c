@@ -190,6 +190,22 @@ void test_init_file(void)
 		}
 	}	
 }
+
+void test_export_file(void)
+{
+	int size = 4, i, j;
+	grille M1 = random_grille(size);
+	export_file(M1, size);
+	grille M2 = init_file(size, "plateau.txt");
+
+	for (i=0 ; i<size ; i++)
+	{
+		for (j=0 ; j<size ; j++)
+		{
+			CU_ASSERT(M1[i][j].color == M2[i][j].color);
+		}
+	}	
+}
 /*fin des tests */
 
 
@@ -288,20 +304,20 @@ int main(void)
     /*
      *Test all the functions of coordonnees.h here
     */
-    pSuite_pile = CU_add_suite("Suite_coordonnees",init_suite,clean_suite);
-	if (NULL == pSuite_pile)
+    pSuite_coordonnees = CU_add_suite("Suite_coordonnees",init_suite,clean_suite);
+	if (NULL == pSuite_coordonnees)
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
     
-	if (NULL == CU_add_test(pSuite_pile, "test of coord_def", test_coord_def))
+	if (NULL == CU_add_test(pSuite_coordonnees, "test of coord_def", test_coord_def))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 
-	if (NULL == CU_add_test(pSuite_pile, "test of coord_compare", test_coord_compare))
+	if (NULL == CU_add_test(pSuite_coordonnees, "test of coord_compare", test_coord_compare))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
@@ -324,6 +340,11 @@ int main(void)
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(pSuite_fichier, "test of size_file", test_size_file))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_fichier, "test of export_file", test_export_file))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
