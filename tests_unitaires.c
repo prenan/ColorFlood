@@ -108,7 +108,7 @@ void test_pile_taille(void)
 
     pile_vider(P);
 
-    CU_ASSERT(pile_taille(P) == 0):
+    CU_ASSERT(pile_taille(P) == 0);
 }
 
 void test_pile_vider(void)
