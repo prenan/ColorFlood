@@ -170,16 +170,25 @@ void test_size_file(void)
 void test_init_file(void)
 {
 	int size = 15, i, j;
-	grille M1 = random_grille(size);
-	export_file(M1, size);
-	grille M2 = init_file(size, "plateau.txt");
+	grille M1 = initialize(15);
+
 	for (i=0 ; i<size ; i++)
 	{
-		for (j=0 ; i<size ; j++)
+		for (j=0 ; j<size ; j++)
+		{
+			M1[i][j].color = 'R';
+		}
+	}
+
+	grille M2 = init_file(size, "fichier_grille_2.txt");
+
+	for (i=0 ; i<size ; i++)
+	{
+		for (j=0 ; j<size ; j++)
 		{
 			CU_ASSERT(M1[i][j].color == M2[i][j].color);
 		}
-	}
+	}	
 }
 /*fin des tests */
 
