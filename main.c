@@ -4,8 +4,7 @@
 #include "coordonnees.h"
 
 
-
-void pile_affichage(Pile P) /* Attention : cette fonction est conçu seulement pour type_element 'coordonnees' */
+void pile_affichage(Pile P) /* Attention : cette fonction est conçue seulement pour type_element 'coordonnees' */
 											/* déjà elle n'est utile que pour les tests */
 {
     while( !pile_estVide(P) )
@@ -18,8 +17,7 @@ void pile_affichage(Pile P) /* Attention : cette fonction est conçu seulement p
 
 int main()
 {
-	int i;
-	int size = 4;
+	int i, size = 4;
 	grille M = random_grille(size);
 	char couleur = M[0][0].color;
 	char buffer[2];
@@ -31,6 +29,7 @@ int main()
 	
 	while(if_flood(M, size) != 1)
 	{
+		printf("Entrer B, V, R, J, M ou G : ");
 		scanf("%1s", buffer);
 		couleur = buffer[0];
 		modif_color(couleur, M, size);
@@ -44,8 +43,9 @@ int main()
 		M[i]=NULL;
 	}
 	free(M);
-	M=NULL;
-	printf("Vous avez gagné\n");
+	M = NULL;
+
+	printf("Vous avez gagné !\n");
 
 	return 0;
 }

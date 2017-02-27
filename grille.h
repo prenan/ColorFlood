@@ -88,7 +88,7 @@ grille change_color(coordonnees coord, char c, grille plateau);
  *
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
- * \return 1 si le plateau est entièrement innondé d'une couleur (victoire), 0 sinon.
+ * \return 1 si le plateau est entièrement inondé d'une couleur (victoire), 0 sinon.
  */
 bool if_flood(grille plateau, int size);
 
@@ -100,7 +100,8 @@ bool if_flood(grille plateau, int size);
  * \param coord Coordonnée de la case.
  * \param size Taille du jeu (grille size*size).
  * \param couleur_choisie Couleur choisie.
- * \return 0, 1, 2, 3 ou 4 si il n'y a pas de voisin ou si la case au-dessus, de droite, en-dessous ou à gauche a la même couleur que celle choisie.
+ * \return 0 s'il n'y a pas de voisin, 1, 2, 3 ou 4
+ * si la case au-dessus, de droite, en-dessous ou à gauche a la même couleur que celle choisie.
  */
 int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie);
 
@@ -115,8 +116,8 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 void modif_color (char couleur_choisie, grille plateau, int size);
 
 /**
- * \fn Pile Deep(char couleur_choisie, grille plateau, int size,coordonnees position_pere, Pile P)
- * \brief Fonction recursive qui avance afin de chercher de nouveaux éléments de la même couleur, comme un parcours d'arbre en profondeur.
+ * \fn Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P)
+ * \brief Fonction récursive qui avance afin de chercher de nouveaux éléments de la même couleur, comme un parcours d'arbre en profondeur.
  *
  * \param couleur_choisie Couleur choisie.
  * \param plateau Grille en cours.

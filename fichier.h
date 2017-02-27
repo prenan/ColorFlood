@@ -31,7 +31,6 @@ int open_file(char const* file_name);
  * \brief Fonction de fermeture d'un fichier.
  *
  * \param file_in Fichier à fermer.
- * \return ??.
  */
 void close_file(int file_in);
 

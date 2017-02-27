@@ -1,4 +1,3 @@
-
 #include "coordonnees.h"
 
 
@@ -14,12 +13,9 @@ coordonnees coord_def(int i, int j)
 
 int coord_compare(coordonnees A, coordonnees B)
 {
-	if ( A.x == B.x  &&  A.y == B.y )
+	if (A.x == B.x  &&  A.y == B.y)
+	{
 		return 1;
+	}
 	return 0;
 }
-
-
-/*******************************************************************/
-/***Tests unitaires ***/
-/******************************************************************/

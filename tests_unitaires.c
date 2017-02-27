@@ -5,20 +5,10 @@
 #include <CUnit/CUnit.h>
 #include "CUnit/Basic.h"
 
-/* README
- * Here the functions init_suite and clean_suite
- * are optional for us. They don't do anything in this example
- * We can might need rewrite them and apply to the function
- * CU_pSuite CU_add_suite(const char* strName,
-                         CU_InitializeFunc pInit,
-                         CU_CleanupFunc pClean);
-*/
 
-/* The suite initialization function. */
 int init_suite(void)
 {
-  
-      return 0;
+    return 0;
 }
 
 /* The suite cleanup function. */

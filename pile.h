@@ -13,10 +13,7 @@
 #ifndef PILE_H
 #define PILE_H
 
-
 #define type_element coordonnees 
-
-
 
 /**
  * \struct liste
@@ -52,7 +49,7 @@ int pile_estVide(Pile P);
 
 /**
  * \fn Pile empiler(Pile P, coordonnees elem)
- * \brief Empiler: ajout d'un élément au sommet 
+ * \brief Empiler : ajout d'un élément au sommet 
  *
  * \param P la pile qui va être empilée.
  * \param elem la coordonnée que l'on souhaite empiler.
@@ -62,16 +59,16 @@ Pile empiler(Pile P, coordonnees elem);
 
 /**
  * \fn Pile depiler(Pile P)
- * \brief dépiler: supprimer le sommet. Erreur si la pile est déjà vide.
+ * \brief Dépiler : supprimer le sommet
  *
  * \param P la pile qui va être dépilée.
- * \return La pile avec un élément de moins.
+ * \return NULL si la pile est déjà vide, la pile avec un élément de moins sinon.
  */
 Pile depiler(Pile P);
 
 /**
  * \fn void pile_vider(Pile P)
- * \brief vider la pile et détruire la liste pour libérer la mémoire.
+ * \brief Vider la pile et détruire la liste pour libérer la mémoire.
  *
  * \param P la pile.
  */
@@ -79,7 +76,7 @@ void pile_vider(Pile P);
 
 /**
  * \fn int pile_taille(Pile P)
- * \brief délivrer la taille de la pile.
+ * \brief Délivrer la taille de la pile.
  *
  * \param P la pile dont on souhaite connaître la taille.
  * \return La taille de la pile.
