@@ -13,14 +13,18 @@ int pile_estVide(Pile P)
 
 Pile empiler(Pile P, type_element elem)
 {
-    Pile ret;
+    Pile ret=NULL;
 
     ret = (Pile)malloc(sizeof(Cellule));
 
     ret->tete = elem;
     ret->suivant = P;
+    pile_vider(P);
+    P=ret;
+    free(ret);
+    ret=NULL;
 
-    return ret;
+    return P;
 }
 
 Pile depiler(Pile P)
@@ -43,7 +47,8 @@ void pile_vider(Pile P)
         free(ancienne_premiereCellule); /* destruction de la cellule mémorisée */
     }
     
-    P = NULL; /* pile vide */
+    free(P); /* pile vide */
+    P=NULL;
 }
 
 int pile_taille(Pile P)

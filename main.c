@@ -18,8 +18,9 @@ void pile_affichage(Pile P) /* Attention : cette fonction est conçu seulement p
 
 int main()
 {
-	int size = size_file("fichier_grille.txt");
-	grille M = init_file(size, "fichier_grille.txt");
+	int i;
+	int size = 4;
+	grille M = random_grille(size);
 	char couleur = M[0][0].color;
 	char buffer[2];
 
@@ -36,6 +37,11 @@ int main()
 		display(M, size);
 		scanf("%c", &couleur);
 		printf("\n");
+	}
+	for (i=0;i<size;i++)
+	{
+		free(M[i]);
+		M[i]=NULL;
 	}
 	printf("Vous avez gagné\n");
 

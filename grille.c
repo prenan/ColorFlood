@@ -69,6 +69,7 @@ grille random_grille(int size)
 			plateau[i][j].appartenance = 0;
 		}
 	}
+	plateau[0][0].appartenance=1;
 	return plateau;
 }
 
@@ -102,7 +103,7 @@ bool if_flood(grille plateau, int size)
 void free_space(grille plateau, int size)
 {
 	int i;
-	for (i=0 ; i<size ; i++)
+	for (i=0; i<size; i++)
 	{
 		free(plateau[i]);
 	}

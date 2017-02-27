@@ -28,7 +28,7 @@
 typedef struct liste
 {
     type_element tete;
-    struct liste *suivant;
+    struct liste * suivant;
 } Cellule, *Pile;
 
 
