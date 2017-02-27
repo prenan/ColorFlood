@@ -10,7 +10,8 @@ int pile_estVide(Pile P)
 {
     return (P == NULL) ? 1:0 ;
 }
-
+/*
+PROBLÈME LORS DES TESTS UNITAIRES
 Pile empiler(Pile P, type_element elem)
 {
     Pile ret=NULL;
@@ -25,6 +26,18 @@ Pile empiler(Pile P, type_element elem)
     ret=NULL;
 
     return P;
+}
+*/
+Pile empiler(Pile P, type_element elem)
+{
+    Pile ret=NULL;
+
+    ret = (Pile)malloc(sizeof(Cellule));
+
+    ret->tete = elem;
+    ret->suivant = P;
+
+    return ret;
 }
 
 Pile depiler(Pile P)
