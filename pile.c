@@ -45,20 +45,6 @@ Pile depiler(Pile P)
     return nvSommet;
 }
 
-void pile_vider(Pile P)
-{
-    Pile ancienne_premiereCellule;
-    while( P != NULL) /* condition d'arrêt : n'importe quelle liste finit toujours par un suivant NULL*/
-    {
-        ancienne_premiereCellule = P; /* mémorisation de l'adresse de la première cellule */
-        P = P->suivant ; /* passage au suivant */
-        free(ancienne_premiereCellule); /* destruction de la cellule mémorisée */
-    }
-    
-    free(P); /* pile vide */
-    P=NULL;
-}
-
 int pile_taille(Pile P)
 {
     int n = 0;

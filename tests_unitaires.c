@@ -89,20 +89,6 @@ void test_pile_taille(void)
     CU_ASSERT(pile_taille(P2) == 0);
 }
 
-void test_pile_vider(void)
-{
-    Pile P = NULL;
-
-    coordonnees couple1=coord_def(1,1), couple2=coord_def(2,2), couple3=coord_def(3,3); 
-
-    P = empiler(P, couple1);
-    P = empiler(P, couple2);
-    P = empiler(P, couple3);
-
-    pile_vider(P);
-
-    CU_ASSERT_PTR_NULL(P);
-}
 
 void test_test_neighbour(void)
 {

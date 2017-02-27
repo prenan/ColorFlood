@@ -67,14 +67,6 @@ Pile empiler(Pile P, coordonnees elem);
 Pile depiler(Pile P);
 
 /**
- * \fn void pile_vider(Pile P)
- * \brief Vider la pile et détruire la liste pour libérer la mémoire.
- *
- * \param P la pile.
- */
-void pile_vider(Pile P);
-
-/**
  * \fn int pile_taille(Pile P)
  * \brief Délivrer la taille de la pile.
  *

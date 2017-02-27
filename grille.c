@@ -333,10 +333,3 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 	}
 	return P;
 }
-
-/*******************************************************************/
-/***Tests unitaires ***/
-
-
-/******************************************************************/
-/*fin*/
