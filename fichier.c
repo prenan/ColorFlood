@@ -8,7 +8,6 @@ int open_file(char const* file_name)
 	if (-1 == file_in) 
 	{
 		perror("problème d'ouverture de fichier");
-		exit(1);
 	}
 	return file_in;
 }
