@@ -106,18 +106,17 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 
 /**
  * \fn void modif_color (char couleur_choisie, grille plateau, int size)
- * \brief Fonction modification de la couleur de l'ensemble du plateau.
+ * \brief modifier la couleur de l'ensemble des cases où appartenance = 1  (la tache connexe)
  *
  * \param couleur_choisie Couleur choisie.
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
- * \return Grille avec changement de couleur de l'ensemble des cases.
  */
 void modif_color (char couleur_choisie, grille plateau, int size);
 
 /**
  * \fn Pile Deep(char couleur_choisie, grille plateau, int size,coordonnees position_pere, Pile P)
- * \brief Fonction recursive qui cherche à aller ale plus loins possible avec une couleur.
+ * \brief Fonction recursive qui cherche à aller au plus loins possible avec une couleur.
  *
  * \param couleur_choisie Couleur choisie.
  * \param plateau Grille en cours.
