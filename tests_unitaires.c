@@ -290,11 +290,6 @@ int main(void)
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-	if (NULL == CU_add_test(pSuite_pile, "test of pile_vider", test_pile_vider))
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
 
 
 	/*Tests des fonctions de coordonnees.c*/
