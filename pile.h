@@ -46,7 +46,6 @@ Pile pile_initialiser();
  */
 int pile_estVide(Pile P);
 
-
 /**
  * \fn Pile empiler(Pile P, coordonnees elem)
  * \brief Empiler : ajout d'un élément au sommet 

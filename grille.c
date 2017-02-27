@@ -112,10 +112,8 @@ void free_space(grille plateau, int size)
 
 int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie)
 {
-	int test=0;
-	int i=coord.x;
-	int j=coord.y;
-	if (i<0||j<0||i>size||j>size)
+	int test=0, i=coord.x, j=coord.y;
+	if (i<0 || j<0 || i>size || j>size)
 	{
 		perror("Erreur coordonnees");
 		exit(1);
@@ -285,7 +283,6 @@ void modif_color(char couleur_choisie, grille plateau, int size)
 		}
 	}
 	free(P);
-
 }
 
 Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P)

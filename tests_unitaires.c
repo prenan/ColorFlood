@@ -89,7 +89,6 @@ void test_pile_taille(void)
     CU_ASSERT(pile_taille(P2) == 0);
 }
 
-
 void test_test_neighbour(void)
 {
 	int size = 15;
