@@ -32,9 +32,7 @@ void test_change_color(void)
 {
 	int size = 15;
 	char c='B';
-	coordonnees co;
-	co.x=0;
-	co.y=0;
+	coordonnees co = coord_def(0, 0);
     
 	grille M = init_file(size, "fichier_grille.txt");
 	grille plateau=M;
@@ -206,6 +204,48 @@ void test_export_file(void)
 		}
 	}	
 }
+
+void test_modif_color(void)
+{
+	int size = 15, i, j;
+	grille M1 = init_file(size, "fichier_grille.txt");
+	grille M2= M1;
+
+	char couleur_choisie = 'B' ;
+	modif_color( couleur_choisie, M1, size);
+	modif_color( couleur_choisie, M2, size);
+	for (i=0 ; i<size ; i++)
+	{
+		for (j=0 ; j<size ; j++)
+		{
+			CU_ASSERT(M1[i][j].appartenance == M2[i][j].appartenance);
+		}
+	}	
+}
+
+void test_Deep(void)
+{
+	int size = 15, i, j;
+	Pile P = NULL;
+	coordonnees position_pere = coord_def(0, 0);
+
+	P = empiler(P, position_pere);
+	grille M1 = init_file(size, "fichier_grille.txt");
+	grille M2 = M1;
+
+	M2[1][0].appartenance=1;
+
+	char couleur_choisie=M1[0][0].color;
+	P = Deep(couleur_choisie, M1, size, position_pere, P);
+
+	for (i=0 ; i<size ; i++)
+	{
+		for (j=0 ; j<size ; j++)
+		{
+			CU_ASSERT(M1[i][j].appartenance == M2[i][j].appartenance);
+		}
+	}
+}
 /*fin des tests */
 
 
@@ -262,6 +302,16 @@ int main(void)
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(pSuite_grille, "test of test_neighbour", test_test_neighbour))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_grille, "test of test_modif_color", test_modif_color))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite_grille, "test of test_Deep", test_Deep))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();

@@ -123,45 +123,45 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 	if (i!=0 && i!=size-1 && j!=0 && j!= size-1)
 	{
 		if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-			test=1;
+			return test=1;
 
 		if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-			test=2;
+			return test=2;
 
 		if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-			test=3;
+			return test=3;
 
 		if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-			test=4;
+			return test=4;
 	}
 	if (i==0)
 	{
 		if (j==0)
 		{
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 		}
 		if (j==size-1)
 		{
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 		if(j!=0 && j!= size-1)
 		{
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 	}
 	if (i==size-1)
@@ -169,29 +169,29 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 		if (j==0)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 		}
 		if (j==size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 		if (j !=0 && j!= size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 	}
 	if (j==0)
@@ -199,29 +199,29 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 		if (i==0)
 		{
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 		}
 		if (i==size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 		}
 		if (i!=0 && i!= size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				test=2;
+				return test=2;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 		}
 	}
 	if (j==size-1)
@@ -229,32 +229,32 @@ int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_cho
 		if(i==0)
 		{
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 		if(i==size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 		if (i!=0 && i!=size-1)
 		{
 			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				test=1;
+				return test=1;
 
 			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				test=3;
+				return test=3;
 
 			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				test=4;
+				return test=4;
 		}
 	}
-	return test;
+	return 0;
 }
 
 
@@ -270,8 +270,7 @@ void modif_color(char couleur_choisie, grille plateau, int size)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			position.x = i; 
-			position.y = j;
+			position= coord_def(i, j);
 			if(plateau[i][j].appartenance==1)
 			{
 				change_color(position,couleur_choisie,plateau);
@@ -298,8 +297,7 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 		break;
 		case 1:
 		{
-			position_fils.x = position_pere.x-1;
-			position_fils.y = position_pere.y;
+			position_fils = coord_def(position_pere.x-1 , position_pere.y);
 			plateau[position_fils.x][position_fils.y].appartenance = 1;
 			P = empiler(P,position_fils);
 			P = Deep(couleur_choisie, plateau, size, position_fils, P);
@@ -308,8 +306,7 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 
 		case 2:
 		{
-			position_fils.x = position_pere.x;
-			position_fils.y = position_pere.y+1;
+			position_fils = coord_def(position_pere.x, position_pere.y+1);
 			plateau[position_fils.x][position_fils.y].appartenance=1;
 			P = empiler(P,position_fils);
 			P = Deep(couleur_choisie, plateau, size, position_fils, P);
@@ -318,8 +315,7 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 
 		case 3:
 		{
-			position_fils.x = position_pere.x+1;
-			position_fils.y = position_pere.y;
+			position_fils = coord_def(position_pere.x+1, position_pere.y);
 			plateau[position_fils.x][position_fils.y].appartenance = 1;
 			P = empiler(P,position_fils);
 			P = Deep(couleur_choisie, plateau, size, position_fils, P);
@@ -328,8 +324,7 @@ Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_p
 
 		case 4:
 		{
-			position_fils.x = position_pere.x;
-			position_fils.y = position_pere.y-1;
+			position_fils = coord_def(position_pere.x, position_pere.y-1);
 			plateau[position_fils.x][position_fils.y].appartenance = 1;
 			P = empiler(P,position_fils);
 			P = Deep(couleur_choisie, plateau, size, position_fils, P);
