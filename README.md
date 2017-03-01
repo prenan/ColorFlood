@@ -6,6 +6,10 @@ Pour décompresser l'archive dans un terminal :
 ```
 unzip ColorFlood_THOR.zip 
 ```
+Pour installer la bibliothèque SDL dans un terminal :
+```
+sudo apt-get install libsdl1.2-dev
+```
 Pour la documentation avec Doxygen :
 ```
 sudo apt install doxygen
