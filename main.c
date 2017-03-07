@@ -57,7 +57,7 @@ int main()
 	}
 	free(M);
 	M = NULL;
-	if(nbr_coup<=nbr_coups_max)
+	if(if_flood(M,size) && nbr_coup<=nbr_coups_max)
 		printf("Vous avez gagné !\n");
 	else
 		printf("Vous avez perdu !\n");
