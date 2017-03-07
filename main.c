@@ -50,6 +50,10 @@ int main()
 		printf("\n");
 		test_color=0;
 	}
+	if(if_flood(M,size)==1 && nbr_coup<=nbr_coups_max)
+		printf("Vous avez gagné !\n");
+	else
+		printf("Vous avez perdu !\n");
 	for (i=0;i<size;i++)
 	{
 		free(M[i]);
@@ -57,9 +61,5 @@ int main()
 	}
 	free(M);
 	M = NULL;
-	if(if_flood(M,size) && nbr_coup<=nbr_coups_max)
-		printf("Vous avez gagné !\n");
-	else
-		printf("Vous avez perdu !\n");
 	return 0;
 }
