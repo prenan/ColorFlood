@@ -1,3 +1,4 @@
+#include <math.h>
 #include "fichier.h"
 #include "grille.h"
 #include "pile.h"
@@ -5,8 +6,13 @@
 
 int main()
 {
-	int i, size = 4;
+	int i, size;
 	int test_color=0;
+	int nbr_coup=0;
+	printf("Quelles est la taille désirée ?\n");
+	scanf("%d",&size);
+	int nbr_coups_max = floor(1.8*size-0.7 + 0.5);
+	printf("%d\n",nbr_coups_max);
 	grille M = random_grille(size);
 	char couleur = M[0][0].color;
 	char buffer[2];
@@ -16,7 +22,7 @@ int main()
 	export_file(M, size);
 	modif_color(couleur, M, size);
 	
-	while(if_flood(M, size) != 1)
+	while(if_flood(M, size) != 1 && nbr_coup<nbr_coups_max)
 	{
 		printf("Entrer B, V, R, J, M ou G : ");
 		scanf("%1s", buffer);
@@ -30,6 +36,7 @@ int main()
 			case (1):
 			{
 				modif_color(couleur, M, size);
+				nbr_coup++;
 				break;
 			}
 			default:
@@ -39,6 +46,7 @@ int main()
 
 		}
 		display(M, size);
+		printf("%d/%d coups\n",nbr_coup,nbr_coups_max);
 		scanf("%c", &couleur);
 		printf("\n");
 		test_color=0;
@@ -50,8 +58,9 @@ int main()
 	}
 	free(M);
 	M = NULL;
-
-	printf("Vous avez gagné !\n");
-
+	if(nbr_coup<nbr_coups_max)
+		printf("Vous avez gagné !\n");
+	else
+		printf("Vous avez perdu !\n");
 	return 0;
 }
