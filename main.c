@@ -12,13 +12,12 @@ int main()
 	printf("Quelles est la taille désirée ?\n");
 	scanf("%d",&size);
 	int nbr_coups_max = floor(1.8*size-0.7 + 0.5);
-	printf("%d\n",nbr_coups_max);
 	grille M = random_grille(size);
 	char couleur = M[0][0].color;
 	char buffer[2];
 
 	display(M, size);
-
+	printf("%d/%d coups\n",nbr_coup,nbr_coups_max);
 	export_file(M, size);
 	modif_color(couleur, M, size);
 	
@@ -58,7 +57,7 @@ int main()
 	}
 	free(M);
 	M = NULL;
-	if(nbr_coup<nbr_coups_max)
+	if(nbr_coup<=nbr_coups_max)
 		printf("Vous avez gagné !\n");
 	else
 		printf("Vous avez perdu !\n");
