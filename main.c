@@ -57,11 +57,17 @@ int main()
 		printf("\n");
 		test_color=0;
 	}
+<<<<<<< HEAD
 	if (couleur=='Q')
 		printf("Vous avez quitté la partie !\n");
 	if(if_flood(M,size)==1 && nbr_coup<=nbr_coups_max)
 		printf("Vous avez gagné !\n");
 	if(nbr_coup>nbr_coups_max)
+=======
+	if(if_flood(M,size)==1 && nbr_coup<=nbr_coups_max)
+		printf("Vous avez gagné !\n");
+	else
+>>>>>>> master
 		printf("Vous avez perdu !\n");
 	for (i=0;i<size;i++)
 	{
