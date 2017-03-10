@@ -9,9 +9,14 @@ int main()
 	int i, size;
 	int test_color=0;
 	int nbr_coup=0;
-	printf("Quelles est la taille désirée ?\n");
+	printf("Quelles est la taille désirée ?\nEntre 4 et 24\n");
 	scanf("%d",&size);
-	int nbr_coups_max = floor(1.8*size-0.7 + 0.5);
+	while(size<4 || size >24)
+	{
+		printf("La taille doit être entre 4 et 24 \n");
+		scanf("%d",&size);
+	}
+	int nbr_coups_max = floor(2.1*size-1 + 0.5);
 	grille M = random_grille(size);
 	char couleur = M[0][0].color;
 	char buffer[2];
@@ -23,9 +28,11 @@ int main()
 	
 	while(if_flood(M, size) != 1 && nbr_coup<nbr_coups_max)
 	{
-		printf("Entrer B, V, R, J, M ou G : ");
+		printf("Entrer B, V, R, J, M ou G  pour les couleurs\nQ pour quitter: ");
 		scanf("%1s", buffer);
 		couleur = buffer[0];
+		if(couleur == 'Q')
+			break;
 		if ((couleur!=M[0][0].color) && (couleur=='B'||couleur=='V'||couleur=='R'||couleur=='J'||couleur=='M'||couleur=='G'))
 			{
 				test_color=1;
@@ -50,9 +57,11 @@ int main()
 		printf("\n");
 		test_color=0;
 	}
+	if (couleur=='Q')
+		printf("Vous avez quitté la partie !\n");
 	if(if_flood(M,size)==1 && nbr_coup<=nbr_coups_max)
 		printf("Vous avez gagné !\n");
-	else
+	if(nbr_coup>nbr_coups_max)
 		printf("Vous avez perdu !\n");
 	for (i=0;i<size;i++)
 	{
