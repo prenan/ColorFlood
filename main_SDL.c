@@ -130,7 +130,7 @@ int main()
 
 	
 	/* fenêtre de taille size_window*size_window avec 8 bits couleur*/
-	ecran = SDL_SetVideoMode(size_window, size_window, 8, SDL_HWSURFACE);
+	ecran = SDL_SetVideoMode(size_window, size_window+100, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
 	SDL_WM_SetCaption("Jeu - Color Flood", NULL);
 	/* écran tout blanc */
