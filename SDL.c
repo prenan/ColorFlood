@@ -32,8 +32,12 @@ SDL_Surface *initialize_screen(int size)
 	/* nom de la fenêtre */
 	SDL_WM_SetCaption("Jeu - Color Flood", NULL);
 	/* écran tout blanc */
+
+	SDL_Surface *ima;
+	ima= SDL_LoadBMP("./ourteam.bmp");
 	fillScreen(ecran, init_screen);
 	drawPalette(ecran,size);
+	drawTexture(ecran,(size_window-6*(size_window/size))/2+6*(size_window/size)+5, size_window+size_window/size-10,ima);
 
 	return ecran;
 }
@@ -87,6 +91,14 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
     default:
         return 0;       /* shouldn't happen, but avoids warnings */
     }
+}
+
+void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima) {
+	SDL_Rect rect;
+    rect.x=px;
+    rect.y=py;
+	SDL_BlitSurface(ima, NULL, ecran, &rect);
+	SDL_Flip(ecran);
 }
 
 /* px, py coordonnées haut, gauche du pixel */

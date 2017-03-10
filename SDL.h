@@ -28,6 +28,8 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y);
 
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 
+void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima);
+
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
 void pause1();
