@@ -112,149 +112,45 @@ void free_space(grille plateau, int size)
 
 int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie)
 {
-	int test=0, i=coord.x, j=coord.y;
+	int i=coord.x, j=coord.y,voisin=1;
 	if (i<0 || j<0 || i>size || j>size)
 	{
 		perror("Erreur coordonnees");
 		exit(1);
 	}
-	if (i!=0 && i!=size-1 && j!=0 && j!= size-1)
+	switch(voisin)
 	{
-		if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-			return test=1;
-
-		if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-			return test=2;
-
-		if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-			return test=3;
-
-		if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-			return test=4;
-	}
-	if (i==0)
-	{
-		if (j==0)
+		case 1:
 		{
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
+			if (i!=0 && plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
+				break;
+			else
+				voisin++;
 		}
-		if (j==size-1)
+		case 2:
 		{
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+			if (j!= size-1 && plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
+				break;
+			else
+				voisin++;
 		}
-		if(j!=0 && j!= size-1)
+		case 3:
 		{
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
+			if (i!=size-1 && plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
+				break;
+			else
+				voisin++;
+		}
+		case 4:
+		{
+			if (j!= 0 && plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
+				break;
+			else
+				voisin=0;
 		}
 	}
-	if (i==size-1)
-	{
-		if (j==0)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-		}
-		if (j==size-1)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
-		}
-		if (j !=0 && j!= size-1)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
-		}
-	}
-	if (j==0)
-	{
-		if (i==0)
-		{
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
-		}
-		if (i==size-1)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-		}
-		if (i!=0 && i!= size-1)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				return test=2;
-
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
-		}
-	}
-	if (j==size-1)
-	{
-		if(i==0)
-		{
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
-		}
-		if(i==size-1)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
-		}
-		if (i!=0 && i!=size-1)
-		{
-			if(plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				return test=1;
-
-			if(plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				return test=3;
-
-			if(plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				return test=4;
-		}
-	}
-	return 0;
+	return voisin;
 }
-
 
 void modif_color(char couleur_choisie, grille plateau, int size)
 {
