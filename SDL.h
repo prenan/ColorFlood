@@ -24,6 +24,8 @@ SDL_Surface *initialize_screen(int size);
 
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
+Uint32 getpixel(SDL_Surface *surface, int x, int y);
+
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 
 void fillScreen(SDL_Surface *ecran, RGB couleur);

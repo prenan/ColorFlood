@@ -21,7 +21,7 @@ int main()
 	char couleur = plateau[0][0].color;
 	modif_color(couleur, plateau, size);
 
-	SDL_Surface *ecran = initialize_screen();
+	SDL_Surface *ecran = initialize_screen(size);
 	
 	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 
