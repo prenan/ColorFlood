@@ -32,8 +32,8 @@ SDL_Surface *initialize_screen()
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1, position2, position3;
-	SDL_Color texteNoir = {0, 0, 0};
-	SDL_Color fondBlanc = {255, 255, 255};
+	SDL_Color texteNoir = {0, 0, 0, 42};
+	SDL_Color fondBlanc = {255, 255, 255, 42};
 	SDL_Surface *texte1, *texte2, *texte3;
 	texte1 = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
 	texte2 = TTF_RenderText_Shaded(police, "Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
@@ -135,8 +135,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	int nbr_coup = 0;
 	SDL_Surface *texte;
 	SDL_Event event;
-	SDL_Color texteNoir = {0, 0, 0};
-	SDL_Color fondBlanc = {255, 255, 255};
+	SDL_Color texteNoir = {0, 0, 0, 42};
+	SDL_Color fondBlanc = {255, 255, 255, 42};
 	SDL_Rect position;
 	position.x = 5;
 	position.y = 510;
@@ -218,7 +218,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 
 void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police)
 {
-	SDL_Color texteNoir = {0, 0, 0};
+	SDL_Color texteNoir = {0, 0, 0, 42};
 
 	SDL_Surface *texte = NULL;
 	SDL_Rect position;
