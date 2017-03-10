@@ -1,11 +1,19 @@
 #include "SDL.h"
 
-
-SDL_Surface *initialize_screen()
+	RGB J = {255, 215, 0};
+	RGB R = {219, 23, 2};
+	RGB G = {127, 127, 127};
+	RGB V = {1, 215, 88};
+	RGB B = {0, 127, 255};
+	RGB M = {128, 0, 128};
+	
+SDL_Surface *initialize_screen(int size)
 {
 	SDL_Surface *ecran = NULL;
 	const SDL_VideoInfo* info = NULL;
 	RGB init_screen = {255, 255, 255};
+
+	
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -25,6 +33,7 @@ SDL_Surface *initialize_screen()
 	SDL_WM_SetCaption("Jeu - Color Flood", NULL);
 	/* écran tout blanc */
 	fillScreen(ecran, init_screen);
+	drawPalette(ecran,size);
 
 	return ecran;
 }
@@ -86,12 +95,6 @@ void pause1()
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 {
-	RGB J = {255, 215, 0};
-	RGB R = {219, 23, 2};
-	RGB G = {127, 127, 127};
-	RGB V = {1, 215, 88};
-	RGB B = {0, 127, 255};
-	RGB M = {128, 0, 128};
 	int i, j;
 	char couleur;
 	for (i=0 ; i<size ; i++)
@@ -127,6 +130,16 @@ void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 			}
 		}
 	}
+}
+
+void drawPalette(SDL_Surface *ecran,int size)
+{
+	drawRectangle(ecran, (size_window-6*(size_window/size))/2,size_window+size_window/size, size_window/size, G);
+	drawRectangle(ecran, (size_window-6*(size_window/size))/2+size_window/size,size_window+size_window/size, size_window/size, R);
+	drawRectangle(ecran, (size_window-6*(size_window/size))/2+2*(size_window/size), size_window+size_window/size, size_window/size, J);
+	drawRectangle(ecran, (size_window-6*(size_window/size))/2+3*(size_window/size), size_window+size_window/size, size_window/size, V);
+	drawRectangle(ecran, (size_window-6*(size_window/size))/2+4*(size_window/size), size_window+size_window/size, size_window/size, B);
+	drawRectangle(ecran, (size_window-6*(size_window/size))/2+5*(size_window/size), size_window+size_window/size, size_window/size, M);
 }
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
