@@ -1,5 +1,6 @@
 #include "grille.h"
 
+#include <unistd.h>
 #include <math.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -19,10 +20,9 @@ struct RGB
 typedef struct RGB RGB;
 
 
-
 SDL_Surface *initialize_screen();
 
-void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police, SDL_Surface*** textes);
+void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 
@@ -32,9 +32,9 @@ void pause1();
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran);
 
-void loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, SDL_Surface *texte);
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police);
 
-void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police, SDL_Surface** textes);
+void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
 
 void Free_surface(SDL_Surface** textes);
 

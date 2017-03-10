@@ -12,8 +12,8 @@ COBJ = $(CSRC:.c=.o)
 $(APPLI):	$(COBJ)
 	$(CC) -o $(APPLI) $(COBJ) $(LFLAGS)
 
-sdl:
-	$(CC) -o $(APPLI) grille.c fichier.c pile.c coordonnees.c main_SDL.c -o sdl $(LFLAGS)
+console:
+	$(CC) -o $(APPLI) grille.c fichier.c pile.c coordonnees.c main_console.c -o console -lm
 
 test:
 	$(CC) $(CFLAGS) grille.c fichier.c pile.c coordonnees.c tests_unitaires.c -o test -lcunit -g -lm
@@ -25,4 +25,4 @@ doxygen:
 	doxygen Doxyfile
 
 clean:
-	-rm *.o colorflood test sdl
+	-rm *.o colorflood test console

@@ -1,18 +1,11 @@
 #include "SDL.h"
 
 
-
 SDL_Surface *initialize_screen()
 {
-		RGB J = {255, 215, 0};
-	RGB R = {219, 23, 2};
-	RGB G = {127, 127, 127};
-	RGB V = {1, 215, 88};
-	RGB B = {0, 127, 255};
-	RGB M = {128, 0, 128};
-	RGB init_screen = {255, 255, 255};
 	SDL_Surface *ecran = NULL;
 	const SDL_VideoInfo* info = NULL;
+	RGB init_screen = {255, 255, 255};
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -36,27 +29,25 @@ SDL_Surface *initialize_screen()
 	return ecran;
 }
 
-
-void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police, SDL_Surface*** textes)
+void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1, position2, position3;
 	SDL_Color texteNoir = {0, 0, 0};
 	SDL_Color fondBlanc = {255, 255, 255};
-	
-	*textes[0] = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
-	*textes[1] = TTF_RenderText_Shaded(police, "Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
-	*textes[2] = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
+	SDL_Surface *texte1, *texte2, *texte3;
+	texte1 = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
+	texte2 = TTF_RenderText_Shaded(police, "Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
+	texte3 = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 	position1.x = 5;
 	position1.y = 610;
 	position2.x = 5;
 	position2.y = 660;
 	position3.x = 5;
 	position3.y = 510;
-	SDL_BlitSurface(*textes[0], NULL, ecran, &position1);
-	SDL_BlitSurface(*textes[1], NULL, ecran, &position2);
-	SDL_BlitSurface(*textes[2], NULL, ecran, &position3);
+	SDL_BlitSurface(texte1, NULL, ecran, &position1);
+	SDL_BlitSurface(texte2, NULL, ecran, &position2);
+	SDL_BlitSurface(texte3, NULL, ecran, &position3);
 }
-
 
 /* px, py coordonnées haut, gauche du pixel */
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
@@ -95,13 +86,12 @@ void pause1()
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 {
-		RGB J = {255, 215, 0};
+	RGB J = {255, 215, 0};
 	RGB R = {219, 23, 2};
 	RGB G = {127, 127, 127};
 	RGB V = {1, 215, 88};
 	RGB B = {0, 127, 255};
 	RGB M = {128, 0, 128};
-	RGB init_screen = {255, 255, 255};
 	int i, j;
 	char couleur;
 	for (i=0 ; i<size ; i++)
@@ -139,9 +129,11 @@ void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 	}
 }
 
-void loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, SDL_Surface *texte)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
 {
 	int continuer = 1;
+	int nbr_coup = 0;
+	SDL_Surface *texte;
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0};
 	SDL_Color fondBlanc = {255, 255, 255};
@@ -149,13 +141,6 @@ void loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int n
 	position.x = 5;
 	position.y = 510;
 
-	RGB J = {255, 215, 0};
-	RGB R = {219, 23, 2};
-	RGB G = {127, 127, 127};
-	RGB V = {1, 215, 88};
-	RGB B = {0, 127, 255};
-	RGB M = {128, 0, 128};
-	RGB init_screen = {255, 255, 255};
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
 	{
 		SDL_WaitEvent(&event);
@@ -228,10 +213,10 @@ void loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int n
 			display_SDL(plateau, size, ecran);
 		}
 	}
+	return nbr_coup;
 }
 
-
-void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police, SDL_Surface** textes)
+void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police)
 {
 	SDL_Color texteNoir = {0, 0, 0};
 
@@ -256,7 +241,6 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		SDL_Flip(ecran);
 		sleep(5);
 	}
-	textes[3]=texte;
 }
 
 void Free_surface(SDL_Surface** textes)
@@ -265,5 +249,4 @@ void Free_surface(SDL_Surface** textes)
 	SDL_FreeSurface(textes[1]);
 	SDL_FreeSurface(textes[2]);
 	SDL_FreeSurface(textes[3]);
-
 }
