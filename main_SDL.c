@@ -101,7 +101,16 @@ void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 
 int main()
 {
-	int size = 5, i;
+	int i, size;
+
+	printf("Entrer la taille du jeu (entre 4 et 24)\n");
+	scanf("%d",&size);
+	while(size<4 || size >24)
+	{
+		printf("La taille doit être comprise entre 4 et 24.\n");
+		scanf("%d",&size);
+	}
+
 	int nbr_coup=0;
 	int nbr_coups_max = floor(2.1*size-1 + 0.5);
 

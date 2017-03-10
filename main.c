@@ -9,11 +9,11 @@ int main()
 	int i, size;
 	int test_color=0;
 	int nbr_coup=0;
-	printf("Quelles est la taille désirée ?\nEntre 4 et 24\n");
+	printf("Entrer la taille du jeu (entre 4 et 24)\n");
 	scanf("%d",&size);
 	while(size<4 || size >24)
 	{
-		printf("La taille doit être entre 4 et 24 \n");
+		printf("La taille doit être comprise entre 4 et 24.\n");
 		scanf("%d",&size);
 	}
 	int nbr_coups_max = floor(2.1*size-1 + 0.5);
