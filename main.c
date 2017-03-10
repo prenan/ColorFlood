@@ -7,7 +7,7 @@
 int main()
 {
 	int size = choose_size();
-	int nbr_coup, nbr_coups_max = floor(2.1*size-1 + 0.5);
+	int nbr_coup = 0, nbr_coups_max = floor(2.1*size-1 + 0.5);
 	char nbr_coup_texte[30];
 
 	TTF_Font *police1 = NULL, *police2 = NULL;
