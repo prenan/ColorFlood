@@ -32,6 +32,13 @@ typedef struct element element;
 
 typedef element ** grille;
 
+/**
+ * \fn int choose_size()
+ * \brief Choix de la taille.
+ *
+ * \return Taille du jeu, doit être comprise entre 4 et 24.
+ */
+int choose_size();
 
 /**
  * \fn grille initialize(int size)

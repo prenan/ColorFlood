@@ -2,6 +2,19 @@
 #include "coordonnees.h"
 
 
+int choose_size()
+{
+	int size;
+	printf("Entrer la taille du jeu (entre 4 et 24) :\n");
+	scanf("%d", &size);
+	while(size<4 || size>24)
+	{
+		printf("La taille doit être comprise entre 4 et 24.\n");
+		scanf("%d", &size);
+	}
+	return size;
+}
+
 grille initialize(int size)
 {
 	int i;
@@ -106,8 +119,10 @@ void free_space(grille plateau, int size)
 	for (i=0; i<size; i++)
 	{
 		free(plateau[i]);
+		plateau[i] = NULL;
 	}
 	free(plateau);
+	plateau = NULL;
 }
 
 int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie)

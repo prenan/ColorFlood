@@ -1,9 +1,9 @@
 APPLI = colorflood
-CSRC = grille.c fichier.c pile.c coordonnees.c main.c
+CSRC = grille.c fichier.c pile.c coordonnees.c SDL.c main.c
 CC = gcc
 
 CFLAGS = -Wall -Wextra -g
-LFLAGS = -lm -lSDL
+LFLAGS = -lm -lSDL -lSDL_ttf
 COBJ = $(CSRC:.c=.o)
 
 .c.o:
