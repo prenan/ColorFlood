@@ -10,6 +10,14 @@ Pour installer la bibliothèque SDL dans un terminal :
 ```
 sudo apt-get install libsdl1.2-dev
 ```
+Pour installer la bibliothèque SDL_ttf dans un terminal :
+```
+sudo apt-get install libsdl-ttf2.0-dev
+```
+Pour installer la bibliothèque FreeType dans un terminal :
+```
+sudo apt-get install libfreetype6-dev
+```
 Pour la documentation avec Doxygen :
 ```
 sudo apt install doxygen
