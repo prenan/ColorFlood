@@ -1,19 +1,11 @@
 #include "SDL.h"
 
-	RGB B = {0, 127, 255};
-	RGB V = {1, 215, 88};
-	RGB R = {219, 23, 2};
-	RGB J = {255, 215, 0};
-	RGB M = {128, 0, 128};
-	RGB G = {127, 127, 127};
-	
+
 SDL_Surface *initialize_screen()
 {
 	SDL_Surface *ecran = NULL;
 	const SDL_VideoInfo* info = NULL;
 	RGB init_screen = {255, 255, 255};
-
-	
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -28,16 +20,11 @@ SDL_Surface *initialize_screen()
 		SDL_Quit();
 	}
 
-	ecran = SDL_SetVideoMode(size_window, size_window+200, 24, SDL_HWSURFACE);
+	ecran = SDL_SetVideoMode(size_window, size_window+200, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
 	SDL_WM_SetCaption("Jeu - Color Flood", NULL);
 	/* écran tout blanc */
-
-	SDL_Surface *ima;
-	ima= SDL_LoadBMP("./ourteam.bmp");
 	fillScreen(ecran, init_screen);
-	drawPalette(ecran);
-	drawTexture(ecran,(size_window-6*(size_window/12))/2+6*(size_window/12)+7, size_window+size_window/12-10,ima);
 
 	return ecran;
 }
@@ -60,45 +47,6 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
 	SDL_BlitSurface(texte2, NULL, ecran, &position2);
 	SDL_BlitSurface(texte3, NULL, ecran, &position3);
-}
-
-Uint32 getpixel(SDL_Surface *surface, int x, int y)
-{
-    int bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to retrieve */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-
-    switch(bpp) {
-    case 1:
-        return *p;
-        break;
-
-    case 2:
-        return *(Uint16 *)p;
-        break;
-
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
-            return p[0] << 16 | p[1] << 8 | p[2];
-        else
-            return p[0] | p[1] << 8 | p[2] << 16;
-        break;
-
-    case 4:
-        return *(Uint32 *)p;
-        break;
-
-    default:
-        return 0;       /* shouldn't happen, but avoids warnings */
-    }
-}
-
-void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima) {
-	SDL_Rect rect;
-    rect.x=px;
-    rect.y=py;
-	SDL_BlitSurface(ima, NULL, ecran, &rect);
-	SDL_Flip(ecran);
 }
 
 /* px, py coordonnées haut, gauche du pixel */
@@ -138,6 +86,12 @@ void pause1()
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 {
+	RGB J = {255, 215, 0};
+	RGB R = {219, 23, 2};
+	RGB G = {127, 127, 127};
+	RGB V = {1, 215, 88};
+	RGB B = {0, 127, 255};
+	RGB M = {128, 0, 128};
 	int i, j;
 	char couleur;
 	for (i=0 ; i<size ; i++)
@@ -175,16 +129,6 @@ void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 	}
 }
 
-void drawPalette(SDL_Surface *ecran)
-{
-	drawRectangle(ecran, (size_window-6*(size_window/9))/2-50,size_window+size_window/9, size_window/9, B);
-	drawRectangle(ecran, (size_window-6*(size_window/9))/2+size_window/9-50,size_window+size_window/9, size_window/9, V);
-	drawRectangle(ecran, (size_window-6*(size_window/9))/2+2*(size_window/9)-50, size_window+size_window/9, size_window/9, R);
-	drawRectangle(ecran, (size_window-6*(size_window/9))/2+3*(size_window/9)-50, size_window+size_window/9, size_window/9, J);
-	drawRectangle(ecran, (size_window-6*(size_window/9))/2+4*(size_window/9)-50, size_window+size_window/9, size_window/9, M);
-	drawRectangle(ecran, (size_window-6*(size_window/9))/2+5*(size_window/9)-50, size_window+size_window/9, size_window/9, G);
-}
-
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
 {
 	int continuer = 1;
@@ -206,161 +150,68 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			continuer = 0;
 			break;
 			case SDL_KEYDOWN:
-			     switch (event.key.keysym.sym)
-				 {
-					case SDLK_b:
-					if (plateau[0][0].color != 'B')
-					{
-						modif_color('B', plateau, size);
-						nbr_coup++;
-					}
-					break;
-
-					case SDLK_v:
-					if (plateau[0][0].color != 'V')
-					{
-						modif_color('V', plateau, size);
-						nbr_coup++;
-					}
-					break;
-
-					case SDLK_r:
-					if (plateau[0][0].color != 'R')
-					{
-						modif_color('R', plateau, size);
-						nbr_coup++;
-					}
-					break;
-
-					case SDLK_j:
-					if (plateau[0][0].color != 'J')
-					{
-						modif_color('J', plateau, size);
-						nbr_coup++;
-					}
-					break;
-
-					case SDLK_m:
-					if (plateau[0][0].color != 'M')
-					{
-						modif_color('M', plateau, size);
-						nbr_coup++;
-					}
-					break;
-
-					case SDLK_g:
-					if (plateau[0][0].color != 'G')
-					{
-						modif_color('G', plateau, size);
-						nbr_coup++;
-					}
-					break;
-
-					case SDLK_ESCAPE:
-					continuer = 0;
-					break;
-
-					default:
-					break;
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_b:
+				if (plateau[0][0].color != 'B')
+				{
+					modif_color('B', plateau, size);
+					nbr_coup++;
 				}
+				break;
 
-			case SDL_MOUSEBUTTONUP:
-                break;
+				case SDLK_v:
+				if (plateau[0][0].color != 'V')
+				{
+					modif_color('V', plateau, size);
+					nbr_coup++;
+				}
+				break;
 
-            case SDL_MOUSEBUTTONDOWN:
-                if(event.button.button == SDL_BUTTON_RIGHT)
-                {
-                    int x,y;
-                    x = event.button.x ;
-                    y = event.button.y ;
-                    int bpp = ecran->format->BytesPerPixel;
-                    /* Here p is the address to the pixel we want to retrieve */
-                    Uint8 *p = (Uint8 *)ecran->pixels + y * ecran->pitch + x * bpp;
-                    fprintf(stderr,"%d %d -> %d %d %d\n",y, x, p[0], p[1], p[2]);
-                }
-                if (event.button.button == SDL_BUTTON_LEFT) 
-                {
-                	
-                	Uint32 pixel;
-					SDL_PixelFormat *fmt;
-					Uint8 r,g,b;
-                	pixel=getpixel(ecran,event.button.x, event.button.y);
-                	fmt = ecran->format;
-                	SDL_GetRGB(pixel,fmt, &r, &g, &b);
+				case SDLK_r:
+				if (plateau[0][0].color != 'R')
+				{
+					modif_color('R', plateau, size);
+					nbr_coup++;
+				}
+				break;
 
-                	/*
-                	int x,y;
-                    x = event.button.x ;
-                    y = event.button.y ;
-                    int bpp = ecran->format->BytesPerPixel;
-                    Uint8 *p = (Uint8 *)ecran->pixels + y * ecran->pitch + x * bpp;
-                    fprintf(stderr,"%d %d -> %d %d %d\n",y, x, p[0], p[1], p[2]);
-                    */
-                    /* Here p is the address to the pixel we want to retrieve */
-					if(G.r==r)
-                	{
-					 	if (plateau[0][0].color != 'G')
-						{
-							modif_color('G', plateau, size);
-							nbr_coup++;
-						}
-						break;
-				    }
-                	if(R.r==r)
-                	{
-						if (plateau[0][0].color != 'R')
-						{
-							modif_color('R', plateau, size);
-							nbr_coup++;
-						}
-						break;
-					}
-                    if(J.r==r)
-                    {
-						if (plateau[0][0].color != 'J')
-						{
-							modif_color('J', plateau, size);
-							nbr_coup++;
-						}
-						break;
-				    }
-                    if(V.r==r)
-                    {
-					   	if (plateau[0][0].color != 'V')
-						{
-							modif_color('V', plateau, size);
-							nbr_coup++;
-						}
-						break;
-					}
-                    if(B.r==r)
-					{
-						if (plateau[0][0].color != 'B')
-						{
-							modif_color('B', plateau, size);
-							nbr_coup++;
-						}
-						break;
-					}
-                    if(M.r==r)
-                    {
-						if (plateau[0][0].color != 'M')
-						{
-							modif_color('M', plateau, size);
-							nbr_coup++;
-						}
-						break;
-					}
-                }
-                break;
-            case SDL_MOUSEMOTION:
-                break;
-            
-		}
+				case SDLK_j:
+				if (plateau[0][0].color != 'J')
+				{
+					modif_color('J', plateau, size);
+					nbr_coup++;
+				}
+				break;
+
+				case SDLK_m:
+				if (plateau[0][0].color != 'M')
+				{
+					modif_color('M', plateau, size);
+					nbr_coup++;
+				}
+				break;
+
+				case SDLK_g:
+				if (plateau[0][0].color != 'G')
+				{
+					modif_color('G', plateau, size);
+					nbr_coup++;
+				}
+				break;
+
+				case SDLK_ESCAPE:
+				continuer = 0;
+				break;
+
+				default:
+				break;
+			}
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
 			display_SDL(plateau, size, ecran);
+		}
 	}
 	return nbr_coup;
 }

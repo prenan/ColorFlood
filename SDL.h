@@ -24,19 +24,13 @@ SDL_Surface *initialize_screen();
 
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
-Uint32 getpixel(SDL_Surface *surface, int x, int y);
-
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
-
-void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima);
 
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
 void pause1();
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran);
-
-void drawPalette(SDL_Surface *ecran);
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police);
 

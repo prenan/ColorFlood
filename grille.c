@@ -4,14 +4,14 @@
 
 int choose_size()
 {
-	int size;
-	printf("Entrer la taille du jeu (entre 4 et 24) :\n");
-	scanf("%d", &size);
-	while(size<4 || size>24)
-	{
-		printf("La taille doit être comprise entre 4 et 24.\n");
-		scanf("%d", &size);
-	}
+	int size; 
+	printf("Entrer la taille du jeu (entre 4 et 24) :\n"); 
+	scanf("%d", &size); 
+	while(size<4 || size>24) 
+	{ 
+		printf("La taille doit être comprise entre 4 et 24.\n"); 
+		scanf("%d", &size); 
+	} 
 	return size;
 }
 
@@ -47,7 +47,7 @@ grille random_grille(int size)
 	int i, j, k;
 	grille plateau = initialize(size);
 	srand(time(NULL));
-	
+
 	for (i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
@@ -90,7 +90,7 @@ grille change_color(coordonnees coord, char c, grille plateau)
 {
 	int i=coord.x;
 	int j=coord.y;
-	
+
 	plateau[i][j].color = c;
 
 	return plateau;
