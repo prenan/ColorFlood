@@ -20,7 +20,7 @@ struct RGB
 typedef struct RGB RGB;
 
 
-SDL_Surface *initialize_screen(int size);
+SDL_Surface *initialize_screen();
 
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
@@ -36,7 +36,7 @@ void pause1();
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran);
 
-void drawPalette(SDL_Surface *ecran,int size);
+void drawPalette(SDL_Surface *ecran);
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police);
 

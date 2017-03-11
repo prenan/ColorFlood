@@ -7,7 +7,7 @@
 	RGB M = {128, 0, 128};
 	RGB G = {127, 127, 127};
 	
-SDL_Surface *initialize_screen(int size)
+SDL_Surface *initialize_screen()
 {
 	SDL_Surface *ecran = NULL;
 	const SDL_VideoInfo* info = NULL;
@@ -36,8 +36,8 @@ SDL_Surface *initialize_screen(int size)
 	SDL_Surface *ima;
 	ima= SDL_LoadBMP("./ourteam.bmp");
 	fillScreen(ecran, init_screen);
-	drawPalette(ecran,size);
-	drawTexture(ecran,(size_window-6*(size_window/size))/2+6*(size_window/size)+5, size_window+size_window/size-10,ima);
+	drawPalette(ecran);
+	drawTexture(ecran,(size_window-6*(size_window/12))/2+6*(size_window/12)+7, size_window+size_window/12-10,ima);
 
 	return ecran;
 }
@@ -175,14 +175,14 @@ void display_SDL(grille plateau, int size, SDL_Surface *ecran)
 	}
 }
 
-void drawPalette(SDL_Surface *ecran,int size)
+void drawPalette(SDL_Surface *ecran)
 {
-	drawRectangle(ecran, (size_window-6*(size_window/size))/2,size_window+size_window/size, size_window/size, B);
-	drawRectangle(ecran, (size_window-6*(size_window/size))/2+size_window/size,size_window+size_window/size, size_window/size, V);
-	drawRectangle(ecran, (size_window-6*(size_window/size))/2+2*(size_window/size), size_window+size_window/size, size_window/size, R);
-	drawRectangle(ecran, (size_window-6*(size_window/size))/2+3*(size_window/size), size_window+size_window/size, size_window/size, J);
-	drawRectangle(ecran, (size_window-6*(size_window/size))/2+4*(size_window/size), size_window+size_window/size, size_window/size, M);
-	drawRectangle(ecran, (size_window-6*(size_window/size))/2+5*(size_window/size), size_window+size_window/size, size_window/size, G);
+	drawRectangle(ecran, (size_window-6*(size_window/9))/2-50,size_window+size_window/9, size_window/9, B);
+	drawRectangle(ecran, (size_window-6*(size_window/9))/2+size_window/9-50,size_window+size_window/9, size_window/9, V);
+	drawRectangle(ecran, (size_window-6*(size_window/9))/2+2*(size_window/9)-50, size_window+size_window/9, size_window/9, R);
+	drawRectangle(ecran, (size_window-6*(size_window/9))/2+3*(size_window/9)-50, size_window+size_window/9, size_window/9, J);
+	drawRectangle(ecran, (size_window-6*(size_window/9))/2+4*(size_window/9)-50, size_window+size_window/9, size_window/9, M);
+	drawRectangle(ecran, (size_window-6*(size_window/9))/2+5*(size_window/9)-50, size_window+size_window/9, size_window/9, G);
 }
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
@@ -280,22 +280,24 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
                 }
                 if (event.button.button == SDL_BUTTON_LEFT) 
                 {
-                	/*
+                	
                 	Uint32 pixel;
 					SDL_PixelFormat *fmt;
 					Uint8 r,g,b;
                 	pixel=getpixel(ecran,event.button.x, event.button.y);
                 	fmt = ecran->format;
                 	SDL_GetRGB(pixel,fmt, &r, &g, &b);
-                	*/
+
+                	/*
                 	int x,y;
                     x = event.button.x ;
                     y = event.button.y ;
                     int bpp = ecran->format->BytesPerPixel;
-                    /* Here p is the address to the pixel we want to retrieve */
                     Uint8 *p = (Uint8 *)ecran->pixels + y * ecran->pitch + x * bpp;
                     fprintf(stderr,"%d %d -> %d %d %d\n",y, x, p[0], p[1], p[2]);
-					if(G.r==p[2])
+                    */
+                    /* Here p is the address to the pixel we want to retrieve */
+					if(G.r==r)
                 	{
 					 	if (plateau[0][0].color != 'G')
 						{
@@ -304,7 +306,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						}
 						break;
 				    }
-                	if(R.r==p[2])
+                	if(R.r==r)
                 	{
 						if (plateau[0][0].color != 'R')
 						{
@@ -313,7 +315,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						}
 						break;
 					}
-                    if(J.r==p[2])
+                    if(J.r==r)
                     {
 						if (plateau[0][0].color != 'J')
 						{
@@ -322,7 +324,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						}
 						break;
 				    }
-                    if(V.r==p[2])
+                    if(V.r==r)
                     {
 					   	if (plateau[0][0].color != 'V')
 						{
@@ -331,7 +333,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						}
 						break;
 					}
-                    if(B.r==p[2])
+                    if(B.r==r)
 					{
 						if (plateau[0][0].color != 'B')
 						{
@@ -340,7 +342,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						}
 						break;
 					}
-                    if(M.r==p[2])
+                    if(M.r==r)
                     {
 						if (plateau[0][0].color != 'M')
 						{
