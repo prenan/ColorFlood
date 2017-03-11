@@ -7,9 +7,8 @@
 int main()
 {
 	int size = choose_size();
-	int nbr_coup = 0, nbr_coups_max = floor(2.1*size-1 + 0.5);
+	int nbr_coup = 0, nbr_coups_max = floor(2.1*size-1 + 0.5);	/* formule obtenue par régression linéaire */
 	char nbr_coup_texte[30];
-
 	TTF_Font *police1 = NULL, *police2 = NULL;
 
 	TTF_Init();
@@ -27,7 +26,7 @@ int main()
 
 	initialize_text(ecran, nbr_coup_texte, police1);
 	
-	display_SDL(plateau, size, ecran);
+	display_SDL(ecran, plateau, size);
 
 	nbr_coup = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coup_texte, police1);
 
@@ -37,7 +36,6 @@ int main()
 	TTF_CloseFont(police2);
 
 	TTF_Quit();
-
 	SDL_Quit();
 
 	return 0;

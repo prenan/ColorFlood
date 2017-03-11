@@ -61,7 +61,7 @@ SDL_Surface *initialize_screen();
 
 /**
  * \fn void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
- * \brief Initialisation du texte pour les règles.
+ * \brief Initialisation du texte pour les règles et le nombre de coups.
  *
  * \param ecran L'écran de la fenêtre en cours.
  * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
@@ -69,12 +69,50 @@ SDL_Surface *initialize_screen();
  */
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
-void display_SDL(grille plateau, int size, SDL_Surface *ecran);
+/**
+ * \fn void display_SDL(grille plateau, int size, SDL_Surface *ecran)
+ * \brief Affichage du plateau avec SDL à partir d'une grille.
+ *
+ * \param ecran L'écran de la fenêtre en cours.
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ */
+void display_SDL(SDL_Surface *ecran, grille plateau, int size);
 
+/**
+ * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
+ * \brief Boucle du jeu.
+ *
+ * \param ecran L'écran de la fenêtre en cours.
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \param nbr_coups_max Le nombre de coups maximum autorisés.
+ * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
+ * \param police La police du texte et sa taille.
+ * \return Le nombre de coups en cours.
+ */
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police);
 
+/**
+ * \fn void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
+ * \brief Affichage lors de la fin du jeu (victoire ou défaite).
+ *
+ * \param ecran L'écran de la fenêtre en cours.
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \param nbr_coups_max Le nombre de coups maximum autorisés.
+ * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
+ * \param police La police du texte et sa taille.
+ */
 void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
 
-void Free_surface(SDL_Surface** textes);
+/**
+ * \fn void free_surface(SDL_Surface **textes) ??
+ * \brief Libération de la mémoire ??
+ *
+ * \param ??
+ */
+void free_surface(SDL_Surface **textes);
+
 
 #endif
