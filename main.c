@@ -34,8 +34,8 @@ int main()
 	
 	TTF_CloseFont(police1);
 	TTF_CloseFont(police2);
-
 	TTF_Quit();
+	
 	SDL_Quit();
 
 	free_space(plateau, size);

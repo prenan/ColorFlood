@@ -50,18 +50,25 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_Rect position1, position2, position3;
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};	/* 4ème paramètre inutile */
 	SDL_Surface *texte1, *texte2, *texte3;
+
 	texte1 = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
 	texte2 = TTF_RenderText_Shaded(police, "Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
 	texte3 = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
+
 	position1.x = 5;
 	position1.y = 610;
 	position2.x = 5;
 	position2.y = 660;
 	position3.x = 5;
 	position3.y = 510;
+
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
 	SDL_BlitSurface(texte2, NULL, ecran, &position2);
 	SDL_BlitSurface(texte3, NULL, ecran, &position3);
+	
+	SDL_FreeSurface(texte1);
+	SDL_FreeSurface(texte2);
+	SDL_FreeSurface(texte3);
 }
 
 void display_SDL(SDL_Surface *ecran, grille plateau, int size)
@@ -189,6 +196,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
 			display_SDL(ecran, plateau, size);
+			SDL_FreeSurface(texte);
 		}
 	}
 	return nbr_coup;
@@ -208,6 +216,7 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
+		SDL_FreeSurface(texte);
 		sleep(4);
 	}
 	if (if_flood(plateau, size) == 1)
@@ -217,14 +226,7 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
+		SDL_FreeSurface(texte);
 		sleep(4);
 	}
-}
-
-void free_surface(SDL_Surface **textes)
-{
-	SDL_FreeSurface(textes[0]);
-	SDL_FreeSurface(textes[1]);
-	SDL_FreeSurface(textes[2]);
-	SDL_FreeSurface(textes[3]);
 }

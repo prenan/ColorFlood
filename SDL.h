@@ -106,13 +106,5 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
  */
 void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
 
-/**
- * \fn void free_surface(SDL_Surface **textes) ??
- * \brief Libération de la mémoire ??
- *
- * \param ??
- */
-void free_surface(SDL_Surface **textes);
-
 
 #endif
