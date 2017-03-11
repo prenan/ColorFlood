@@ -1,11 +1,27 @@
 #include "SDL.h"
 
 
+void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
+{
+	SDL_Rect rect;
+	rect.x=px;
+	rect.y=py;
+	rect.h=rect.w=size;
+	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
+	SDL_Flip(ecran);
+}
+
+void fillScreen(SDL_Surface *ecran, RGB couleur)
+{
+	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
+	SDL_Flip(ecran);	/*MàJ de l'écran*/
+}
+
 SDL_Surface *initialize_screen()
 {
 	SDL_Surface *ecran = NULL;
-	const SDL_VideoInfo* info = NULL;
-	RGB init_screen = {255, 255, 255};
+	const SDL_VideoInfo *info = NULL;
+	RGB init_screen = {255, 255, 255};	/* blanc */
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -22,7 +38,7 @@ SDL_Surface *initialize_screen()
 
 	ecran = SDL_SetVideoMode(size_window, size_window+200, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
-	SDL_WM_SetCaption("Jeu - Color Flood", NULL);
+	SDL_WM_SetCaption("Color Flood (THOR)", NULL);
 	/* écran tout blanc */
 	fillScreen(ecran, init_screen);
 
@@ -32,7 +48,7 @@ SDL_Surface *initialize_screen()
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1, position2, position3;
-	SDL_Color texteNoir = {0, 0, 0, 42};
+	SDL_Color texteNoir = {0, 0, 0, 42};	/* 4ème paramètre inutile */
 	SDL_Color fondBlanc = {255, 255, 255, 42};
 	SDL_Surface *texte1, *texte2, *texte3;
 	texte1 = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
@@ -47,41 +63,6 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
 	SDL_BlitSurface(texte2, NULL, ecran, &position2);
 	SDL_BlitSurface(texte3, NULL, ecran, &position3);
-}
-
-/* px, py coordonnées haut, gauche du pixel */
-void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
-{
-	SDL_Rect rect;
-	rect.x=px;
-	rect.y=py;
-	rect.h=rect.w=size;
-	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
-	SDL_Flip(ecran);
-}
-
-/*SDL_FillRect(pointeur ecran, NULL pour tout remplir, couleur)
-permet de remplir l'écran entier d'une couleur*/
-void fillScreen(SDL_Surface *ecran, RGB couleur)
-{
-	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
-	SDL_Flip(ecran);	/*MàJ de l'écran*/
-}
-
-void pause1()
-{
-	int continuer = 1;
-	SDL_Event event;
-
-	while (continuer)
-	{
-		SDL_WaitEvent(&event);
-		switch(event.type)
-		{
-			case SDL_QUIT:
-			continuer = 0;
-		}
-	}
 }
 
 void display_SDL(grille plateau, int size, SDL_Surface *ecran)
