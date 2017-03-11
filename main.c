@@ -38,5 +38,7 @@ int main()
 	TTF_Quit();
 	SDL_Quit();
 
+	free_space(plateau, size);
+
 	return 0;
 }
