@@ -12,6 +12,7 @@
 #ifndef COORDONNEES_H
 #define COORDONNEES_H
 
+
 /**
  * \struct coordonnees
  * \brief représente les coordonnées d'une case du plateau

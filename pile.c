@@ -1,5 +1,4 @@
 #include "pile.h"
-#include "coordonnees.h"
 
 
 Pile pile_initialiser()

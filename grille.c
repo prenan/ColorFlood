@@ -1,5 +1,4 @@
 #include "grille.h"
-#include "coordonnees.h"
 
 
 int choose_size()

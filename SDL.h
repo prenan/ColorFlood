@@ -16,6 +16,7 @@
 
 #define size_window 500
 
+
 /**
  * \struct RGB
  * \brief Structure pour la couleur d'une case

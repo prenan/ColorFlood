@@ -15,6 +15,7 @@
 #ifndef GRILLE_H
 #define GRILLE_H
 
+
 /**
  * \struct element
  * \brief Structure d'une case du plateau

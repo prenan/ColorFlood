@@ -17,6 +17,7 @@
 #ifndef FICHIER_H
 #define FICHIER_H
 
+
 /**
  * \fn int open_file(char const* file_name)
  * \brief Fonction d'ouverture d'un fichier.

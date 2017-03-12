@@ -61,7 +61,7 @@ int main()
 		printf("Vous avez quitté la partie !\n");
 	if(if_flood(M,size)==1 && nbr_coup<=nbr_coups_max)
 		printf("Vous avez gagné !\n");
-	if(nbr_coup>nbr_coups_max)
+	if(if_flood(M, size) == 0 && nbr_coup >= nbr_coups_max)
 		printf("Vous avez perdu !\n");
 	for (i=0;i<size;i++)
 	{
@@ -70,5 +70,6 @@ int main()
 	}
 	free(M);
 	M = NULL;
+	
 	return 0;
 }

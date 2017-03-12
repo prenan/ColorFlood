@@ -15,6 +15,7 @@
 
 #define type_element coordonnees 
 
+
 /**
  * \struct liste
  * \brief Structure d'une liste

@@ -31,13 +31,13 @@ sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
 ## Instructions d'utilisation
 
 Dans un terminal,
-* pour compiler et exécuter sous mode de SDL
+* pour compiler et exécuter (avec interface graphique SDL)
 
 ```
 make
 ./colorflood
 ```
-* pour compiler et exécuter dans un terminal,
+* pour compiler et exécuter (mode console)
 
 ```
 make console
