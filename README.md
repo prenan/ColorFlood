@@ -31,15 +31,22 @@ sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
 ## Instructions d'utilisation
 
 Dans un terminal,
-* pour compiler et exécuter
+* pour compiler et exécuter sous mode de SDL
 
 ```
 make
 ./colorflood
 ```
+* pour compiler et exécuter dans un terminal,
+
+```
+make console
+./console
+```
 * pour tester l'absence de fuites de mémoire (Valgrind)
 
 ```
+
 make valgrind
 ```
 * pour les tests unitaires
