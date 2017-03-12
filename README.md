@@ -46,7 +46,6 @@ make console
 * pour tester l'absence de fuites de mémoire (Valgrind)
 
 ```
-
 make valgrind
 ```
 * pour les tests unitaires
