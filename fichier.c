@@ -1,5 +1,5 @@
 #include "fichier.h"
-
+#include "grille.h"
 
 int open_file(char const* file_name)
 {
