@@ -11,4 +11,11 @@
 
 int solution(SDL_Surface *ecran, grille plateau, int size);
 
+int solution_opti(SDL_Surface *ecran, grille plateau, int size);
+
+int compteur_appartenance(grille plateau, int size);
+
+grille copie(grille plateau, int size);
+
+
 #endif
