@@ -15,7 +15,4 @@ int solution_opti(grille plateau, int size);
 
 int compteur_appartenance(grille plateau, int size);
 
-grille copie(grille plateau, int size);
-
-
 #endif

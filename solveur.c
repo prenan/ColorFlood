@@ -64,16 +64,3 @@ int compteur_appartenance(grille plateau, int size)
 	return compteur;
 }
 
-grille copie(grille plateau, int size)
-{
-	int i, j;
-	grille new_plateau=initialize(size);
-	for (i=0; i<size; i++)
-	{
-		for(j=0; j<size; j++)
-		{
-			new_plateau[i][j]=plateau[i][j];
-		}
-	}
-	return new_plateau;
-}

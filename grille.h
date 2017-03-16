@@ -136,5 +136,14 @@ void modif_color (char couleur_choisie, grille plateau, int size);
  */
 Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P);
 
+/**
+ * \fn grille copie(grille plateau, int size)
+ * \brief Fonction qui copie une grille;
+ *
+ * \param plateau Grille que l'on souhaite modifier.
+ * \param size Taille du jeu (grille size*size).
+ * \return La nouvelle grille qui est égale à la grille mise en paramètre.
+ */
+grille copie(grille plateau, int size);
 
 #endif
