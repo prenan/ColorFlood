@@ -3,11 +3,12 @@
 #include "pile.h"
 #include "coordonnees.h"
 #include "SDL.h"
+#include "solveur.h"
 
 int main()
 {
 	int size = choose_size();
-	int nbr_coup = 0, nbr_coups_max = floor(2.1*size-1 + 0.5);	/* formule obtenue par régression linéaire */
+	int nbr_coup = 0;
 	char nbr_coup_texte[30];
 	TTF_Font *police1 = NULL, *police2 = NULL;
 
@@ -17,6 +18,10 @@ int main()
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 
 	grille plateau = random_grille(size);
+
+	grille sol_plateau=copie(plateau,size);
+	int nbr_coups_max =solution_opti(sol_plateau,size)+2;
+	
 	char couleur = plateau[0][0].color;
 	modif_color(couleur, plateau, size);
 
@@ -29,7 +34,6 @@ int main()
 	display_SDL(ecran, plateau, size);
 
 	nbr_coup = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coup_texte, police1);
-
 	end_game(ecran, plateau, size, nbr_coup, nbr_coups_max, police2);
 	
 	TTF_CloseFont(police1);

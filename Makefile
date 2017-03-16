@@ -1,5 +1,5 @@
 APPLI = colorflood
-CSRC = grille.c fichier.c pile.c coordonnees.c SDL.c main.c
+CSRC = grille.c fichier.c pile.c coordonnees.c SDL.c solveur.c main.c
 CC = gcc
 
 CFLAGS = -Wall -Wextra -g

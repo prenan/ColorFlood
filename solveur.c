@@ -1,6 +1,6 @@
 #include "solveur.h"
 
-int solution(SDL_Surface *ecran, grille plateau, int size)
+int solution(grille plateau, int size)
 {
 	int nbr_coups = 0, i;
 	char* couleurs = "BVRJMG";
@@ -16,7 +16,6 @@ int solution(SDL_Surface *ecran, grille plateau, int size)
 			i++;
 			modif_color (couleurs[i], plateau, size);
 		}
-		display_SDL(ecran, plateau, size);
 		nbr_coups ++;
 		i%=6;
 	}
@@ -24,7 +23,7 @@ int solution(SDL_Surface *ecran, grille plateau, int size)
 }
 
 
-int solution_opti(SDL_Surface *ecran, grille plateau, int size)
+int solution_opti(grille plateau, int size)
 {
 	int nbr_coups = 0, i,max=0,place;
 	grille plateau_test=initialize(size);
@@ -47,7 +46,6 @@ int solution_opti(SDL_Surface *ecran, grille plateau, int size)
 			}
 		}
 		modif_color(couleurs[place],plateau,size);
-		display_SDL(ecran, plateau, size);
 		nbr_coups ++;
 		i%=6;
 	}

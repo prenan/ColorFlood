@@ -227,6 +227,6 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
 		SDL_FreeSurface(texte);
-		sleep(4);
+		sleep(2);
 	}
 }
