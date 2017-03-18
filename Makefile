@@ -1,5 +1,5 @@
 APPLI = colorflood
-CSRC = grille.c fichier.c pile.c coordonnees.c SDL.c main.c
+CSRC = grille.c fichier.c pile.c coordonnees.c
 CC = gcc
 
 CFLAGS = -Wall -Wextra -g -std=c99
@@ -27,16 +27,25 @@ DIST_FILES = grille.h fichier.h pile.h coordonnees.h SDL.h n_arbres.h\
 DIR := $(shell basename `pwd`)
 DISTNAME := $(DIR)_THOR.tar.gz
 
-.c.o:
-	$(CC) $(CFLAGS) -c $*.c
 
-$(APPLI):	$(COBJ)
-	@echo "Building $@"
-	$(CC) -o $(APPLI) $(COBJ) $(LFLAGS)
+all : colorflood console
 
-console:
-	@echo "Building $@"
-	$(CC) grille.c fichier.c pile.c coordonnees.c main_console.c -o console -lm
+main.o: fichier.h grille.h pile.h coordonnees.h SDL.h main.c
+	$(CC) -c $(CFLAGS) main.c $(LFLAGS)
+
+SDL.o : SDL.h SDL.c
+	$(CC) -c $(CFLAGS) SDL.c
+
+main_console.o: fichier.h grille.h pile.h coordonnees.h main_console.c
+	$(CC) -c $(CFLAGS) main_console.c
+
+colorflood:$(COBJ) main.o SDL.o
+		@echo "Building $@"
+		$(CC) -o $@ $(COBJ) SDL.o main.o $(LFLAGS) 
+
+console:$(COBJ) main_console.o
+		@echo "Building $@"
+		$(CC) -o $@ $(COBJ) main_console.o -lm 
 
 test:
 	$(CC) $(CFLAGS) grille.c fichier.c pile.c coordonnees.c tests_unitaires.c -o test -lcunit -g -lm
@@ -48,7 +57,7 @@ doxygen:
 	doxygen Doxyfile
 
 clean:
-	@rm -f $(TARGETS) *.o *~
+	@rm -f $(TARGETS) *.o *~ colorflood console test
 
 dist: $(DIST_FILES)
 	@echo "* creating $(DIR)"
