@@ -66,6 +66,10 @@ ouvrir html/index.html
 make clean
 ```
 
+* pour compacter les fichiers
+```
+make dist
+```
 
 ## Équipe THOR
 

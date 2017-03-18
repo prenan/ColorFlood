@@ -25,7 +25,7 @@ DIST_FILES = grille.h fichier.h pile.h coordonnees.h SDL.h n_arbres.h\
 			  Makefile
 
 DIR := $(shell basename `pwd`)
-DISTNAME := Projet-$(DIR).tar.gz
+DISTNAME := $(DIR)_THOR.tar.gz
 
 .c.o:
 	$(CC) $(CFLAGS) -c $*.c
