@@ -8,8 +8,9 @@
 int main()
 {
 	int size = choose_size();
-	int nbr_coup = 0;
+	int nbr_coup = 0, nbr_coups_max;
 	char nbr_coup_texte[30];
+	char* chemin = malloc(sizeof(char));
 	TTF_Font *police1 = NULL, *police2 = NULL;
 
 	TTF_Init();
@@ -18,14 +19,16 @@ int main()
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 
 	grille plateau = random_grille(size);
-
-	grille sol_plateau=copie(plateau,size);
-	int nbr_coups_max =solution_opti(sol_plateau,size)+2;
+	grille sol_plateau=initialize(size);
+	sol_plateau = copie(plateau,size);
 	
 	char couleur = plateau[0][0].color;
+
 	modif_color(couleur, plateau, size);
 
 	SDL_Surface *ecran = initialize_screen();
+	chemin=solution_opti(sol_plateau,size,&nbr_coups_max);
+	printf("%s\n",chemin );
 	
 	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 

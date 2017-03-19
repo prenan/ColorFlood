@@ -9,9 +9,9 @@
 #ifndef SOLVEUR_H
 #define SOLVEUR_H
 
-int solution(grille plateau, int size);
+char* solution(grille plateau, int size, int *nbr_coups);
 
-int solution_opti(grille plateau, int size);
+char* solution_opti(grille plateau, int size,int *nbr_coups);
 
 int compteur_appartenance(grille plateau, int size);
 
