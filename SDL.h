@@ -14,7 +14,6 @@
 #ifndef SDL_H
 #define SDL_H
 
-#define size_window 500
 
 
 /**
@@ -58,7 +57,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur);
  *
  * \return La surface, ie. l'écran de la fenêtre.
  */
-SDL_Surface *initialize_screen();
+SDL_Surface *initialize_screen(int size_window);
 
 /**
  * \fn void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
@@ -78,7 +77,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
  */
-void display_SDL(SDL_Surface *ecran, grille plateau, int size);
+void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window);
 
 /**
  * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
@@ -92,7 +91,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size);
  * \param police La police du texte et sa taille.
  * \return Le nombre de coups en cours.
  */
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police);
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window);
 
 /**
  * \fn void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);

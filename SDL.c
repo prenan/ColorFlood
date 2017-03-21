@@ -17,7 +17,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
 }
 
-SDL_Surface *initialize_screen()
+SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran = NULL;
 	const SDL_VideoInfo *info = NULL;
@@ -71,7 +71,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_FreeSurface(texte3);
 }
 
-void display_SDL(SDL_Surface *ecran, grille plateau, int size)
+void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
 	RGB J = {255, 215, 0};
 	RGB R = {219, 23, 2};
@@ -116,7 +116,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size)
 	}
 }
 
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window)
 {
 	int continuer = 1, nbr_coup = 0;
 	SDL_Surface *texte;
@@ -195,7 +195,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
-			display_SDL(ecran, plateau, size);
+			display_SDL(ecran, plateau, size,size_window);
 			SDL_FreeSurface(texte);
 		}
 	}

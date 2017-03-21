@@ -23,6 +23,7 @@ char* solution(grille plateau, int size, int *nbr_coups)
 		*nbr_coups = *nbr_coups +1;
 		i%=6;
 	}
+	*nbr_coups =*nbr_coups+2;
 	return chemin;
 }
 
@@ -56,6 +57,7 @@ char* solution_opti(grille plateau, int size, int *nbr_coups)
 		*nbr_coups =*nbr_coups+1;
 		i%=6;
 	}
+	free_space(plateau_test,size);
 	*nbr_coups =*nbr_coups+2;
 	return chemin; 
 }
@@ -72,33 +74,53 @@ int compteur_appartenance(grille plateau, int size)
 	}
 	return compteur;
 }
-
 /*
-int solveur_arbre(SDL_Surface *ecran,node* root, grille plateau, int size, int nbr_coups)
+char* solveur(grille plateau, int size, int* nbr_coups,char* chemin)
 {
-	int a=0,b=0,c=0,d=0,e=0,f=0;
-	int i;
+	*nbr_coups = 0;
+	char * chemins[6]={chemin};
 	char* couleurs = "BVRJMG";
+	int i,j;
 	grille plateau_test=initialize(size);
-	while (if_flood(plateau,size)!=1)
+
+
+	for (i=0; i<6; i++)
 	{
-		for (i=0; i<6; i++)
+		for(j=0; j<6; j++)
 		{
-			plateau_test = copie(plateau, size);
-			modif_color(couleurs[i], plateau_test, size);
-			node_insert(root, plateau_test, couleurs[i]);
-			display_SDL(ecran, plateau_test, size);
+			plateau_test=copie(plateau, size);
+			modif_color (couleurs[j], plateau_test, size);
+			if(compteur_appartenance(plateau,size)!=compteur_appartenance(plateau_test,size))
+			{
+				chemins[i]=copie_texte(chemins[i],couleurs[j]);
+				printf("%s\n",chemins[i] );
+			}
+			if(testeur_chemins(chemins[i],plateau,size)==1)
+				return chemins[i];
+			else
+				solveur(plateau, size, nbr_coups,chemins[i]);
 		}
-		rootchild1= root;
-		a=solveur_arbre(ecran, root->child1, root->child1->plateau, size, nbr_coups+1);
-		b=solveur_arbre(ecran, root->child2, root->child2->plateau, size, nbr_coups+1);
-		c=solveur_arbre(ecran, root->child3, root->child3->plateau, size, nbr_coups+1);
-		d=solveur_arbre(ecran, root->child4, root->child4->plateau, size, nbr_coups+1);
-		e=solveur_arbre(ecran, root->child5, root->child5->plateau, size, nbr_coups+1);
-		f=solveur_arbre(ecran, root->child6, root->child6->plateau, size, nbr_coups+1);
 	}
-	return a;
+	free_space(plateau,size);
+	return chemins[i];
+}*/
+
+int testeur_chemins(char* chemin, grille plateau, int size)
+{
+	int taille = strlen(chemin);
+	int i;
+	for (i=0; i<taille; i++)
+	{
+		modif_color(chemin[i],plateau,size);
+	}
+	return if_flood(plateau,size);
 }
 
-
-	*/
+char* copie_texte(char* chemin, char couleur)
+{
+	char ajout[1]= {couleur};
+	char *result = malloc(strlen(chemin)+strlen(ajout)+1);
+	strcpy(result, chemin);
+	strcat(result, ajout);
+	return result;
+}
