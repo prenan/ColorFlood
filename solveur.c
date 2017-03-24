@@ -8,6 +8,7 @@ char* solution(grille plateau, int size, int *nbr_coups)
 	char* couleurs = "BVRJMG";
 	while(if_flood(plateau, size)==0)
 	{
+		i%=6;
 		if (plateau[0][0].color != couleurs[i])	
 		{
 			modif_color (couleurs[i], plateau, size);
@@ -21,7 +22,6 @@ char* solution(grille plateau, int size, int *nbr_coups)
 			chemin[*nbr_coups]=couleurs[i];
 		}
 		*nbr_coups = *nbr_coups +1;
-		i%=6;
 	}
 	*nbr_coups =*nbr_coups+2;
 	return chemin;
@@ -55,7 +55,6 @@ char* solution_opti(grille plateau, int size, int *nbr_coups)
 		chemin[*nbr_coups]=couleurs[place];
 		modif_color(couleurs[place],plateau,size);
 		*nbr_coups =*nbr_coups+1;
-		i%=6;
 	}
 	free_space(plateau_test,size);
 	*nbr_coups =*nbr_coups+2;

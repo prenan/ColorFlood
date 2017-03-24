@@ -52,9 +52,9 @@ void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
 /**
- * \fn SDL_Surface *initialize_screen()
+ * \fn SDL_Surface *initialize_screen(int size_window)
  * \brief Initialisation de la fenêtre.
- *
+ * \param size_window Taille de l'écran de jeu.
  * \return La surface, ie. l'écran de la fenêtre.
  */
 SDL_Surface *initialize_screen(int size_window);
@@ -70,12 +70,13 @@ SDL_Surface *initialize_screen(int size_window);
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
 /**
- * \fn void display_SDL(grille plateau, int size, SDL_Surface *ecran)
+ * \fn void display_SDL(grille plateau, int size, SDL_Surface *ecran, int size_window)
  * \brief Affichage du plateau avec SDL à partir d'une grille.
  *
  * \param ecran L'écran de la fenêtre en cours.
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
+ * \param size_window Taille de l'écran de jeu.
  */
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window);
 
@@ -89,6 +90,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window);
  * \param nbr_coups_max Le nombre de coups maximum autorisés.
  * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
  * \param police La police du texte et sa taille.
+ * \param size_window Taille de l'écran de jeu.
  * \return Le nombre de coups en cours.
  */
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window);
