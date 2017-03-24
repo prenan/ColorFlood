@@ -4,8 +4,8 @@
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 {
 	SDL_Rect rect;
-	rect.x=px;
-	rect.y=py;
+	rect.y=px;
+	rect.x=py;
 	rect.h=rect.w=size;
 	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
 	SDL_Flip(ecran);
@@ -126,7 +126,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	position.x = 5;
 	position.y = 510;
 	char ancienne_couleur = plateau[0][0];
-	coordonnees coord;
+	coordonnees coord=coord_def(0,0);
 
 
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
@@ -207,6 +207,16 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				default:
 				break;
 			}
+			for(int i=0;i<size;i++)
+			{
+				for(int j=0;j<size;j++)
+				{
+					printf("%2c",plateau[i][j]);
+				}
+				printf("\n");
+			}
+			printf("\n");
+			ancienne_couleur=plateau[0][0];
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);

@@ -126,28 +126,45 @@ void modif_color(coordonnees position, char couleur_choisie, char ancienne_coule
 {
 	int x=position.x;
 	int y=position.y;
-	if(plateau[x][y] = ancienne_couleur)
+	coordonnees new_position=coord_def(x,y);
+
+	if(plateau[x][y] == ancienne_couleur)
 	{
+		printf("choix %c\n",couleur_choisie );
+		printf("ancienne %c\n",ancienne_couleur );
+		printf("0\n");
 		plateau[x][y] = couleur_choisie;
-		if(x+1<size)
+		if(x+1 < size)
 		{
-			position.x +=1;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			new_position.x = position.x+1 ;
+			printf("position x %d\n",position.x);
+			printf("position y %d\n",position.y);
+			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
+			printf("1\n");
 		}
-		if(x-1>0)
+		if(x-1 >= 0)
 		{
-			position.x -=1;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			new_position.x = position.x-1;
+			printf("position x %d\n",position.x);
+			printf("position y %d\n",position.y);
+			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
+			printf("2\n");
 		}
-		if(y+1<size)
+		if(y+1 < size)
 		{
-			position.y +=1;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			new_position.y = position.y+1;
+			printf("position x %d\n",position.x);
+			printf("position y %d\n",position.y);
+			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
+			printf("3\n");
 		}
-		if(y-1>0)
+		if(y-1 >= 0)
 		{
-			position.y -=1;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			new_position.y = position.y-1;
+			printf("position x %d\n",position.x);
+			printf("position y %d\n",position.y);
+			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
+			printf("4\n");
 		}
 	}
 }

@@ -13,7 +13,6 @@ int main()
 	char* chemin = malloc(sizeof(char));
 	TTF_Font *police1 = NULL, *police2 = NULL;
 	int size_window =500-500%size;
-	coordonnees position={0,0};
 
 	TTF_Init();
 
@@ -23,14 +22,8 @@ int main()
 	grille plateau = random_grille(size);
 	grille sol_plateau=initialize(size);
 	sol_plateau = copie(plateau,size);
-	
-	char couleur = plateau[0][0];
-
-	modif_color(position, couleur, couleur, plateau, size);
 
 	SDL_Surface *ecran = initialize_screen(size_window);
-	/*hemin=solution_opti(sol_plateau,size,&nbr_coups_max);
-	printf("%s\n",chemin );*/
 
 	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 
