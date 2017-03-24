@@ -1,6 +1,5 @@
 #include "fichier.h"
 
-
 int open_file(char const* file_name)
 {
 	int file_in;
@@ -82,14 +81,12 @@ grille init_file(int size, char* file_name)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			plateau[i][j].color = text[i*size + j + k];	/*le k sert à sauter les \n*/
-			plateau[i][j].appartenance = 0;
+			plateau[i][j] = text[i*size + j + k];	/*le k sert à sauter les \n*/
 		}
 		k++;
 	}
 
 	close_file(file_in);
-	plateau[0][0].appartenance = 1;
 
 	return plateau;
 }
@@ -109,7 +106,7 @@ void export_file(grille plateau, int size)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			fputc(plateau[i][j].color, file_out);	/*caractère par caractère*/
+			fputc(plateau[i][j], file_out);	/*caractère par caractère*/
 			if (j == size-1 && i != size-1)
 			{
 				fputc('\n', file_out);	/*pour mettre les \n en bout de ligne sauf la dernière*/

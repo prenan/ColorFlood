@@ -85,7 +85,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			couleur = plateau[i][j].color;
+			couleur = plateau[i][j];
 			switch (couleur)
 			{
 				case 'B':
@@ -125,6 +125,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	SDL_Rect position;
 	position.x = 5;
 	position.y = 510;
+	char ancienne_couleur = plateau[0][0];
+	coordonnees coord;
+
 
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
 	{
@@ -138,49 +141,61 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			switch (event.key.keysym.sym)
 			{
 				case SDLK_b:
-				if (plateau[0][0].color != 'B')
+				if (ancienne_couleur != 'B')
 				{
-					modif_color('B', plateau, size);
+					coord.x=0;
+					coord.y=0;
+					modif_color(coord, 'B', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_v:
-				if (plateau[0][0].color != 'V')
+				if (ancienne_couleur != 'V')
 				{
-					modif_color('V', plateau, size);
+					coord.x=0;
+					coord.y=0;
+					modif_color(coord, 'V', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_r:
-				if (plateau[0][0].color != 'R')
+				if (ancienne_couleur  != 'R')
 				{
-					modif_color('R', plateau, size);
+					coord.x=0;
+					coord.y=0;
+					modif_color(coord, 'R', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_j:
-				if (plateau[0][0].color != 'J')
+				if (ancienne_couleur != 'J')
 				{
-					modif_color('J', plateau, size);
+					coord.x=0;
+					coord.y=0;
+					modif_color(coord, 'J', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_m:
-				if (plateau[0][0].color != 'M')
+				if (ancienne_couleur != 'M')
 				{
-					modif_color('M', plateau, size);
+					coord.x=0;
+					coord.y=0;
+					modif_color(coord, 'M', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_g:
-				if (plateau[0][0].color != 'G')
+				if (ancienne_couleur != 'G')
 				{
-					modif_color('G', plateau, size);
+					coord.x=0;
+					coord.y=0;
+					modif_color(coord, 'G', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;

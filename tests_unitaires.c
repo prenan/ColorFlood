@@ -25,7 +25,7 @@ void test_change_color(void)
     
 	grille M = init_file(size, "fichier_grille.txt");
 	grille plateau=M;
-	plateau[0][0].color = c;
+	plateau[0][0] = c;
 
     CU_ASSERT_EQUAL_FATAL(change_color(co, c, M), plateau);
 }
@@ -94,9 +94,6 @@ void test_test_neighbour(void)
 	int size = 15;
 	grille M = init_file(size, "fichier_grille.txt");
 
-	M[size-1][size-2].appartenance = 1; 
-	M[size-2][size-1].appartenance = 1;  
-
 	CU_ASSERT(test_neighbour(M, coord_def(size-1, size-1), size, 'B') == 0); /* car appartenance = 1 */
 	CU_ASSERT(test_neighbour(M, coord_def(size-1, size-1), size, 'V') == 0); /* car appartenance = 1 */
 
@@ -144,7 +141,7 @@ void test_init_file(void)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			M1[i][j].color = 'R';
+			M1[i][j] = 'R';
 		}
 	}
 
@@ -154,7 +151,7 @@ void test_init_file(void)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			CU_ASSERT(M1[i][j].color == M2[i][j].color);
+			CU_ASSERT(M1[i][j] == M2[i][j]);
 		}
 	}	
 }
@@ -170,7 +167,7 @@ void test_export_file(void)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			CU_ASSERT(M1[i][j].color == M2[i][j].color);
+			CU_ASSERT(M1[i][j] == M2[i][j]);
 		}
 	}	
 }
@@ -188,7 +185,7 @@ void test_modif_color(void)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			CU_ASSERT(M1[i][j].appartenance == M2[i][j].appartenance);
+			//CU_ASSERT(M1[i][j].appartenance == M2[i][j].appartenance);
 		}
 	}	
 }
@@ -203,16 +200,14 @@ void test_Deep(void)
 	grille M1 = init_file(size, "fichier_grille.txt");
 	grille M2 = M1;
 
-	M2[1][0].appartenance=1;
-
-	char couleur_choisie=M1[0][0].color;
+	char couleur_choisie=M1[0][0];
 	P = Deep(couleur_choisie, M1, size, position_pere, P);
 
 	for (i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			CU_ASSERT(M1[i][j].appartenance == M2[i][j].appartenance);
+			//CU_ASSERT(M1[i][j].appartenance == M2[i][j].appartenance);
 		}
 	}
 }

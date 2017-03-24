@@ -18,10 +18,10 @@ grille initialize(int size)
 {
 	int i;
 	grille plateau = NULL;
-	plateau = (grille) calloc(size, sizeof(element *));
+	plateau = (grille) calloc(size, sizeof(char *));
 	for (i=0 ; i<size ; i++)
 	{
-		plateau[i] = (element *) calloc(size, sizeof(element));
+		plateau[i] = (char *) calloc(size, sizeof(char));
 	}
 
 	return plateau;
@@ -34,7 +34,7 @@ void display(grille plateau, int size)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			printf("%2c", plateau[i][j].color);
+			printf("%2c", plateau[i][j]);
 		}
 		printf("\n");
 	}
@@ -55,33 +55,31 @@ grille random_grille(int size)
 			switch (k)
 			{
 				case 0:
-				plateau[i][j].color = 'B';
+				plateau[i][j] = 'B';
 				break;
 
 				case 1:
-				plateau[i][j].color = 'V';
+				plateau[i][j] = 'V';
 				break;
 
 				case 2:
-				plateau[i][j].color = 'R';
+				plateau[i][j] = 'R';
 				break;
 
 				case 3:
-				plateau[i][j].color = 'J';
+				plateau[i][j] = 'J';
 				break;
 
 				case 4:
-				plateau[i][j].color = 'M';
+				plateau[i][j] = 'M';
 				break;
 
 				case 5:
-				plateau[i][j].color = 'G';
+				plateau[i][j] = 'G';
 				break;
 			}
-			plateau[i][j].appartenance = 0;
 		}
 	}
-	plateau[0][0].appartenance=1;
 	return plateau;
 }
 
@@ -90,7 +88,7 @@ grille change_color(coordonnees coord, char c, grille plateau)
 	int i=coord.x;
 	int j=coord.y;
 
-	plateau[i][j].color = c;
+	plateau[i][j] = c;
 
 	return plateau;
 }
@@ -103,7 +101,7 @@ bool if_flood(grille plateau, int size)
 	{
 		for (j=0 ; j<size ; j++)
 		{   
-			if(plateau[0][0].color != plateau[i][j].color)
+			if(plateau[0][0] != plateau[i][j])
 			{
 				return res = 0;
 			}
@@ -124,121 +122,34 @@ void free_space(grille plateau, int size)
 	plateau = NULL;
 }
 
-int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie)
+void modif_color(coordonnees position, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
 {
-	int i=coord.x, j=coord.y,voisin=1;
-	if (i<0 || j<0 || i>size || j>size)
+	int x=position.x;
+	int y=position.y;
+	if(plateau[x][y] = ancienne_couleur)
 	{
-		perror("Erreur coordonnees");
-		exit(1);
-	}
-	switch(voisin)
-	{
-		case 1:
+		plateau[x][y] = couleur_choisie;
+		if(x+1<size)
 		{
-			if (i!=0 && plateau[i-1][j].appartenance==0 && plateau[i-1][j].color==couleur_choisie)
-				break;
-			else
-				voisin++;
+			position.x +=1;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
 		}
-		case 2:
+		if(x-1>0)
 		{
-			if (j!= size-1 && plateau[i][j+1].appartenance==0 && plateau[i][j+1].color==couleur_choisie)
-				break;
-			else
-				voisin++;
+			position.x -=1;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
 		}
-		case 3:
+		if(y+1<size)
 		{
-			if (i!=size-1 && plateau[i+1][j].appartenance==0 && plateau[i+1][j].color==couleur_choisie)
-				break;
-			else
-				voisin++;
+			position.y +=1;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
 		}
-		case 4:
+		if(y-1>0)
 		{
-			if (j!= 0 && plateau[i][j-1].appartenance==0 && plateau[i][j-1].color==couleur_choisie)
-				break;
-			else
-				voisin=0;
+			position.y -=1;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
 		}
 	}
-	return voisin;
-}
-
-void modif_color(char couleur_choisie, grille plateau, int size)
-{
-	coordonnees position;
-
-	Pile P = NULL;
-
-	int i,j;
-
-	for (i=0 ; i<size ;i++)
-	{
-		for (j=0 ; j<size ; j++)
-		{
-			position= coord_def(i, j);
-			if(plateau[i][j].appartenance==1)
-			{
-				change_color(position,couleur_choisie,plateau);
-				P=empiler(P,position);
-				while(pile_estVide(P)!=1)
-				{
-					position = P->tete; 
-					P=Deep(couleur_choisie, plateau, size, position, P);
-					P=depiler(P);
-				}
-			}
-		}
-	}
-	free(P);
-}
-
-Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P)
-{
-	coordonnees position_fils;
-	switch (test_neighbour(plateau, position_pere, size, couleur_choisie))
-	{
-		case 0:
-		break;
-		case 1:
-		{
-			position_fils = coord_def(position_pere.x-1 , position_pere.y);
-			plateau[position_fils.x][position_fils.y].appartenance = 1;
-			P = empiler(P,position_fils);
-			P = Deep(couleur_choisie, plateau, size, position_fils, P);
-			break;
-		}
-
-		case 2:
-		{
-			position_fils = coord_def(position_pere.x, position_pere.y+1);
-			plateau[position_fils.x][position_fils.y].appartenance=1;
-			P = empiler(P,position_fils);
-			P = Deep(couleur_choisie, plateau, size, position_fils, P);
-			break;
-		}
-
-		case 3:
-		{
-			position_fils = coord_def(position_pere.x+1, position_pere.y);
-			plateau[position_fils.x][position_fils.y].appartenance = 1;
-			P = empiler(P,position_fils);
-			P = Deep(couleur_choisie, plateau, size, position_fils, P);
-			break;
-		}
-
-		case 4:
-		{
-			position_fils = coord_def(position_pere.x, position_pere.y-1);
-			plateau[position_fils.x][position_fils.y].appartenance = 1;
-			P = empiler(P,position_fils);
-			P = Deep(couleur_choisie, plateau, size, position_fils, P);
-			break;
-		}
-	}
-	return P;
 }
 
 grille copie(grille plateau, int size)

@@ -64,5 +64,4 @@ grille init_file(int size, char* file_name);
  */
 void export_file(grille plateau, int size);
 
-
 #endif
