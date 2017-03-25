@@ -18,13 +18,13 @@ int main()
 	}
 	int nbr_coups_max = floor(2.1*size-1 + 0.5);
 	grille M = random_grille(size);
-	char couleur = M[0][0].color;
+	char couleur = M[0][0];
 	char buffer[2];
-
+    char ancienne_couleur = M[0][0];
 	display(M, size);
 	printf("%d/%d coups\n",nbr_coup,nbr_coups_max);
 	export_file(M, size);
-	modif_color(couleur, M, size);
+	modif_color(0,0, couleur, ancienne_couleur, M, size);
 	
 	while(if_flood(M, size) != 1 && nbr_coup<nbr_coups_max)
 	{
@@ -33,15 +33,17 @@ int main()
 		couleur = buffer[0];
 		if(couleur == 'Q')
 			break;
-		if ((couleur!=M[0][0].color) && (couleur=='B'||couleur=='V'||couleur=='R'||couleur=='J'||couleur=='M'||couleur=='G'))
+		if ((couleur!=M[0][0]) && (couleur=='B'||couleur=='V'||couleur=='R'||couleur=='J'||couleur=='M'||couleur=='G'))
 			{
 				test_color=1;
 			}
+
+		ancienne_couleur = M[0][0];
 		switch (test_color)
 		{
 			case (1):
 			{
-				modif_color(couleur, M, size);
+				modif_color(0,0, couleur, ancienne_couleur, M, size);
 				nbr_coup++;
 				break;
 			}

@@ -31,13 +31,17 @@ sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
 ## Instructions d'utilisation
 
 Dans un terminal,
-* pour compiler
+* pour compiler et exécuter (avec interface graphique SDL)
 
 ```
 make
-./colorflood     exécuter (avec interface graphique SDL)
-./console        exécuter (mode console)
+./colorflood
+```
+* pour compiler et exécuter (mode console)
 
+```
+make console
+./console
 ```
 * pour tester l'absence de fuites de mémoire (Valgrind)
 
@@ -62,10 +66,6 @@ ouvrir html/index.html
 make clean
 ```
 
-* pour compacter les fichiers
-```
-make dist
-```
 
 ## Équipe THOR
 

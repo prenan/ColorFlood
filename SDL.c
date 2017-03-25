@@ -4,8 +4,8 @@
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 {
 	SDL_Rect rect;
-	rect.x=px;
-	rect.y=py;
+	rect.y=px;
+	rect.x=py;
 	rect.h=rect.w=size;
 	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
 	SDL_Flip(ecran);
@@ -17,7 +17,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
 }
 
-SDL_Surface *initialize_screen()
+SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran = NULL;
 	const SDL_VideoInfo *info = NULL;
@@ -71,7 +71,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_FreeSurface(texte3);
 }
 
-void display_SDL(SDL_Surface *ecran, grille plateau, int size)
+void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
 	RGB J = {255, 215, 0};
 	RGB R = {219, 23, 2};
@@ -85,7 +85,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size)
 	{
 		for (j=0 ; j<size ; j++)
 		{
-			couleur = plateau[i][j].color;
+			couleur = plateau[i][j];
 			switch (couleur)
 			{
 				case 'B':
@@ -116,7 +116,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size)
 	}
 }
 
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window)
 {
 	int continuer = 1, nbr_coup = 0;
 	SDL_Surface *texte;
@@ -128,6 +128,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
 	{
+		char ancienne_couleur = plateau[0][0];
 		SDL_WaitEvent(&event);
 		switch (event.type)
 		{
@@ -138,49 +139,49 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			switch (event.key.keysym.sym)
 			{
 				case SDLK_b:
-				if (plateau[0][0].color != 'B')
+				if (ancienne_couleur != 'B')
 				{
-					modif_color('B', plateau, size);
+					modif_color(0,0, 'B', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_v:
-				if (plateau[0][0].color != 'V')
+				if (ancienne_couleur != 'V')
 				{
-					modif_color('V', plateau, size);
+					modif_color(0,0, 'V', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_r:
-				if (plateau[0][0].color != 'R')
+				if (ancienne_couleur  != 'R')
 				{
-					modif_color('R', plateau, size);
+					modif_color(0,0, 'R', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_j:
-				if (plateau[0][0].color != 'J')
+				if (ancienne_couleur != 'J')
 				{
-					modif_color('J', plateau, size);
+					modif_color(0,0, 'J', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_m:
-				if (plateau[0][0].color != 'M')
+				if (ancienne_couleur != 'M')
 				{
-					modif_color('M', plateau, size);
+					modif_color(0,0, 'M', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
 
 				case SDLK_g:
-				if (plateau[0][0].color != 'G')
+				if (ancienne_couleur != 'G')
 				{
-					modif_color('G', plateau, size);
+					modif_color(0,0, 'G', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -192,10 +193,20 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				default:
 				break;
 			}
+			for(int i=0;i<size;i++)
+			{
+				for(int j=0;j<size;j++)
+				{
+					printf("%2c",plateau[i][j]);
+				}
+				printf("\n");
+			}
+			printf("\n");
+			//ancienne_couleur=plateau[0][0];
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
-			display_SDL(ecran, plateau, size);
+			display_SDL(ecran, plateau, size,size_window);
 			SDL_FreeSurface(texte);
 		}
 	}
@@ -227,6 +238,6 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
 		SDL_FreeSurface(texte);
-		sleep(4);
+		sleep(2);
 	}
 }

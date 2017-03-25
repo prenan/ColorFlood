@@ -23,15 +23,10 @@
  * Pour une case, on a son appartenance à la tâche ou non (int)
  * ainsi que sa couleur (char).
  */
-struct element
-{
-	int appartenance;
-	char color;
-};
 
 typedef struct element element;
 
-typedef element ** grille;
+typedef char ** grille;
 
 /**
  * \fn int choose_size()
@@ -101,40 +96,25 @@ grille change_color(coordonnees coord, char c, grille plateau);
 bool if_flood(grille plateau, int size);
 
 /**
- * \fn int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie)
- * \brief Fonction de test des cases voisines de même couleur.
- *
- * \param plateau Grille en cours.
- * \param coord Coordonnée de la case.
- * \param size Taille du jeu (grille size*size).
- * \param couleur_choisie Couleur choisie.
- * \return 0 s'il n'y a pas de voisin, 1, 2, 3 ou 4
- * si la case au-dessus, de droite, en-dessous ou à gauche a la même couleur que celle choisie.
- */
-int test_neighbour(grille plateau, coordonnees coord, int size, char couleur_choisie);
-
-/**
- * \fn void modif_color (char couleur_choisie, grille plateau, int size)
+ * \fn void modif_color (coordonnees position, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
  * \brief modifier la couleur de l'ensemble des cases où appartenance = 1  (la tache connexe)
  *
+ * \param position Position de la case à modifier.
  * \param couleur_choisie Couleur choisie.
+ * \param ancienne_couleur Ancienne couleur.
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
  */
-void modif_color (char couleur_choisie, grille plateau, int size);
+void modif_color (int x,int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size);
 
 /**
- * \fn Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P)
- * \brief Fonction récursive qui avance afin de chercher de nouveaux éléments de la même couleur, comme un parcours d'arbre en profondeur.
+ * \fn grille copie(grille plateau, int size)
+ * \brief Fonction qui copie une grille;
  *
- * \param couleur_choisie Couleur choisie.
- * \param plateau Grille en cours.
+ * \param plateau Grille que l'on souhaite modifier.
  * \param size Taille du jeu (grille size*size).
- * \param coord Coordonnée de la case.
- * \param P Pile du parcours lors de la recherche en profondeur.
- * \return La pile P avec un nouvel élément ou la pile sans modification.
+ * \return La nouvelle grille qui est égale à la grille mise en paramètre.
  */
-Pile Deep(char couleur_choisie, grille plateau, int size, coordonnees position_pere, Pile P);
-
+grille copie(grille plateau, int size);
 
 #endif
