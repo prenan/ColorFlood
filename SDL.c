@@ -125,12 +125,10 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	SDL_Rect position;
 	position.x = 5;
 	position.y = 510;
-	char ancienne_couleur = plateau[0][0];
-	coordonnees coord=coord_def(0,0);
-
 
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
 	{
+		char ancienne_couleur = plateau[0][0];
 		SDL_WaitEvent(&event);
 		switch (event.type)
 		{
@@ -143,9 +141,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_b:
 				if (ancienne_couleur != 'B')
 				{
-					coord.x=0;
-					coord.y=0;
-					modif_color(coord, 'B', ancienne_couleur, plateau, size);
+					modif_color(0,0, 'B', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -153,9 +149,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_v:
 				if (ancienne_couleur != 'V')
 				{
-					coord.x=0;
-					coord.y=0;
-					modif_color(coord, 'V', ancienne_couleur, plateau, size);
+					modif_color(0,0, 'V', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -163,9 +157,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_r:
 				if (ancienne_couleur  != 'R')
 				{
-					coord.x=0;
-					coord.y=0;
-					modif_color(coord, 'R', ancienne_couleur, plateau, size);
+					modif_color(0,0, 'R', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -173,9 +165,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_j:
 				if (ancienne_couleur != 'J')
 				{
-					coord.x=0;
-					coord.y=0;
-					modif_color(coord, 'J', ancienne_couleur, plateau, size);
+					modif_color(0,0, 'J', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -183,9 +173,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_m:
 				if (ancienne_couleur != 'M')
 				{
-					coord.x=0;
-					coord.y=0;
-					modif_color(coord, 'M', ancienne_couleur, plateau, size);
+					modif_color(0,0, 'M', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -193,9 +181,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_g:
 				if (ancienne_couleur != 'G')
 				{
-					coord.x=0;
-					coord.y=0;
-					modif_color(coord, 'G', ancienne_couleur, plateau, size);
+					modif_color(0,0, 'G', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
 				break;
@@ -216,7 +202,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				printf("\n");
 			}
 			printf("\n");
-			ancienne_couleur=plateau[0][0];
+			//ancienne_couleur=plateau[0][0];
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);

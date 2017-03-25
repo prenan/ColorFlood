@@ -122,51 +122,61 @@ void free_space(grille plateau, int size)
 	plateau = NULL;
 }
 
-void modif_color(coordonnees position, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
+void modif_color(int x,int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
 {
+
+	if(x >= 0 && x < size && y >= 0 && y < size && plateau[x][y] == ancienne_couleur && plateau[x][y] != couleur_choisie)
+    {
+     	plateau[x][y] = couleur_choisie; //set color before starting recursion
+
+    	modif_color(x+1, y, couleur_choisie, ancienne_couleur,plateau,size);
+    	
+    	modif_color(x-1, y, couleur_choisie, ancienne_couleur,plateau,size);
+    	
+    	modif_color(x, y-1, couleur_choisie, ancienne_couleur,plateau,size);
+ 		
+    	modif_color(x, y+1, couleur_choisie, ancienne_couleur,plateau,size);
+  	}
+  
+	/*
 	int x=position.x;
 	int y=position.y;
-	coordonnees new_position=coord_def(x,y);
 
-	if(plateau[x][y] == ancienne_couleur)
+	if((plateau[x][y] == ancienne_couleur) && (plateau[x][y] != couleur_choisie))
 	{
 		printf("choix %c\n",couleur_choisie );
 		printf("ancienne %c\n",ancienne_couleur );
 		printf("0\n");
 		plateau[x][y] = couleur_choisie;
-		if(x+1 < size)
+		//ancienne_couleur+ = plateau[0][0];
+		if( x+1<size && x-1>=0 && y+1<size && y-1>=0)
 		{
-			new_position.x = position.x+1 ;
-			printf("position x %d\n",position.x);
-			printf("position y %d\n",position.y);
-			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
-			printf("1\n");
-		}
-		if(x-1 >= 0)
-		{
-			new_position.x = position.x-1;
-			printf("position x %d\n",position.x);
-			printf("position y %d\n",position.y);
-			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
-			printf("2\n");
-		}
-		if(y+1 < size)
-		{
-			new_position.y = position.y+1;
-			printf("position x %d\n",position.x);
-			printf("position y %d\n",position.y);
-			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
-			printf("3\n");
-		}
-		if(y-1 >= 0)
-		{
-			new_position.y = position.y-1;
-			printf("position x %d\n",position.x);
-			printf("position y %d\n",position.y);
-			modif_color(new_position, couleur_choisie, ancienne_couleur, plateau, size);	
-			printf("4\n");
+			{
+			position.x++ ;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			//printf("x+1\n");
+			}
+
+			{
+			position.x--;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			//printf("x-1\n");
+			}
+
+			{
+			position.y++;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			//printf("y+1\n");
+			}
+
+			{
+			position.y--;
+			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
+			//printf("y-14\n");
+			}
 		}
 	}
+	*/
 }
 
 grille copie(grille plateau, int size)

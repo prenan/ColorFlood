@@ -6,21 +6,20 @@ char* solution(grille plateau, int size, int *nbr_coups)
 	*nbr_coups = 0;
 	int i;
 	char* couleurs = "BVRJMG";
-	coordonnees position={0,0};
 	char ancienne_couleur = plateau[0][0];
 	while(if_flood(plateau, size)==0)
 	{
 		i%=6;
 		if (plateau[0][0] != couleurs[i])	
 		{
-			modif_color (position, couleurs[i], ancienne_couleur, plateau, size);
+			modif_color (0,0, couleurs[i], ancienne_couleur, plateau, size);
 			chemin[*nbr_coups]=couleurs[i];
 			i++;
 		}
 		else
 		{
 			i++;
-			modif_color (position, couleurs[i], ancienne_couleur, plateau, size);
+			modif_color (0,0, couleurs[i], ancienne_couleur, plateau, size);
 			chemin[*nbr_coups]=couleurs[i];
 		}
 		*nbr_coups = *nbr_coups +1;
@@ -99,11 +98,10 @@ int testeur_chemins(char* chemin, grille plateau, int size)
 {
 	int taille = strlen(chemin);
 	int i;
-	coordonnees position={0,0};
 	char ancienne_couleur = plateau[0][0];
 	for (i=0; i<taille; i++)
 	{
-		modif_color(position,chemin[i], ancienne_couleur,plateau,size);
+		modif_color(0,0,chemin[i], ancienne_couleur,plateau,size);
 	}
 	return if_flood(plateau,size);
 }

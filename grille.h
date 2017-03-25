@@ -105,7 +105,7 @@ bool if_flood(grille plateau, int size);
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
  */
-void modif_color (coordonnees position, char couleur_choisie, char ancienne_couleur, grille plateau, int size);
+void modif_color (int x,int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size);
 
 /**
  * \fn grille copie(grille plateau, int size)
