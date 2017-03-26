@@ -6,22 +6,16 @@ CFLAGS = -Wall -Wextra -g -std=c99
 LFLAGS = -lm -lSDL -lSDL_ttf
 COBJ = $(CSRC:.c=.o)
 
-DIST_FILES = grille.h fichier.h pile.h coordonnees.h SDL.h n_arbres.h\
-		      grille.c\
-			  fichier.c\
-			  pile.c\
-			  coordonnees.c\
-			  SDL.c\
-			  n_arbres.c\
-			  liberation.ttf\
-			  tests_unitaires.c\
+DIST_FILES =  grille.h fichier.h pile.h coordonnees.h SDL.h n_arbres.h\
+		      grille.c fichier.c pile.c coordonnees.c SDL.c n_arbres.c\
+			  fichier_grille.txt fichier_grille_2.txt\
+			  liberation.ttf tests_unitaires.c\
+			  ourteam.bmp\
+			  plateau.txt\
+			  Doxyfile\
+			  README.md\
 			  main_console.c\
 			  main.c\
-			  fichier_grille.txt\
-			  fichier_grille_2.txt\
-			  plateau.txt\
-			  README.md\
-			  ourteam.bmp\
 			  Makefile
 
 DIR := $(shell basename `pwd`)

@@ -4,7 +4,9 @@
 #include <stdbool.h>
 #include <math.h>
 #include <stdlib.h>
+#include <SDL/SDL.h>
 #include "n_arbres.h"
+
 
 typedef struct t_narbre NNoeud,*NArbre;
 

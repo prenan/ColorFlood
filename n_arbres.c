@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <assert.h>
-#include <stdbool.h>
-#include <math.h>
-#include <stdlib.h>
+#include "n_arbres.h"
 
 #define NARBREVIDE NULL
 #define MAXFILS 5
