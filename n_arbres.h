@@ -5,8 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <SDL/SDL.h>
-#include "n_arbres.h"
-
+#include "grille.h"
 
 typedef struct t_narbre NNoeud,*NArbre;
 
@@ -18,7 +17,7 @@ NArbre nouvelNArbre(char c);
  ** @brief create a new node with initial color c
  **/
 
-NArbre ajoutFils(NArbre a,NArbre fils);
+NArbre insert(NArbre a,NArbre fils);
 
 void affNArbreRec(NArbre a, int num);
 

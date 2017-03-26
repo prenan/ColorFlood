@@ -31,8 +31,9 @@ NArbre nouvelNArbre(char c){
  ** @brief create a new node with initial color c
  **/
 
-NArbre ajoutFils(NArbre a,NArbre fils){
-  
+NArbre insert(NArbre a, char c){
+    
+    NArbre fils=nouvelNArbre(char c);
     for(int i=0;i<MAXFILS;i++){
          if(a->tabfils[i]==NULL){
             a->tabfils[i]=fils;
@@ -40,7 +41,7 @@ NArbre ajoutFils(NArbre a,NArbre fils){
            }
     }
     a->nbFils++;
-    return a;
+    return fils;
 }
 
 void affNArbreRec(NArbre a, int num){
@@ -102,4 +103,32 @@ void tree_delete(NArbre n) {
 	  	}
 		    node_delete(n);
 	  }
+}
+
+void sovleur(grille plateau, int size)
+{
+    grille copy=copie(plateau, int size);
+    char color[6]="BVRJMG"
+    char ancienne_couleur = copy[0][0];
+
+    NArbre solveur=nouvelNArbre(copy[0][0]);
+
+    while()
+    {
+      for(int i=0;i<5;i++)
+      {
+        if(solveur->c==color[i]);
+        else
+        NArbre fils=nouvelNArbre(char c);
+        for(int i=0;i<MAXFILS;i++){
+         if(a->tabfils[i]==NULL){
+            a->tabfils[i]=fils;
+            break;
+        }
+    }
+    a->nbFils++;      
+      }
+
+    }
+    modif_color(0, 0, char couleur_choisie, ancienne_couleur, copy, size);
 }
