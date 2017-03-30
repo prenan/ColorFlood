@@ -3,6 +3,7 @@
 #include "pile.h"
 #include "coordonnees.h"
 #include "SDL.h"
+#include "n_tree.h"
 /*#include "solveur.h"*/
 
 int main()
@@ -20,6 +21,10 @@ int main()
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 
 	grille plateau = random_grille(size);
+
+	NTree root=newNTree(plateau[0][0]);
+	solution(plateau, root, size);
+
 	grille sol_plateau=initialize(size);
 	sol_plateau = copie(plateau,size);
 

@@ -7,7 +7,10 @@
 #include <SDL/SDL.h>
 #include "grille.h"
 
-typedef struct NTree Nnode,*NTree;
+#ifndef NTREE_H
+#define NTREE_H
+
+typedef struct node* NTree;
 
 int NTreeVide(NTree a);
 
@@ -16,6 +19,8 @@ NTree nouvelNTree(char c);
 /**
  ** @brief create a new node with initial color c
  **/
+
+NTree newNTree(char c);
 
 NTree insert(NTree a,char c);
 
@@ -37,3 +42,9 @@ bool node_isleaf(NTree n);
 
 
 void tree_delete(NTree n);
+
+void solution(grille plateau, NTree root, int size);
+
+int modif_from_node(grille plateau, NTree n, int size);
+
+#endif

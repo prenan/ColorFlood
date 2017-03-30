@@ -1,25 +1,27 @@
+#include <assert.h>
+#include <string.h>
 #include "n_tree.h"
+#include "grille.h"
+
 
 #define TREEEMPTY NULL
 #define MAX 5
+char color[7]="BVRJMG";
 
  
-typedef struct NTree{
-      char c*;       /*the current color*/
-      struct NTree *tab[MAX];
+typedef struct node{
+      char *c;       /*the current color*/
       int h;         //the height information
       int len;       //the length  of this string
+      struct node *tab[MAX];
 }Nnode,*NTree;
-
-int is_empty(NTree a){
-    return (a==TREEEMPTY);
-}
 
 NTree newNTree(char c){
     Nnode *n;
     n=(Nnode*)malloc(sizeof(Nnode));
-    n->c=(char *)malloc(sizeof(1));
-    n->c=c;
+    n->len=1;
+    n->c=(char *)malloc(sizeof(n->len));
+    n->c=&c;
     for(int i=0;i<MAX;i++)
        n->tab[i]=NULL;
     return n;
@@ -29,31 +31,22 @@ NTree newNTree(char c){
  ** @brief create a new node with initial color c
  **/
 
-NTree insert(NTree a, char c){
+NTree insert(NTree a, char c){     //from a leaf to insert  !!!not root
     
     NTree son=newNTree(c);
-    son->h=
     for(int i=0;i<MAX;i++){
-         if(a->tab[i]==NULL){
+         if(a->tab[i]==NULL)
+         {
             a->tab[i]=son;
+            son->len=a->len+1;
+            son->c=(char *)malloc(sizeof(son->len));
+            son->c=strcat(a->c,&c);
             break;
-           }
+        }
     }
-    return NTree;
+    return son;
 }
 
-/*
-void printNTree(NTree a, int num){
-     if (!NTreeVide(a)) {
-   //afficher les infos du noeud *a
-     	printf("n%d [label=%c];\n",num,a->c);
-     	if(num!=0)
-	     printf("n%d -> n%c;\n",(num-1)/MAX,num);
-	for(int i=0;i<a->nbFils;i++)
-     	     printNTree(a->tab[i],MAX*num+i+1);
-    }
-}
-*/
 void node_delete(NTree n) {
 	  if (n) {
 	  	    int i;
@@ -82,7 +75,7 @@ bool node_isinner(NTree n) {
 /**
  ** detect if @a n is a leaf
  **/
-
+/*
 bool node_isleaf(NTree n) {
 	  assert(n);
 	  return !node_isinner(n);
@@ -90,30 +83,79 @@ bool node_isleaf(NTree n) {
 
 
 void tree_delete(NTree n) {
-	  if (n) {
-	  	int i;
-	  	for (i = 0; i < MAX; ++i)
-	  	{
-	  		tree_delete(n->tab[i]);
-	  	}
-	  	for (i = 0; i < MAX; ++i)
-	  	{
-	  		n->tab[i]=0;
-	  	}
-		    node_delete(n);
-	  }
+	  
 }
 
-void construct_ntree(grille plateau,int size)
+
+void solution(grille plateau,int size)
 {
     NTree root=newNTree(plateau[0][0]);
-    char color[6]="BVRJMG";
-    grille tmp=copie(plateau, size);
-    for(int i=0;i<MAX;i++)
+    int stop=1;
+    while(stop)
     {
-        NTree node=insert(root,color[i]);
-        modif_color(0, 0, char couleur_choisie, ancienne_couleur, copy, size);
+      int j=0;
+      for(int i=0;i<MAX;i++)
+      {
+        if(color[i]!=root->c[root->len-1])
+        {
+          root->tab[j++]=insert(root,color[i]);
+          stop=modif_from_node(plateau, n, size);
+        }
+      }
+      root=node;
     }
+}
+*/
+
+void solution(grille plateau, NTree root, int size)
+{
+  if(root)
+  {
+      int stop=1;
+      int j=0;
+      for(int i=0;i<MAX;i++)
+        {
+          if(color[i]!=root->c[root->len-1])
+          {
+            root->tab[j++]=insert(root,color[i]);
+            stop=modif_from_node(plateau, root->tab[j++], size);
+          }
+      }
+      if(!stop)
+      exit(0);
+      else
+      {
+        solution(plateau, root->tab[0], size);
+        solution(plateau, root->tab[1], size);
+        solution(plateau, root->tab[2], size);
+        solution(plateau, root->tab[3], size);
+        solution(plateau, root->tab[4], size);
+      }
+  }
+}
+
+int modif_from_node(grille plateau, NTree n, int size)
+{
+  grille copy=copie(plateau, size);
+  for(int i=0;i<n->len;i++)
+  {
+    if(!if_flood(copy,size))
+    {
+      printf("Best solution:");
+      for(int j=0;j<n->len;i++)
+      {
+        printf("%c->",n->c[j]);
+      }
+      printf("\n for %d shots",n->len);
+      return 0;
+    }
+    else
+    {
+      char ancienne_couleur=plateau[0][0];
+      modif_color(0, 0, n->c[i], ancienne_couleur, copy, size);
+    }  
+  }
+  return 1;
 }
 
 /*

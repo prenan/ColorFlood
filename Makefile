@@ -24,18 +24,21 @@ DISTNAME := $(DIR)_THOR.tar.gz
 
 all : colorflood console
 
-main.o: fichier.h grille.h pile.h coordonnees.h SDL.h main.c
+main.o: fichier.h grille.h pile.h coordonnees.h SDL.h n_tree.h main.c
 	$(CC) -c $(CFLAGS) main.c $(LFLAGS)
 
 SDL.o : SDL.h SDL.c
 	$(CC) -c $(CFLAGS) SDL.c
 
+n_ltree.o : grille.h n_tree.h n_tree.c
+	$(CC) -c $(CFLAGS) n_ltree.c
+
 main_console.o: fichier.h grille.h pile.h coordonnees.h main_console.c
 	$(CC) -c $(CFLAGS) main_console.c
 
-colorflood:$(COBJ) main.o SDL.o
+colorflood:$(COBJ) main.o SDL.o n_ltree.o
 		@echo "Building $@"
-		$(CC) -o $@ $(COBJ) SDL.o main.o $(LFLAGS) 
+		$(CC) -o $@ $(COBJ) SDL.o main.o n_ltree.o $(LFLAGS) 
 
 console:$(COBJ) main_console.o
 		@echo "Building $@"
