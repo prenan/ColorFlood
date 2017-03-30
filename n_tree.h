@@ -7,33 +7,33 @@
 #include <SDL/SDL.h>
 #include "grille.h"
 
-typedef struct t_narbre NNoeud,*NArbre;
+typedef struct NTree Nnode,*NTree;
 
-int narbreVide(NArbre a);
+int NTreeVide(NTree a);
 
-NArbre nouvelNArbre(char c);
+NTree nouvelNTree(char c);
 
 /**
  ** @brief create a new node with initial color c
  **/
 
-NArbre insert(NArbre a,NArbre fils);
+NTree insert(NTree a,char c);
 
-void affNArbreRec(NArbre a, int num);
+void affNTreeRec(NTree a, int num);
 
-void node_delete(NArbre n);
+void node_delete(NTree n);
 
 /**
  **  detect if n has children
  **/
 
-bool node_isinner(NArbre n);
+bool node_isinner(NTree n);
 
 /**
  ** detect if @a n is a leaf
  **/
 
-bool node_isleaf(NArbre n);
+bool node_isleaf(NTree n);
 
 
-void tree_delete(NArbre n);
+void tree_delete(NTree n);
