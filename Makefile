@@ -6,8 +6,8 @@ CFLAGS = -Wall -Wextra -g -std=c99
 LFLAGS = -lm -lSDL -lSDL_ttf
 COBJ = $(CSRC:.c=.o)
 
-DIST_FILES =  grille.h fichier.h pile.h coordonnees.h SDL.h n_arbres.h\
-		      grille.c fichier.c pile.c coordonnees.c SDL.c n_arbres.c\
+DIST_FILES =  grille.h fichier.h pile.h coordonnees.h SDL.h n_arbres.h n_tree.h\
+		      grille.c fichier.c pile.c coordonnees.c SDL.c n_arbres.c n_tree.c\
 			  fichier_grille.txt fichier_grille_2.txt\
 			  liberation.ttf tests_unitaires.c\
 			  ourteam.bmp\
@@ -30,15 +30,15 @@ main.o: fichier.h grille.h pile.h coordonnees.h SDL.h n_tree.h main.c
 SDL.o : SDL.h SDL.c
 	$(CC) -c $(CFLAGS) SDL.c
 
-n_ltree.o : grille.h n_tree.h n_tree.c
-	$(CC) -c $(CFLAGS) n_ltree.c
+n_tree.o : grille.h n_tree.h n_tree.c
+	$(CC) -c $(CFLAGS) n_tree.c
 
 main_console.o: fichier.h grille.h pile.h coordonnees.h main_console.c
 	$(CC) -c $(CFLAGS) main_console.c
 
-colorflood:$(COBJ) main.o SDL.o n_ltree.o
+colorflood:$(COBJ) main.o SDL.o n_tree.o
 		@echo "Building $@"
-		$(CC) -o $@ $(COBJ) SDL.o main.o n_ltree.o $(LFLAGS) 
+		$(CC) -o $@ $(COBJ) SDL.o main.o n_tree.o $(LFLAGS) 
 
 console:$(COBJ) main_console.o
 		@echo "Building $@"
