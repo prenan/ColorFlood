@@ -8,7 +8,7 @@
 char color[7]="BVRJMG";
 
 typedef struct node{
-      char *c;       /*the current color*/
+      char *str;       /*the current color*/
       int h;         //the height information
       int len;       //the length  of this string
       struct node* tab[MAX];  //array of pointer to five childs
@@ -17,9 +17,9 @@ typedef struct node{
 NTree newNTree(char c){              //create a new tree node with c 
     Nnode *n;
     n=(Nnode*)malloc(sizeof(Nnode));
-    n->len=1;                         //initialize the string len as 1
-    n->c=(char *)malloc(sizeof(n->len));
-    n->c=&c;
+    n->len=2;                         //initialize the string len as 1
+    n->str=(char *)malloc(sizeof(n->len));
+    n->str=&c;
     for(int i=0;i<MAX;i++)
        n->tab[i]=NULL;                //set all the children pointers as NULL
     return n;
@@ -34,8 +34,8 @@ NTree insert(NTree a, char c){     //from a leaf to insert  !!!not root
          	//a->tab[i]=(Nnode*)malloc(sizeof(Nnode));
             a->tab[i]=son;           //add this new tree(string "c") as his child       
             son->len=a->len+1;        // len of string ++       
-            son->c=(char *)malloc(sizeof(son->len));  //malloc bigger memomry to store new string
-            son->c=strcat(a->c,&c);     //add char c at the end
+            son->str=(char *)malloc(sizeof(son->len));  //malloc bigger memomry to store new string
+            son->str=strcat(a->str,&c);     //add char c at the end
             break;
         }
     }
@@ -99,7 +99,7 @@ int modif_from_node(grille plateau, NTree n, int size)
 	for(int i=0;i<n->len;i++)           //read all the character of string of this tree node
     {
 	  char ancienne_couleur=plateau[0][0];  
-	  modif_color(0, 0, n->c[i], ancienne_couleur, copy, size);
+	  modif_color(0, 0, n->str[i], ancienne_couleur, copy, size);
 
 	}
     if(if_flood(copy,size))  //After every time modif color if colorflood==ture
@@ -107,7 +107,7 @@ int modif_from_node(grille plateau, NTree n, int size)
       printf("Solution:");
       for(int j=0;j<n->len;j++)   //not a const char *, have to print one by one
       {
-        printf("%c->",n->c[j]);
+        printf("%c->",n->str[j]);
       }
       printf("\nAfter %d shots",n->len);
       return 1;           //A sulution is find return 1 not find return 0
@@ -126,9 +126,9 @@ void solution(grille plateau, NTree root, int size)
       int j=0;
       for(int i=0;i<MAX;i++)  //add in order the characters to the children nodes
       {
-          if(color[i]!=root->c[root->len-1])  //when it's equal to parent's last color, ignore that
+          if(color[i]!=root->str[root->len-1])  //when it's equal to parent's last color, ignore that
           {
-            root->tab[j++]=insert(root,color[i]);
+            insert(root,color[i]);
             modif_from_node(plateau, root->tab[j++], size); 
           }  //use all the children nodes string to try change color find colorflood
       }
