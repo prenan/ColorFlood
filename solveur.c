@@ -117,41 +117,46 @@ char* copie_texte(char* chemin, char* couleur)
 
 char* solveur(grille plateau, int size, int *nbr_coups)
 {
-	int i,j,k=0;
+	int i,j,m=0,k=0;
 	char* couleurs[6] = {"B","V","R","J","M","G"};
 	char*** chemins=malloc(100*sizeof(char**));
 	grille sol_plateau=initialize(size);
 
 	for (i=0;i<100;i++)
 	{
-		chemins[i]=malloc(pow(6,i+1)*sizeof(char*));
+		chemins[i]=malloc(pow(5,i+1)*sizeof(char*));
 	}
 
 	for(i=0;i<6;i++)
 	{
-		chemins[0][i]=couleurs[i];
+		if(couleurs[i][0]!=plateau[0][0])
+		{
+			chemins[0][k]=couleurs[i];
+			k++;
+		}
 	}
-
-
-	while(!if_flood(plateau,size))
+	k=0;
+	while(1)
 	{
-
 		for(i=0; i<pow(5,k+1);i++)
 		{
 			for (j=0;j<6;j++)
 			{
-				sol_plateau = copie(plateau,size);
-				chemins[k+1][j+i*6]=copie_texte(chemins[k][i],couleurs[j]);
-				if(testeur_chemins(chemins[k+1][j+i*6],sol_plateau,size)==1)
+				if(couleurs[j][0]!=chemins[k][i][k])
 				{
-					*nbr_coups = k+2;
-					return chemins[k+1][j+i*6];			
+					sol_plateau = copie(plateau,size);
+					chemins[k+1][m+i*5]=copie_texte(chemins[k][i],couleurs[j]);
+					if(testeur_chemins(chemins[k+1][m+i*5],sol_plateau,size)==1)
+					{
+						*nbr_coups = k+2;
+						return chemins[k+1][m+i*5];			
+					}
+					m++;
 				}
 			}
-
+			m=0;
 		}
 		k++;
 	}
-
 	return 0;
 }
