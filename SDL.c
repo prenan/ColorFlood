@@ -193,16 +193,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				default:
 				break;
 			}
-			for(int i=0;i<size;i++)
-			{
-				for(int j=0;j<size;j++)
-				{
-					printf("%2c",plateau[i][j]);
-				}
-				printf("\n");
-			}
-			printf("\n");
-			//ancienne_couleur=plateau[0][0];
+
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);

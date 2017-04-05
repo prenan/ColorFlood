@@ -102,36 +102,56 @@ int testeur_chemins(char* chemin, grille plateau, int size)
 	for (i=0; i<taille; i++)
 	{
 		modif_color(0,0,chemin[i], ancienne_couleur,plateau,size);
+		ancienne_couleur = chemin[i];
 	}
 	return if_flood(plateau,size);
 }
 
-char* copie_texte(char* chemin, char couleur)
+char* copie_texte(char* chemin, char* couleur)
 {
-	char ajout[1]= {couleur};
-	char *result = malloc(strlen(chemin)+strlen(ajout)+1);
+	char *result = malloc(strlen(chemin)+strlen(couleur)+1);
 	strcpy(result, chemin);
-	strcat(result, ajout);
+	strcat(result, couleur);
 	return result;
 }
-/*
-char ** solveur(grille plateau, int size, int* nbr_coups,char* chemin)
+
+char* solveur(grille plateau, int size, int *nbr_coups)
 {
-	char *chemins[2]={chemin};
-	char* chemin=malloc(sizeof(char));
-	char* couleurs = "BVRJMG";
-	int taille=strlen(chemins[0]);
-	char couleur=chemins[0][taille-1];
-	printf("couleur: %c\n",couleur );
-	while(j!=0)
+	int i,j,k=0;
+	char* couleurs[6] = {"B","V","R","J","M","G"};
+	char*** chemins=malloc(100*sizeof(char**));
+	grille sol_plateau=initialize(size);
+
+	for (i=0;i<100;i++)
 	{
-		for (i=0; i<6; i++)
-		{
-			if(couleur!=couleurs[i])
-			{
-				strcpy(chemins[1], chemin);
-				chemins[1]=copie(chemins[1],couleurs[i]);
-			}
-		}
+		chemins[i]=malloc(pow(6,i+1)*sizeof(char*));
 	}
-}*/
+
+	for(i=0;i<6;i++)
+	{
+		chemins[0][i]=couleurs[i];
+	}
+
+
+	while(!if_flood(plateau,size))
+	{
+
+		for(i=0; i<pow(5,k+1);i++)
+		{
+			for (j=0;j<6;j++)
+			{
+				sol_plateau = copie(plateau,size);
+				chemins[k+1][j+i*6]=copie_texte(chemins[k][i],couleurs[j]);
+				if(testeur_chemins(chemins[k+1][j+i*6],sol_plateau,size)==1)
+				{
+					*nbr_coups = k+2;
+					return chemins[k+1][j+i*6];			
+				}
+			}
+
+		}
+		k++;
+	}
+
+	return 0;
+}

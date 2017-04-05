@@ -3,14 +3,13 @@
 #include "pile.h"
 #include "coordonnees.h"
 #include "SDL.h"
-/*#include "solveur.h"*/
+#include "solveur.h"
 
 int main()
 {
 	int size = choose_size();
-	int nbr_coup = 0, nbr_coups_max=30;
+	int nbr_coup = 0, nbr_coups_max;
 	char nbr_coup_texte[30];
-	char* chemin = malloc(sizeof(char));
 	TTF_Font *police1 = NULL, *police2 = NULL;
 	int size_window =500-500%size;
 
@@ -18,14 +17,14 @@ int main()
 
 	police1 = TTF_OpenFont("liberation.ttf", 20);
 	police2 = TTF_OpenFont("liberation.ttf", 50);
-
 	grille plateau = random_grille(size);
-	grille sol_plateau=initialize(size);
-	sol_plateau = copie(plateau,size);
+
+	char* chemin = solveur(plateau,size,&nbr_coups_max);
+	printf("%s\n",chemin );
 
 	SDL_Surface *ecran = initialize_screen(size_window);
 
-	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
+	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d nbr coups min =%d", nbr_coup, nbr_coups_max,nbr_coups_max);
 
 	initialize_text(ecran, nbr_coup_texte, police1);
 	
@@ -40,7 +39,6 @@ int main()
 	
 	SDL_Quit();
 	free(chemin);
-	free_space(sol_plateau, size);
 	free_space(plateau, size);
 
 	return 0;
