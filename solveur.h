@@ -10,8 +10,6 @@
 #ifndef SOLVEUR_H
 #define SOLVEUR_H
 
-char* solution(grille plateau, int size, int *nbr_coups);
-
 char* solution_opti(grille plateau, int size,int *nbr_coups);
 
 int testeur_chemins(char* chemin, grille plateau, int size);

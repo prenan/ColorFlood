@@ -218,7 +218,6 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
-		SDL_FreeSurface(texte);
 		sleep(4);
 	}
 	if (if_flood(plateau, size) == 1)
@@ -228,7 +227,8 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
-		SDL_FreeSurface(texte);
 		sleep(2);
-	}
+	}	
+	SDL_FreeSurface(texte);
+
 }

@@ -25,4 +25,4 @@ doxygen:
 	doxygen Doxyfile
 
 clean:
-	-rm *.o colorflood test console
+	-rm *.o -f colorflood test console
