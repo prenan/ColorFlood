@@ -21,14 +21,45 @@
  * \param size_window Taille de l'écran de jeu.
  * \return La surface, ie. l'écran de la fenêtre.
  */
-char* solution_opti(grille plateau, int size, int *nbr_coups);
+/*char* solution_opti(grille plateau, int size, int *nbr_coups);*/
 
-int testeur_chemins(grille plateau, int size, char* chemin);
+/**
+ * \fn int testeur_chemins(grille plateau, int size, char* chemin)
+ * \brief Test si le chemin permet d'inonder le plateau.
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \param chemin Chemin à tester.
+ * \return 1 si le plateau est entièrement inondé d'une couleur en effectuant le chemin,
+ 	0 sinon.
+ */
+bool testeur_chemins(grille plateau, int size, char* chemin);
 
-char* copie_texte(char* chemin, char* couleur);
+/**
+ * \fn char* concatener(char* chemin, char* couleur)
+ * \brief Concaténer le chemin et une couleur.
+ * \param chemin Chemin.
+ * \param couleur Couleur.
+ * \return Une chaîne de caractères (le chemin puis la couleur bout à bout).
+ */
+char* concatener(char* chemin, char* couleur);
 
-char* solveur_brut(grille plateau, int size, int *nbr_coups);
+/**
+ * \fn char* solveur_brut(grille plateau, int size, int *nbr_coups)
+ * \brief Solveur : détermine le chemin le plus court pour terminer la partie
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \param nbr_coups_min Le nombre de coups du chemin le plus court trouvé.
+ * \return Une chaîne de caractères (le chemin puis la couleur bout à bout).
+ */
+char* solveur_brut(grille plateau, int size, int *nbr_coups_min);
 
+/**
+ * \fn void free_chemins(char*** chemins, int i, int j, int k, int l)
+ * \brief Libération de la mémoire des chemins.
+ *
+ * \param chemins Chemins à libérer.
+ * \param i, j, k, l ???
+ */
 void free_chemins(char*** chemins, int i, int j, int k, int l);
 
 

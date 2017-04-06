@@ -70,7 +70,6 @@ grille random_grille(int size);
  *
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
- * \return Libération de la mémoire d'une grille.
  */
 void free_space(grille plateau, int size);
 

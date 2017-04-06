@@ -8,7 +8,7 @@
 int main()
 {
 	int size = choose_size();
-	int nbr_coup = 0, nbr_coups_max;
+	int nbr_coup = 0, nbr_coups_max, nbr_coups_min;
 	char nbr_coup_texte[30];
 	TTF_Font *police1 = NULL, *police2 = NULL;
 	int size_window =500-500%size;
@@ -19,12 +19,13 @@ int main()
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 	grille plateau = random_grille(size);
 
-	char* chemin = solveur_brut(plateau, size, &nbr_coups_max);
+	char* chemin = solveur_brut(plateau, size, &nbr_coups_min);
 	printf("Solveur : %s\n", chemin);
+	nbr_coups_max = nbr_coups_min; /*niveau de difficulté*/
 
 	SDL_Surface *ecran = initialize_screen(size_window);
 
-	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, nbr_coups_max);
+	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, nbr_coups_min);
 
 	initialize_text(ecran, nbr_coup_texte, police1);
 	

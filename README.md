@@ -20,7 +20,7 @@ sudo apt-get install libfreetype6-dev
 ```
 Pour la documentation avec Doxygen :
 ```
-sudo apt install doxygen
+sudo apt-get install doxygen
 ```
 Pour le test des fuites de mémoire avec Valgrind :
 ```

@@ -101,6 +101,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
  * \param ecran L'écran de la fenêtre en cours.
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
+ * \param nbr_coup Le nombre de coups effectués (en cours).
  * \param nbr_coups_max Le nombre de coups maximum autorisés.
  * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
  * \param police La police du texte et sa taille.

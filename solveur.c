@@ -37,7 +37,7 @@ char* solution_opti(grille plateau, int size, int *nbr_coups)
 	return chemin; 
 }*/
 
-int testeur_chemins(grille plateau, int size, char* chemin)
+bool testeur_chemins(grille plateau, int size, char* chemin)
 {
 	int i, taille = strlen(chemin);
 	char ancienne_couleur = plateau[0][0];
@@ -49,7 +49,7 @@ int testeur_chemins(grille plateau, int size, char* chemin)
 	return if_flood(plateau, size);
 }
 
-char* copie_texte(char* chemin, char* couleur)
+char* concatener(char* chemin, char* couleur)
 {
 	char* result = malloc(strlen(chemin)+strlen(couleur)+1);
 	strcpy(result, chemin);
@@ -57,7 +57,7 @@ char* copie_texte(char* chemin, char* couleur)
 	return result;
 }
 
-char* solveur_brut(grille plateau, int size, int *nbr_coups)
+char* solveur_brut(grille plateau, int size, int *nbr_coups_min)
 {
 	int i, j, m = 0, k = 0, l;
 	char* couleurs[6] = {"B", "V", "R", "J", "M", "G"};
@@ -88,10 +88,10 @@ char* solveur_brut(grille plateau, int size, int *nbr_coups)
 				{
 					sol_plateau = copie(plateau, size);
 					l = m + i*5;
-					chemins[k+1][l] = copie_texte(chemins[k][i], couleurs[j]);
+					chemins[k+1][l] = concatener(chemins[k][i], couleurs[j]);
 					if(testeur_chemins(sol_plateau, size, chemins[k+1][l]) == 1)
 					{
-						*nbr_coups = k+2;
+						*nbr_coups_min = k+2;
 						char* solution = chemins[k+1][l];
 						free_space(sol_plateau, size);
 						free_chemins(chemins, i, j, k, l);
