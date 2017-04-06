@@ -50,15 +50,15 @@ int testeur_chemins(char* chemin, grille plateau, int size)
 
 char* copie_texte(char* chemin, char* couleur)
 {
-	char *result = malloc(strlen(chemin)+strlen(couleur)+1);
-	strcpy(result, chemin);
+	char* result=malloc(strlen(chemin)+strlen(couleur)+1);
+	strcpy(result,chemin);
 	strcat(result, couleur);
 	return result;
 }
 
 char* solveur(grille plateau, int size, int *nbr_coups)
 {
-	int i,j,m=0,k=0;
+	int i,j,m=0,k=0,l;
 	char* couleurs[6] = {"B","V","R","J","M","G"};
 	char*** chemins=malloc(100*sizeof(char**));
 	grille sol_plateau=initialize(size);
@@ -90,10 +90,27 @@ char* solveur(grille plateau, int size, int *nbr_coups)
 					if(testeur_chemins(chemins[k+1][m+i*5],sol_plateau,size)==1)
 					{
 						*nbr_coups = k+2;
+						l=m+i*5;
 						char* solution=chemins[k+1][m+i*5];
 						free_space(sol_plateau,size);
 						for(i=0;i<100;i++)
 						{
+							if(i>0 && i<k+1)
+							{
+								for(j=0;j<pow(5,i+1);j++)
+								{
+									free(chemins[i][j]);
+									chemins[i][j]=NULL;
+								}
+							}
+							if(i==k+1)
+							{
+								for(j=0;j<l;j++)
+								{
+									free(chemins[i][j]);
+									chemins[i][j]=NULL;
+								}
+							}
 							free(chemins[i]);
 							chemins[i]=NULL;
 						}
