@@ -22,6 +22,10 @@ Pour la documentation avec Doxygen :
 ```
 sudo apt install doxygen
 ```
+Pour le test des fuites de mémoire avec Valgrind :
+```
+sudo apt-get install valgrind
+```
 Pour les tests unitaires avec CUnit :
 ```
 sudo apt-get install libcunit1 libcunit1-doc libcunit1-dev
