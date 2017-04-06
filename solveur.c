@@ -61,7 +61,7 @@ char* solveur(grille plateau, int size, int *nbr_coups)
 	int i,j,m=0,k=0,l;
 	char* couleurs[6] = {"B","V","R","J","M","G"};
 	char*** chemins=malloc(100*sizeof(char**));
-	grille sol_plateau=initialize(size);
+	grille sol_plateau=NULL;
 
 	for (i=0;i<100;i++)
 	{
