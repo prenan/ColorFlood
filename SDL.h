@@ -15,7 +15,6 @@
 #define SDL_H
 
 
-
 /**
  * \struct RGB
  * \brief Structure pour la couleur d'une case

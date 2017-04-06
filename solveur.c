@@ -1,6 +1,8 @@
 #include "solveur.h"
 
+
 /*
+//Solution du jeu mais pas la minimale
 char* solution_opti(grille plateau, int size, int *nbr_coups)
 {
 	char* chemin=malloc(sizeof(char));
@@ -35,96 +37,100 @@ char* solution_opti(grille plateau, int size, int *nbr_coups)
 	return chemin; 
 }*/
 
-int testeur_chemins(char* chemin, grille plateau, int size)
+int testeur_chemins(grille plateau, int size, char* chemin)
 {
-	int taille = strlen(chemin);
-	int i;
+	int i, taille = strlen(chemin);
 	char ancienne_couleur = plateau[0][0];
-	for (i=0; i<taille; i++)
+	for (i=0 ; i<taille ; i++)
 	{
-		modif_color(0,0,chemin[i], ancienne_couleur,plateau,size);
+		modif_color(0, 0, chemin[i], ancienne_couleur, plateau, size);
 		ancienne_couleur = chemin[i];
 	}
-	return if_flood(plateau,size);
+	return if_flood(plateau, size);
 }
 
 char* copie_texte(char* chemin, char* couleur)
 {
-	char* result=malloc(strlen(chemin)+strlen(couleur)+1);
-	strcpy(result,chemin);
+	char* result = malloc(strlen(chemin)+strlen(couleur)+1);
+	strcpy(result, chemin);
 	strcat(result, couleur);
 	return result;
 }
 
-char* solveur(grille plateau, int size, int *nbr_coups)
+char* solveur_brut(grille plateau, int size, int *nbr_coups)
 {
-	int i,j,m=0,k=0,l;
-	char* couleurs[6] = {"B","V","R","J","M","G"};
-	char*** chemins=malloc(100*sizeof(char**));
-	grille sol_plateau=NULL;
+	int i, j, m = 0, k = 0, l;
+	char* couleurs[6] = {"B", "V", "R", "J", "M", "G"};
+	char*** chemins = malloc(100*sizeof(char**));
+	grille sol_plateau = NULL;
 
-	for (i=0;i<100;i++)
+	for (i=0 ; i<100 ; i++)
 	{
-		chemins[i]=malloc(pow(5,i+1)*sizeof(char*));
+		chemins[i] = malloc(pow(5,i+1)*sizeof(char*));
 	}
 
-	for(i=0;i<6;i++)
+	for(i=0 ; i<6 ; i++)
 	{
-		if(couleurs[i][0]!=plateau[0][0])
+		if(couleurs[i][0] != plateau[0][0])
 		{
-			chemins[0][k]=couleurs[i];
+			chemins[0][k] = couleurs[i];
 			k++;
 		}
 	}
-	k=0;
+	k = 0;
 	while(1)
 	{
-		for(i=0; i<pow(5,k+1);i++)
+		for(i=0 ; i<pow(5,k+1) ; i++)
 		{
-			for (j=0;j<6;j++)
+			for (j=0 ; j<6 ; j++)
 			{
-				if(couleurs[j][0]!=chemins[k][i][k])
+				if(couleurs[j][0] != chemins[k][i][k])
 				{
-					sol_plateau = copie(plateau,size);
-					chemins[k+1][m+i*5]=copie_texte(chemins[k][i],couleurs[j]);
-					if(testeur_chemins(chemins[k+1][m+i*5],sol_plateau,size)==1)
+					sol_plateau = copie(plateau, size);
+					l = m + i*5;
+					chemins[k+1][l] = copie_texte(chemins[k][i], couleurs[j]);
+					if(testeur_chemins(sol_plateau, size, chemins[k+1][l]) == 1)
 					{
 						*nbr_coups = k+2;
-						l=m+i*5;
-						char* solution=chemins[k+1][m+i*5];
-						free_space(sol_plateau,size);
-						for(i=0;i<100;i++)
-						{
-							if(i>0 && i<k+1)
-							{
-								for(j=0;j<pow(5,i+1);j++)
-								{
-									free(chemins[i][j]);
-									chemins[i][j]=NULL;
-								}
-							}
-							if(i==k+1)
-							{
-								for(j=0;j<l;j++)
-								{
-									free(chemins[i][j]);
-									chemins[i][j]=NULL;
-								}
-							}
-							free(chemins[i]);
-							chemins[i]=NULL;
-						}
-						free(chemins);
-						chemins=NULL;
+						char* solution = chemins[k+1][l];
+						free_space(sol_plateau, size);
+						free_chemins(chemins, i, j, k, l);
 						return solution;			
 					}
-					free_space(sol_plateau,size);
+					free_space(sol_plateau, size);
 					m++;
 				}
 			}
-			m=0;
+			m = 0;
 		}
 		k++;
 	}
 	return 0;
+}
+
+void free_chemins(char*** chemins, int i, int j, int k, int l)
+{
+	for(i=0 ; i<100 ; i++)
+	{
+		if(i>0 && i<k+1)
+		{
+			for(j=0 ; j<pow(5,i+1) ; j++)
+			{
+				free(chemins[i][j]);
+				chemins[i][j] = NULL;
+			}
+		}
+		if(i == k+1)
+		{
+			for(j=0 ; j<l ; j++)
+			{
+				free(chemins[i][j]);
+				chemins[i][j] = NULL;
+			}
+		}
+		free(chemins[i]);
+		chemins[i] = NULL;
+	}
+	free(chemins);
+	chemins = NULL;
 }
