@@ -118,6 +118,7 @@ char* solveur(grille plateau, int size, int *nbr_coups)
 						chemins=NULL;
 						return solution;			
 					}
+					free_space(sol_plateau,size);
 					m++;
 				}
 			}
