@@ -9,7 +9,7 @@ int main()
 {
 	int size = choose_size();
 	int nbr_coup = 0, nbr_coups_max, nbr_coups_min;
-	char nbr_coup_texte[30];
+	char nbr_coup_texte[50];
 	TTF_Font *police1 = NULL, *police2 = NULL;
 	int size_window =500-500%size;
 
@@ -21,7 +21,7 @@ int main()
 
 	char* chemin = solveur_brut(plateau, size, &nbr_coups_min);
 	printf("Solveur : %s\n", chemin);
-	nbr_coups_max = nbr_coups_min; /*niveau de difficulté*/
+	nbr_coups_max = nbr_coups_min+2; /*niveau de difficulté*/
 
 	SDL_Surface *ecran = initialize_screen(size_window);
 
