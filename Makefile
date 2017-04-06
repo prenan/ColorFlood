@@ -33,7 +33,7 @@ SDL.o : SDL.h SDL.c
 n_tree.o : grille.h n_tree.h n_tree.c
 	$(CC) -c $(CFLAGS) n_tree.c
 
-main_console.o: fichier.h grille.h pile.h coordonnees.h main_console.c
+main_console.o: fichier.h grille.h pile.h coordonnees.h n_tree.h main_console.c
 	$(CC) -c $(CFLAGS) main_console.c
 
 colorflood:$(COBJ) main.o SDL.o n_tree.o
@@ -42,7 +42,7 @@ colorflood:$(COBJ) main.o SDL.o n_tree.o
 
 console:$(COBJ) main_console.o
 		@echo "Building $@"
-		$(CC) -o $@ $(COBJ) main_console.o -lm 
+		$(CC) -o $@ $(COBJ) n_tree.o main_console.o -lm 
 
 test:
 	$(CC) $(CFLAGS) grille.c fichier.c pile.c coordonnees.c tests_unitaires.c -o test -lcunit -g -lm

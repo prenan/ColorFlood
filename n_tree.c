@@ -8,7 +8,7 @@
 char color[7]="BVRJMG";
 
 typedef struct node{
-      char *str;       /*the current color*/
+      char *str;       /*the current color string*/
       int h;         //the height information
       int len;       //the length  of this string
       struct node* tab[MAX];  //array of pointer to five childs
@@ -17,7 +17,7 @@ typedef struct node{
 NTree newNTree(char c){              //create a new tree node with c 
     Nnode *n;
     n=(Nnode*)malloc(sizeof(Nnode));
-    n->len=2;                         //initialize the string len as 1
+    n->len=1;                         //initialize the string len as 1
     n->str=(char *)malloc(sizeof(n->len));
     n->str=&c;
     for(int i=0;i<MAX;i++)
@@ -36,7 +36,7 @@ NTree insert(NTree a, char c){     //from a leaf to insert  !!!not root
             son->len=a->len+1;        // len of string ++       
             son->str=(char *)malloc(sizeof(son->len));  //malloc bigger memomry to store new string
             son->str=strcat(a->str,&c);     //add char c at the end
-            break;
+            break;    //leaves this loop
         }
     }
     return son;         //return the new tree node
@@ -95,19 +95,19 @@ int modif_from_node(grille plateau, NTree n, int size)
   //assert(n);
   if(n!=NULL)
   { 
-	grille copy=copie(plateau, size);   //backup original plateau to manipulate  
-	for(int i=0;i<n->len;i++)           //read all the character of string of this tree node
+  	grille copy=copie(plateau, size);   //backup original plateau to manipulate  
+  	for(int i=0;i<n->len;i++)           //read all the character of string of this tree node
     {
-	  char ancienne_couleur=plateau[0][0];  
-	  modif_color(0, 0, n->str[i], ancienne_couleur, copy, size);
+  	  char ancienne_couleur=plateau[0][0];  
+  	  modif_color(0, 0, n->str[i], ancienne_couleur, copy, size);
 
-	}
+  	}
     if(if_flood(copy,size))  //After every time modif color if colorflood==ture
     {						 // print the current string which is a solution
       printf("Solution:");
       for(int j=0;j<n->len;j++)   //not a const char *, have to print one by one
       {
-        printf("%c->",n->str[j]);
+        printf("->%c",n->str[j]);
       }
       printf("\nAfter %d shots",n->len);
       return 1;           //A sulution is find return 1 not find return 0

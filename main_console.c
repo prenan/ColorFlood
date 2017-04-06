@@ -3,6 +3,7 @@
 #include "grille.h"
 #include "pile.h"
 #include "coordonnees.h"
+#include "n_tree.h"
 
 int main()
 {
@@ -18,6 +19,9 @@ int main()
 	}
 	int nbr_coups_max = floor(2.1*size-1 + 0.5);
 	grille M = random_grille(size);
+	NTree root=newNTree(M[0][0]);
+	solution(M, root, size);
+	tree_delete(root);
 	char couleur = M[0][0];
 	char buffer[2];
     char ancienne_couleur = M[0][0];

@@ -137,46 +137,7 @@ void modif_color(int x,int y, char couleur_choisie, char ancienne_couleur, grill
  		
     	modif_color(x, y+1, couleur_choisie, ancienne_couleur,plateau,size);
   	}
-  
-	/*
-	int x=position.x;
-	int y=position.y;
-
-	if((plateau[x][y] == ancienne_couleur) && (plateau[x][y] != couleur_choisie))
-	{
-		printf("choix %c\n",couleur_choisie );
-		printf("ancienne %c\n",ancienne_couleur );
-		printf("0\n");
-		plateau[x][y] = couleur_choisie;
-		//ancienne_couleur+ = plateau[0][0];
-		if( x+1<size && x-1>=0 && y+1<size && y-1>=0)
-		{
-			{
-			position.x++ ;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
-			//printf("x+1\n");
-			}
-
-			{
-			position.x--;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
-			//printf("x-1\n");
-			}
-
-			{
-			position.y++;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
-			//printf("y+1\n");
-			}
-
-			{
-			position.y--;
-			modif_color(position, couleur_choisie, ancienne_couleur, plateau, size);	
-			//printf("y-14\n");
-			}
-		}
-	}
-	*/
+  	
 }
 
 grille copie(grille plateau, int size)

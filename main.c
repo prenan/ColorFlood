@@ -22,9 +22,11 @@ int main()
 
 	grille plateau = random_grille(size);
 
+	display(plateau,size);
+
 	NTree root=newNTree(plateau[0][0]);
 	solution(plateau, root, size);
-	tree_delete(root);
+	//tree_delete(root);
 
 	grille sol_plateau=initialize(size);
 	sol_plateau = copie(plateau,size);

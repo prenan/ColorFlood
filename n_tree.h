@@ -43,8 +43,8 @@ bool node_isleaf(NTree n);
 
 void tree_delete(NTree n);
 
-void solution(grille plateau, NTree root, int size);
-
 int modif_from_node(grille plateau, NTree n, int size);
+
+void solution(grille plateau, NTree root, int size);
 
 #endif
