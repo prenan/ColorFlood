@@ -73,6 +73,7 @@ char* solveur_brut(grille plateau, int size, int *nbr_coups_min)
 	{
 		if(couleurs[i][0] != plateau[0][0])
 		{
+			chemins[0][k] = malloc(sizeof(char));
 			chemins[0][k] = couleurs[i];
 			k++;
 		}

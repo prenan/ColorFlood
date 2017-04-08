@@ -58,7 +58,10 @@ char* solveur_brut(grille plateau, int size, int *nbr_coups_min);
  * \brief Libération de la mémoire des chemins.
  *
  * \param chemins Chemins à libérer.
- * \param i, j, k, l ???
+ * \param i la taille maximale de nos chemins (en effectuant des tests on a remarqué qu'on avaait jamais plus de 60 coups).
+ * \param j le nombre de chemins différent lorsqu'on est à l'étage i.
+ * \param k l'étage où l'on a trouvé la solution. 
+ * \param l la position de cette solution au sein de l'étage.
  */
 void free_chemins(char*** chemins, int i, int j, int k, int l);
 
