@@ -138,6 +138,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	RGB M = {128, 0, 128};
 	int i, j;
 	char couleur;
+
 	for (i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
@@ -182,6 +183,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	SDL_Rect position;
 	position.x = 5;
 	position.y = 510;
+
+	int nbr_coups_min;
+	char* chemin;
 
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
 	{
@@ -241,6 +245,12 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					modif_color(0,0, 'G', ancienne_couleur, plateau, size);
 					nbr_coup++;
 				}
+				break;
+
+				case SDLK_s:
+				chemin = solveur_brut(plateau, size, &nbr_coups_min);
+				printf("Solveur : %s\n", chemin);
+				free(chemin);
 				break;
 
 				case SDLK_ESCAPE:

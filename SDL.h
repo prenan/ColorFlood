@@ -10,6 +10,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "grille.h"
+#include "solveur.h"
 
 #ifndef SDL_H
 #define SDL_H

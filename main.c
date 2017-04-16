@@ -9,7 +9,7 @@ int main()
 {
 	int size = 0; /* taille du jeu sera indiquée au menu par le joueur */
 	int size_window = 0; /* taille de la fenetre dépendra de size */
-	int nbr_coup = 0, nbr_coups_max, nbr_coups_min;
+	int nbr_coup = 0, nbr_coups_max;
 	char nbr_coup_texte[50];
 	SDL_Surface *ecran = NULL;
 	TTF_Font *police1 = NULL, *police2 = NULL;
@@ -40,14 +40,13 @@ int main()
 	{
 		grille plateau = random_grille(size);
 
-		char* chemin = solveur_brut(plateau, size, &nbr_coups_min);
-		printf("Solveur : %s\n", chemin);
-		nbr_coups_max = nbr_coups_min+2; /*niveau de difficulté*/
+		
+		nbr_coups_max = 30; /*niveau de difficulté*/
 
 		size_window =500-500%size;
 		ecran = initialize_screen(size_window);
 
-		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, nbr_coups_min);
+		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, 31);
 
 		initialize_text(ecran, nbr_coup_texte, police1);
 		
@@ -56,7 +55,6 @@ int main()
 		nbr_coup = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coup_texte, police1, size_window);
 		end_game(ecran, plateau, size, nbr_coup, nbr_coups_max, police2);
 
-		free(chemin);
 		free_space(plateau, size);
 	}
 
