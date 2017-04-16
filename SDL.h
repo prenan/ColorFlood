@@ -57,9 +57,10 @@ void fillScreen(SDL_Surface *ecran, RGB couleur);
  * \param police1 Police du texte 'indications' et sa taille
  * \param police1 Police du texte 'compteur' et sa taille
  * \param size Pointeur pour enregistrer la taille choisie 
+ * \param difficulte Pointeur pour enregistrer la difficultée choisie 
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size);
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)

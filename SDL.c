@@ -17,32 +17,33 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
 }
 
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte)
 {
-	SDL_Surface *ecran = NULL, *texte1, *texte2;
+	SDL_Surface *ecran = NULL, *texte1, *texte2, *texte3, *texte4;
 	SDL_Event event;
-	SDL_Rect position1, position2;
+	SDL_Rect position1, position2, position3, position4;
 	SDL_Color couleur_texte = {255, 255, 255, 42}, fond_texte1 = {255, 215, 0, 42}, fond_texte2 ={1, 215, 88, 42};
 	RGB V = {1, 215, 88};
 
-	int continuer = 1, compteur = 3;
-	char compteur_txt[50];
+	int continuer = 1, compteur = 3, niveau = 1;
+	char compteur_txt[50], niveau_txt[50];
 
 	position1.x = 1;
 	position1.y = 5;
+	position4.x = 1;
+	position4.y = 30;
 	position2.x = 0;
 	position2.y = 120;
+	position3.x = 0;
+	position3.y = 220;
 
 	ecran = SDL_SetVideoMode(400, 400, 8, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 	fillScreen(ecran, V);
 
-	texte1 = TTF_RenderText_Shaded(police1, "'Fleche haut' ou 'Fleche bas' puis 'espace'", couleur_texte, fond_texte2);
-	texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
-
-	SDL_BlitSurface(texte1, NULL, ecran, &position1);
-	SDL_BlitSurface(texte2, NULL, ecran, &position2);
-
+	texte1 = TTF_RenderText_Shaded(police1, "Fleches 'gauche/droite' : difficulte.", couleur_texte, fond_texte2);
+	texte4 = TTF_RenderText_Shaded(police1, "Fleches 'haut/bas' : taille. Puis 'espace'", couleur_texte, fond_texte2);
+	
 	while(continuer)
 	{
 		SDL_WaitEvent(&event);
@@ -63,8 +64,17 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 						if (compteur > 3)
 							compteur --;
 						break;
+					case SDLK_RIGHT:
+						if (niveau < 3)
+							niveau++;
+							break;
+					case SDLK_LEFT:
+						if (niveau > 1)
+							niveau--;
+							break;
 					case SDLK_SPACE:
 						*size = compteur;
+						*difficulte = niveau;
 						continuer = 0;
 						break;
 					default:
@@ -72,12 +82,16 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 				}
 				break;
 		}
-
 		sprintf(compteur_txt, "Taille choisie : %d", compteur);
 		texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
+		sprintf(niveau_txt, "Difficulte : %d", niveau);
+		texte3 = TTF_RenderText_Shaded(police2, niveau_txt, couleur_texte, fond_texte1);
+
 		fillScreen(ecran, V);
 		SDL_BlitSurface(texte1, NULL, ecran, &position1);
 		SDL_BlitSurface(texte2, NULL, ecran, &position2);
+		SDL_BlitSurface(texte3, NULL, ecran, &position3);
+		SDL_BlitSurface(texte4, NULL, ecran, &position4);
 		SDL_Flip(ecran);
 	}
 

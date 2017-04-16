@@ -7,7 +7,7 @@
 
 int main()
 {
-	int size = 0; /* taille du jeu sera indiquée au menu par le joueur */
+	int size = 0, difficulte = 0;
 	int size_window = 0; /* taille de la fenetre dépendra de size */
 	int nbr_coup = 0, nbr_coups_max;
 	char nbr_coup_texte[50];
@@ -35,13 +35,12 @@ int main()
 	police1 = TTF_OpenFont("liberation.ttf", 20);
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 
-	ecran = menu(police1, police2, &size);
+	ecran = menu(police1, police2, &size, &difficulte);
 	if (size != 0)
 	{
 		grille plateau = random_grille(size);
 
-		
-		nbr_coups_max = 30; /*niveau de difficulté*/
+		nbr_coups_max = difficulte*10; /*niveau de difficulté*/
 
 		size_window =500-500%size;
 		ecran = initialize_screen(size_window);
