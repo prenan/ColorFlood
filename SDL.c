@@ -30,7 +30,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 
 	position1.x = 1;
 	position1.y = 5;
-	position2.x = 20;
+	position2.x = 0;
 	position2.y = 120;
 
 	ecran = SDL_SetVideoMode(400, 400, 8, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
@@ -56,7 +56,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 				switch(event.key.keysym.sym)
 				{
 					case SDLK_UP: // Flèche haut
-						if (compteur < 7) /* pour le solveur */
+						if (compteur < 24) /* pour le solveur */
 							compteur ++;
 							break;
 					case SDLK_DOWN: // Flèche bas
@@ -75,7 +75,8 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 
 		sprintf(compteur_txt, "Taille choisie : %d", compteur);
 		texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
-
+		fillScreen(ecran, V);
+		SDL_BlitSurface(texte1, NULL, ecran, &position1);
 		SDL_BlitSurface(texte2, NULL, ecran, &position2);
 		SDL_Flip(ecran);
 	}
@@ -109,7 +110,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_Surface *texte1, *texte2, *texte3;
 
 	texte1 = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
-	texte2 = TTF_RenderText_Shaded(police, "Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
+	texte2 = TTF_RenderText_Shaded(police, "Pour le solveur : taper 'S'. Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
 	texte3 = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 
 	position1.x = 5;
@@ -248,9 +249,16 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				break;
 
 				case SDLK_s:
-				chemin = solveur_brut(plateau, size, &nbr_coups_min);
-				printf("Solveur : %s\n", chemin);
-				free(chemin);
+				if(size > 7)
+				{
+					printf("Solveur brut non optimisé pour cette taille.\n");
+				}
+				else
+				{
+					chemin = solveur_brut(plateau, size, &nbr_coups_min);
+					printf("Solveur : %s\n", chemin);
+					free(chemin);
+				}
 				break;
 
 				case SDLK_ESCAPE:
