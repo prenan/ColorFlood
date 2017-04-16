@@ -46,7 +46,7 @@ int main()
 		size_window =500-500%size;
 		ecran = initialize_screen(size_window);
 
-		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, 31);
+		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d.", nbr_coup, nbr_coups_max);
 
 		initialize_text(ecran, nbr_coup_texte, police1);
 		

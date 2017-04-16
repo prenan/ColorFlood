@@ -255,8 +255,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				}
 				else
 				{
+					printf("Solveur en cours...\n");
 					chemin = solveur_brut(plateau, size, &nbr_coups_min);
-					printf("Solveur : %s\n", chemin);
+					printf("[%s] en %d coups.\n", chemin, nbr_coups_min);
 					free(chemin);
 				}
 				break;
