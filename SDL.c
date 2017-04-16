@@ -17,24 +17,84 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
 }
 
+SDL_Surface * menu(TTF_Font *police1, TTF_Font *police2, int *size)
+{
+	SDL_Surface *ecran = NULL, *texte1, *texte2;
+	SDL_Event event;
+	SDL_Rect position1, position2;
+	RGB V = {1, 215, 88};
+
+	int continuer = 1;
+    int compteur = 3;
+    char compteur_txt[50];
+
+
+    SDL_Color couleur_texte = {255, 255, 255, 42}, fond_texte1 = {255, 215, 0, 42}, fond_texte2 ={1, 215, 88, 42};
+
+    position1.x = 1;
+	position1.y = 5;
+	position2.x = 20;
+	position2.y = 120;
+
+
+	ecran = SDL_SetVideoMode(400, 400, 8, SDL_HWSURFACE); /* fenetre au début à cette taille par défaut */
+    SDL_WM_SetCaption("menu ColorFlood", NULL);
+    fillScreen(ecran, V);
+
+   	texte1 = TTF_RenderText_Shaded(police1, "'Fleche haut' ou 'Fleche bas' puis 'espace'" , couleur_texte, fond_texte2);
+   	sprintf(compteur_txt, "Taille choisie: %d", compteur);
+   	texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
+
+   	SDL_BlitSurface(texte1, NULL, ecran, &position1);
+   	SDL_BlitSurface(texte2, NULL, ecran, &position2);
+
+   	while (continuer)
+    {
+        SDL_WaitEvent(&event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                continuer = 0;
+                break;
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym)
+                {
+                    case SDLK_UP: // Flèche haut
+                    	if (compteur < 7) /* pour le solveur */
+                        	compteur ++;
+                        break;
+                    case SDLK_DOWN: // Flèche bas
+                        if (compteur > 3)
+                        	compteur --;
+                        break;
+                    case SDLK_SPACE:
+                    	*size = compteur;
+                    	continuer = 0;
+                    	break;
+                    default:
+						break;
+                }
+                break;
+        }
+
+        sprintf(compteur_txt, "Taille choisie : %d", compteur);
+   		texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
+        
+        SDL_BlitSurface(texte2, NULL, ecran, &position2);
+        SDL_Flip(ecran);
+    }
+
+    SDL_FreeSurface(texte1); //libération de mémoire
+    SDL_FreeSurface(texte2);
+    return ecran;
+}
+
+
 SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran = NULL;
-	const SDL_VideoInfo *info = NULL;
+	
 	RGB init_screen = {255, 255, 255};	/* blanc */
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
-		SDL_Quit();
-	}
-
-	info = SDL_GetVideoInfo();
-	if(!info)
-	{
-		fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
-		SDL_Quit();
-	}
 
 	ecran = SDL_SetVideoMode(size_window, size_window+200, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
@@ -232,3 +292,4 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 	SDL_FreeSurface(texte);
 
 }
+

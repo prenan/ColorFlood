@@ -51,8 +51,18 @@ void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
 /**
+ * \fn SDL_Surface * menu(TTF_Font *police1, TTF_Font *police2, int *size)
+ * \brief affiche un menu pour choisir la taille du jeu 
+ * \param police1 police du texte 'indications' et sa taille
+ * \param police1 police du texte 'compteur' et sa taille
+ * \param size pointeur pour enregistrer la taille choisie 
+ * \return La surface menu 
+ */
+SDL_Surface * menu(TTF_Font *police1, TTF_Font *police2, int *size);
+
+/**
  * \fn SDL_Surface *initialize_screen(int size_window)
- * \brief Initialisation de la fenêtre.
+ * \brief Initialisation de la fenêtre du jeu (après le menu)
  * \param size_window Taille de l'écran de jeu.
  * \return La surface, ie. l'écran de la fenêtre.
  */
