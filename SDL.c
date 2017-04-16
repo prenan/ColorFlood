@@ -38,7 +38,6 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 	fillScreen(ecran, V);
 
 	texte1 = TTF_RenderText_Shaded(police1, "'Fleche haut' ou 'Fleche bas' puis 'espace'", couleur_texte, fond_texte2);
-	sprintf(compteur_txt, "Taille choisie: %d", compteur);
 	texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
 
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
@@ -50,6 +49,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 		switch(event.type)
 		{
 			case SDL_QUIT:
+				*size = 0;
 				continuer = 0;
 				break;
 			case SDL_KEYDOWN:
@@ -82,6 +82,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
 
 	SDL_FreeSurface(texte1); //libération de mémoire
 	SDL_FreeSurface(texte2);
+
 	return ecran;
 }
 
@@ -90,7 +91,7 @@ SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran = NULL;
 	
-	RGB init_screen = {255, 255, 255};	/* blanc */
+	RGB init_screen = {255, 255, 255};	//blanc
 
 	ecran = SDL_SetVideoMode(size_window, size_window+200, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */

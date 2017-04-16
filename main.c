@@ -36,32 +36,35 @@ int main()
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 
 	ecran = menu(police1, police2, &size);
+	if (size != 0)
+	{
+		grille plateau = random_grille(size);
 
-	grille plateau = random_grille(size);
+		char* chemin = solveur_brut(plateau, size, &nbr_coups_min);
+		printf("Solveur : %s\n", chemin);
+		nbr_coups_max = nbr_coups_min+2; /*niveau de difficulté*/
 
-	char* chemin = solveur_brut(plateau, size, &nbr_coups_min);
-	printf("Solveur : %s\n", chemin);
-	nbr_coups_max = nbr_coups_min+2; /*niveau de difficulté*/
+		size_window =500-500%size;
+		ecran = initialize_screen(size_window);
 
-	size_window =500-500%size;
-	ecran = initialize_screen(size_window);
+		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, nbr_coups_min);
 
-	sprintf(nbr_coup_texte, "Nombre de coups : %d/%d. Solveur : %d coups", nbr_coup, nbr_coups_max, nbr_coups_min);
+		initialize_text(ecran, nbr_coup_texte, police1);
+		
+		display_SDL(ecran, plateau, size,size_window);
 
-	initialize_text(ecran, nbr_coup_texte, police1);
-	
-	display_SDL(ecran, plateau, size,size_window);
+		nbr_coup = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coup_texte, police1, size_window);
+		end_game(ecran, plateau, size, nbr_coup, nbr_coups_max, police2);
 
-	nbr_coup = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coup_texte, police1, size_window);
-	end_game(ecran, plateau, size, nbr_coup, nbr_coups_max, police2);
-	
+		free(chemin);
+		free_space(plateau, size);
+	}
+
 	TTF_CloseFont(police1);
 	TTF_CloseFont(police2);
 	TTF_Quit();
-	
+		
 	SDL_Quit();
-	free(chemin);
-	free_space(plateau, size);
 
 	return 0;
 }
