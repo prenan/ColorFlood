@@ -151,9 +151,9 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 	time_t deb, fin; 
 	time(&deb);
 	int i, j, k = 0, l = 0, min;
-	char* couleurs[6] = {"B", "V", "R", "J", "M", "G"};
-	char** chemins_1 = malloc(sizeof(char*));
-	char** chemins_2 = malloc(sizeof(char*));
+	char* couleurs[6] = {"B\0", "V\0", "R\0", "J\0", "M\0", "G\0"};
+	char** chemins_1 = malloc(5*sizeof(char*));
+	char** chemins_2 = malloc(5*sizeof(char*));
 	grille sol_plateau = NULL;
 	int valeur[6]={0};
 
