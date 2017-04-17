@@ -14,15 +14,6 @@
 #ifndef SOLVEUR_H
 #define SOLVEUR_H
 
-
-/**
- * \fn SDL_Surface *initialize_screen(int size_window)
- * \brief Initialisation de la fenêtre.
- * \param size_window Taille de l'écran de jeu.
- * \return La surface, ie. l'écran de la fenêtre.
- */
-/*char* solution_opti(grille plateau, int size, int *nbr_coups);*/
-
 /**
  * \fn int testeur_chemins(grille plateau, int size, char* chemin)
  * \brief Test si le chemin permet d'inonder le plateau.
@@ -65,14 +56,52 @@ char* solveur_brut(grille plateau, int size, int *nbr_coups_min);
  */
 void free_chemins(char*** chemins, int i, int j, int k, int l);
 
+/**
+ * \fn void comparateur_avancement(grille plateau, int size, int* valeur)
+ * \brief Remplit un tableau de valeur avec le nombre de cases connexes pour chaque couleur.
+ *
+ * \param plateau le plateau de jeu.
+ * \param size la taille du plateau.
+ * \param valeur le tableau comptenant le nombre de cases connexes pour chaque couleur.
+ */
 void comparateur_avancement(grille plateau, int size,int* valeur);
 
+/**
+ * \fn void free_c(char** chemins, int k)
+ * \brief Libération de la mémoire des chemins.
+ *
+ * \param chemins Chemins à libérer.
+ * \param k nombre d'éléments sur la ligne. 
+ */
 void free_c(char** chemins,int k);
 
+/**
+ * \fn int minimum(int* valeur)
+ * \brief Trouve la valeur minimale du tableau.
+ *
+ * \param valeur le tableau dont on cherche le minimum. 
+ * \return La valeur minimale du tableau.
+ */
 int minimum(int* valeur);
 
+/**
+ * \fn char* solveur_perf(grille plateau, int size, int *nbr_coups)
+ * \brief Solveur : détermine le chemin le plus court pour terminer la partie de manière plus optimale.
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \param nbr_coups_min Le nombre de coups du chemin le plus court trouvé.
+ * \return Une chaîne de caractères comptenant un chemin minimal.
+ */
 char* solveur_perf(grille plateau, int size, int *nbr_coups_min);
 
+/**
+ * \fn char* solveur_rapide(grille plateau, int size, int *nbr_coups)
+ * \brief Solveur : détermine une solution rapidement du jeu (relativement optimisée).
+ * \param plateau Grille en cours.
+ * \param size Taille du jeu (grille size*size).
+ * \param nbr_coups_min Le nombre de coups du chemin le plus court trouvé.
+ * \return Une chaîne de caractères comptenant une solution proche de la minimale.
+ */
 char* solution_rapide(grille plateau, int size, int *nbr_coups);
 
 
