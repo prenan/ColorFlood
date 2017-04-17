@@ -56,9 +56,15 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			*size = 0;
 			continuer = 0;
 			break;
+			
 			case SDL_KEYDOWN:
 			switch(event.key.keysym.sym)
 			{
+					case SDLK_ESCAPE:
+					*size = 0;
+					continuer = 0;
+					break;
+
 					case SDLK_UP: // Flèche haut
 					if (compteur < 24) /* pour le solveur */
 						compteur ++;

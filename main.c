@@ -8,14 +8,13 @@
 int main()
 {
 	int size = 0, difficulte = 0, nbr_coup = 0, nbr_coups_max;
-	int size_window = 0;	/* taille de la fenetre dépendra de size */
+	int size_window = 0;	/*taille de la fenetre dépendra de size*/
 	char nbr_coup_texte[50];
-	/*char* chemin_efficace=malloc(100*sizeof(char));*/
 
 	SDL_Surface *ecran = NULL;
 	TTF_Font *police1 = NULL, *police2 = NULL;
 
-	/* initialisation da la SDL */
+	/*initialisation da la SDL*/
 	const SDL_VideoInfo *info = NULL;
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -28,7 +27,7 @@ int main()
 		fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
 		SDL_Quit();
 	}
-	/*fin d'initialisation de la SDL */ 
+	/*fin d'initialisation de la SDL*/ 
 
 	TTF_Init();
 
@@ -43,10 +42,7 @@ int main()
 
 		grille plateau_sol = copie(plateau,size);
 
-		solution_rapide(plateau_sol, size, &nbr_coups_max);
-		/*for (i=0 ; i<nbr_coups_max ; i++)
-			printf("%c", chemin_efficace[i]);
-		printf("\n");*/
+		solution_rapide(plateau_sol, size, &nbr_coups_max);	/*utile pour le niveau de difficulté*/
 		
 		nbr_coups_max += 5/difficulte; /*niveau de difficulté*/
 
