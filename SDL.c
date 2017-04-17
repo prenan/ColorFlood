@@ -1,6 +1,5 @@
 #include "SDL.h"
 
-
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 {
 	SDL_Rect rect;
@@ -19,14 +18,16 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 
 SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte)
 {
-	SDL_Surface *ecran = NULL, *texte1, *texte2, *texte3, *texte4;
+	SDL_Surface *ecran = NULL, *texte1, *texte2, *texte3, *texte4,*fond=NULL;
 	SDL_Event event;
-	SDL_Rect position1, position2, position3, position4;
-	SDL_Color couleur_texte = {255, 255, 255, 42}, fond_texte1 = {255, 215, 0, 42}, fond_texte2 ={1, 215, 88, 42};
-	RGB V = {1, 215, 88};
+	SDL_Rect position1, position2, position3, position4, positionFond;
+	SDL_Color couleur_texte = {255, 255, 255, 42};
 
 	int continuer = 1, compteur = 3, niveau = 1;
 	char compteur_txt[50], niveau_txt[50];
+
+    positionFond.x = 0;
+    positionFond.y = 0;
 
 	position1.x = 1;
 	position1.y = 5;
@@ -37,13 +38,14 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	position3.x = 39;
 	position3.y = 220;
 
-	ecran = SDL_SetVideoMode(400, 400, 8, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
+	ecran = SDL_SetVideoMode(400, 400, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
+	fond = SDL_LoadBMP("fond2.bmp");
+    SDL_BlitSurface(fond, NULL, ecran, &positionFond);
+    SDL_Flip(ecran);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
-	fillScreen(ecran, V);
-
-	texte1 = TTF_RenderText_Shaded(police1, "Fleches 'gauche/droite' : difficulte.", couleur_texte, fond_texte2);
-	texte4 = TTF_RenderText_Shaded(police1, "Fleches 'haut/bas' : taille. Puis 'espace'", couleur_texte, fond_texte2);
 	
+	texte1 = TTF_RenderText_Blended(police1, "Fleches 'gauche/droite' : difficulte.", couleur_texte);
+	texte4 = TTF_RenderText_Blended(police1, "Fleches 'haut/bas' : taille. Puis 'espace'", couleur_texte);
 	while(continuer)
 	{
 		SDL_WaitEvent(&event);
@@ -83,11 +85,10 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 				break;
 			}
 			sprintf(compteur_txt, "Taille choisie : %d", compteur);
-			texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
+			texte2 = TTF_RenderText_Blended(police2, compteur_txt, couleur_texte);
 			sprintf(niveau_txt, "Difficulte : %2d", niveau);
-			texte3 = TTF_RenderText_Shaded(police2, niveau_txt, couleur_texte, fond_texte1);
+			texte3 = TTF_RenderText_Blended(police2, niveau_txt, couleur_texte);
 
-			fillScreen(ecran, V);
 			SDL_BlitSurface(texte1, NULL, ecran, &position1);
 			SDL_BlitSurface(texte2, NULL, ecran, &position2);
 			SDL_BlitSurface(texte3, NULL, ecran, &position3);
