@@ -31,8 +31,8 @@ int main()
 
 	TTF_Init();
 
-	police1 = TTF_OpenFont("liberation.ttf", 20);
-	police2 = TTF_OpenFont("liberation.ttf", 50);
+	police1 = TTF_OpenFont("orkney.ttf", 20);
+	police2 = TTF_OpenFont("orkney.ttf", 50);
 
 	ecran = menu(police1, police2, &size, &difficulte);
 
