@@ -44,8 +44,8 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
     SDL_Flip(ecran);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 	
-	texte1 = TTF_RenderText_Blended(police1, "Fleches 'gauche/droite' : difficulte.", couleur_texte);
-	texte4 = TTF_RenderText_Blended(police1, "Fleches 'haut/bas' : taille. Puis 'espace'", couleur_texte);
+	texte1 = TTF_RenderUTF8_Blended(police1, "Flèches 'gauche/droite' : difficulté.", couleur_texte);
+	texte4 = TTF_RenderUTF8_Blended(police1, "Flèches 'haut/bas' : taille. Puis 'espace'", couleur_texte);
 	while(continuer)
 	{
 		SDL_WaitEvent(&event);
@@ -85,9 +85,9 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 				break;
 			}
 			sprintf(compteur_txt, "Taille choisie : %d", compteur);
-			texte2 = TTF_RenderText_Blended(police2, compteur_txt, couleur_texte);
-			sprintf(niveau_txt, "Difficulte : %2d", niveau);
-			texte3 = TTF_RenderText_Blended(police2, niveau_txt, couleur_texte);
+			texte2 = TTF_RenderUTF8_Blended(police2, compteur_txt, couleur_texte);
+			sprintf(niveau_txt, "Difficulté : %2d", niveau);
+			texte3 = TTF_RenderUTF8_Blended(police2, niveau_txt, couleur_texte);
 
 			SDL_BlitSurface(fond, NULL, ecran, &positionFond);
 			SDL_BlitSurface(texte1, NULL, ecran, &position1);
@@ -127,9 +127,9 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};	/* 4ème paramètre inutile */
 	SDL_Surface *texte1, *texte2, *texte3;
 
-	texte1 = TTF_RenderText_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
-	texte2 = TTF_RenderText_Shaded(police, "Pour le solveur : taper 'S'. Pour quitter : taper 'echap'.", texteNoir, fondBlanc);
-	texte3 = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
+	texte1 = TTF_RenderUTF8_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
+	texte2 = TTF_RenderUTF8_Shaded(police, "Pour le solveur : taper 'S'. Pour quitter : taper 'échap'.", texteNoir, fondBlanc);
+	texte3 = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 
 	position1.x = 5;
 	position1.y = 610;
@@ -267,17 +267,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				break;
 
 				case SDLK_s:
-				/*if(size > 7)
-				{
-					printf("Solveur brut non optimisé pour cette taille.\n");
-				}
-				else
-				{
-					printf("Solveur en cours...\n");
-					chemin = solveur_perf(plateau, size, &nbr_coups_min);
-					printf("[%s] en %d coups.\n", chemin, nbr_coups_min);
-					free(chemin);
-				}*/
 				printf("Solveur en cours...\n");
 				chemin = solveur_perf(plateau, size, &nbr_coups_min);
 				printf("[%s] en %d coups.\n", chemin, nbr_coups_min);
@@ -293,7 +282,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			}
 
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
-			texte = TTF_RenderText_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
+			texte = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
 			display_SDL(ecran, plateau, size,size_window);
 			SDL_FreeSurface(texte);
@@ -311,7 +300,7 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 
 	if (nbr_coup >= nbr_coups_max && if_flood(plateau, size) == 0)
 	{
-		texte = TTF_RenderText_Blended(police, "GAME OVER", texteNoir);
+		texte = TTF_RenderUTF8_Blended(police, "GAME OVER", texteNoir);
 		position.x = 110;
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
@@ -320,7 +309,7 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 	}
 	if (if_flood(plateau, size) == 1)
 	{
-		texte = TTF_RenderText_Blended(police, "WIN", texteNoir);
+		texte = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
 		position.x = 190;
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);

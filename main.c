@@ -48,7 +48,7 @@ int main()
 			printf("%c",chemin_efficace[i] );
 		printf("\n");
 		
-		nbr_coups_max += 12/difficulte; /*niveau de difficulté*/
+		nbr_coups_max += 5/difficulte; /*niveau de difficulté*/
 
 		size_window =500-500%size;
 		ecran = initialize_screen(size_window);
