@@ -7,10 +7,12 @@
 
 int main()
 {
+	int i;
 	int size = 0, difficulte = 0;
 	int size_window = 0; /* taille de la fenetre dépendra de size */
 	int nbr_coup = 0, nbr_coups_max;
 	char nbr_coup_texte[50];
+	char* chemin_efficace=malloc(100*sizeof(char));
 	SDL_Surface *ecran = NULL;
 	TTF_Font *police1 = NULL, *police2 = NULL;
 
@@ -40,7 +42,14 @@ int main()
 	{
 		grille plateau = random_grille(size);
 
-		nbr_coups_max = difficulte*10; /*niveau de difficulté*/
+		grille plateau_sol= copie(plateau,size);
+
+		chemin_efficace=solution_rapide( plateau_sol,size,&nbr_coups_max);
+		for (i=0; i<nbr_coups_max;i++)
+			printf("%c",chemin_efficace[i] );
+		printf("\n");
+		
+		nbr_coups_max += 12/difficulte; /*niveau de difficulté*/
 
 		size_window =500-500%size;
 		ecran = initialize_screen(size_window);
@@ -55,6 +64,7 @@ int main()
 		end_game(ecran, plateau, size, nbr_coup, nbr_coups_max, police2);
 
 		free_space(plateau, size);
+		free_space(plateau_sol, size);
 	}
 
 	TTF_CloseFont(police1);

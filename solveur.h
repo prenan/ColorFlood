@@ -65,5 +65,15 @@ char* solveur_brut(grille plateau, int size, int *nbr_coups_min);
  */
 void free_chemins(char*** chemins, int i, int j, int k, int l);
 
+void comparateur_avancement(grille plateau, int size,int* valeur);
+
+void free_c(char** chemins,int k);
+
+int minimum(int* valeur);
+
+char* solveur_perf(grille plateau, int size, int *nbr_coups_min);
+
+char* solution_rapide(grille plateau, int size, int *nbr_coups);
+
 
 #endif
