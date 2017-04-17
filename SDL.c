@@ -34,7 +34,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	position4.y = 30;
 	position2.x = 5;
 	position2.y = 120;
-	position3.x = 30;
+	position3.x = 39;
 	position3.y = 220;
 
 	ecran = SDL_SetVideoMode(400, 400, 8, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
