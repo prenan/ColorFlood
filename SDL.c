@@ -1,5 +1,6 @@
 #include "SDL.h"
 
+
 void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 {
 	SDL_Rect rect;
@@ -18,7 +19,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 
 SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte)
 {
-	SDL_Surface *ecran = NULL, *texte1, *texte2, *texte3, *texte4,*fond=NULL;
+	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4,*fond;
 	SDL_Event event;
 	SDL_Rect position1, position2, position3, position4, positionFond;
 	SDL_Color couleur_texte = {255, 255, 255, 42};
@@ -26,8 +27,8 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	int continuer = 1, compteur = 3, niveau = 1;
 	char compteur_txt[50], niveau_txt[50];
 
-    positionFond.x = 0;
-    positionFond.y = 0;
+	positionFond.x = 0;
+	positionFond.y = 0;
 
 	position1.x = 1;
 	position1.y = 5;
@@ -40,8 +41,8 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 
 	ecran = SDL_SetVideoMode(400, 400, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
 	fond = SDL_LoadBMP("fond2.bmp");
-    SDL_BlitSurface(fond, NULL, ecran, &positionFond);
-    SDL_Flip(ecran);
+	SDL_BlitSurface(fond, NULL, ecran, &positionFond);
+	SDL_Flip(ecran);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 	
 	texte1 = TTF_RenderUTF8_Blended(police1, "Flèches 'gauche/droite' : difficulté.", couleur_texte);
@@ -59,26 +60,31 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			switch(event.key.keysym.sym)
 			{
 					case SDLK_UP: // Flèche haut
-						if (compteur < 24) /* pour le solveur */
-					compteur ++;
+					if (compteur < 24) /* pour le solveur */
+						compteur ++;
 					break;
+
 					case SDLK_DOWN: // Flèche bas
 					if (compteur > 3)
 						compteur --;
 					break;
+
 					case SDLK_RIGHT:
 					if (niveau < 3)
 						niveau++;
 					break;
+
 					case SDLK_LEFT:
 					if (niveau > 1)
 						niveau--;
 					break;
+
 					case SDLK_SPACE:
 					*size = compteur;
 					*difficulte = niveau;
 					continuer = 0;
 					break;
+
 					default:
 					break;
 				}
@@ -86,7 +92,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			}
 			sprintf(compteur_txt, "Taille choisie : %d", compteur);
 			texte2 = TTF_RenderUTF8_Blended(police2, compteur_txt, couleur_texte);
-			sprintf(niveau_txt, "Difficulté : %2d", niveau);
+			sprintf(niveau_txt, "Difficulté : %d", niveau);
 			texte3 = TTF_RenderUTF8_Blended(police2, niveau_txt, couleur_texte);
 
 			SDL_BlitSurface(fond, NULL, ecran, &positionFond);
@@ -317,5 +323,4 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 		sleep(2);
 	}	
 	SDL_FreeSurface(texte);
-
 }

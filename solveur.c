@@ -1,5 +1,6 @@
 #include "solveur.h"
 
+
 bool testeur_chemins(grille plateau, int size, char* chemin)
 {
 	int i, taille = strlen(chemin);
@@ -103,18 +104,18 @@ void comparateur_avancement(grille plateau, int size,int* valeur)
 {
 	char* couleurs = "BVRJMG";
 	char ancienne_couleur = plateau[0][0];
-	int k,j,i;
-	for (i=0; i<6; i++)
+	int i, j, k;
+	for (i=0 ; i<6 ; i++)
 	{
-		valeur[i]=0;
+		valeur[i] = 0;
 		grille testeur = copie(plateau, size);
 		modif_color(0, 0, couleurs[i], ancienne_couleur, testeur, size);
 		modif_color(0, 0, 'C', couleurs[i], testeur, size);
-		for(j=0; j<size;j++)
+		for(j=0 ; j<size ; j++)
 		{
-			for (k=0;k<size;k++)
+			for (k=0 ; k<size ; k++)
 			{
-				if( testeur[j][k]=='C')
+				if( testeur[j][k] == 'C')
 				{
 					valeur[i]++;
 				}
@@ -126,10 +127,10 @@ void comparateur_avancement(grille plateau, int size,int* valeur)
 int minimum(int* valeur)
 {
 	int i,mini=valeur[0];
-	for(i=1; i<6;i++)
+	for(i=1 ; i<6 ; i++)
 	{
 		if(valeur[i]<mini)
-			mini=valeur[i];
+			mini = valeur[i];
 	}
 	return mini;
 }
@@ -137,13 +138,13 @@ int minimum(int* valeur)
 void free_c(char** chemins,int k)
 {
 	int i;
-	for (i=0;i<k;i++)
+	for (i=0 ; i<k ; i++)
 	{
 		free(chemins[i]);
-		chemins[i]=NULL;
+		chemins[i] = NULL;
 	}
 	free(chemins);
-	chemins=NULL;
+	chemins = NULL;
 }
 
 char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
@@ -169,7 +170,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 	}
 	while(1)
 	{
-		chemins_2=realloc(chemins_2,5*k*sizeof(char*));
+		chemins_2 = realloc(chemins_2,5*k*sizeof(char*));
 		for(i=0 ; i<k ; i++)
 		{
 			sol_plateau = copie(plateau, size);
@@ -191,7 +192,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 						free_c(chemins_2,l);
 						free_space(sol_plateau, size);
 						time(&fin); 
-						printf("Il s'est écoulé entre le début et la fin du solveur %lu secondes\n", fin - deb); 
+						printf("Le solveur a mis %lu seconde(s).\n", fin - deb); 
 						return solution;			
 					}
 					free_space(sol_plateau, size);
@@ -199,14 +200,13 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 				}
 			}
 		}
-		chemins_1=realloc(chemins_1,l*sizeof(char*));
-		for(j=0; j<l;j++)
+		chemins_1 = realloc(chemins_1,l*sizeof(char*));
+		for(j=0 ; j<l ; j++)
 		{
-			chemins_1[j]=chemins_2[j];
+			chemins_1[j] = chemins_2[j];
 		}
 		k=l;
 		l=0;
-
 	}
 	return 0;
 }
@@ -215,7 +215,7 @@ char* solution_rapide(grille plateau, int size, int *nbr_coups)
 {	
 	char* chemin = malloc(100*sizeof(char));
 	*nbr_coups = 0;
-	int i,max=0,place;
+	int i, max=0, place;
 	char* couleurs = "BVRJMG";
 	int valeur[6]={0};
 	char ancienne_couleur = plateau[0][0];

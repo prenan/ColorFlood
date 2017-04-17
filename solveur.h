@@ -15,7 +15,7 @@
 #define SOLVEUR_H
 
 /**
- * \fn int testeur_chemins(grille plateau, int size, char* chemin)
+ * \fn bool testeur_chemins(grille plateau, int size, char* chemin)
  * \brief Test si le chemin permet d'inonder le plateau.
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
@@ -62,7 +62,7 @@ void free_chemins(char*** chemins, int i, int j, int k, int l);
  *
  * \param plateau le plateau de jeu.
  * \param size la taille du plateau.
- * \param valeur le tableau comptenant le nombre de cases connexes pour chaque couleur.
+ * \param valeur le tableau contenant le nombre de cases connexes pour chaque couleur.
  */
 void comparateur_avancement(grille plateau, int size,int* valeur);
 
@@ -90,7 +90,7 @@ int minimum(int* valeur);
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
  * \param nbr_coups_min Le nombre de coups du chemin le plus court trouvé.
- * \return Une chaîne de caractères comptenant un chemin minimal.
+ * \return Une chaîne de caractères contenant un chemin minimal.
  */
 char* solveur_perf(grille plateau, int size, int *nbr_coups_min);
 
@@ -100,7 +100,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min);
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
  * \param nbr_coups_min Le nombre de coups du chemin le plus court trouvé.
- * \return Une chaîne de caractères comptenant une solution proche de la minimale.
+ * \return Une chaîne de caractères contenant une solution proche de la minimale.
  */
 char* solution_rapide(grille plateau, int size, int *nbr_coups);
 

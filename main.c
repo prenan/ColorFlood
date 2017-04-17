@@ -7,14 +7,14 @@
 
 int main()
 {
-	int i;
-	int size = 0, difficulte = 0;
-	int size_window = 0; /* taille de la fenetre dépendra de size */
-	int nbr_coup = 0, nbr_coups_max;
+	int size = 0, difficulte = 0, nbr_coup = 0, nbr_coups_max;
+	int size_window = 0;	/* taille de la fenetre dépendra de size */
 	char nbr_coup_texte[50];
-	char* chemin_efficace=malloc(100*sizeof(char));
+	/*char* chemin_efficace=malloc(100*sizeof(char));*/
+
 	SDL_Surface *ecran = NULL;
 	TTF_Font *police1 = NULL, *police2 = NULL;
+
 	/* initialisation da la SDL */
 	const SDL_VideoInfo *info = NULL;
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -22,7 +22,6 @@ int main()
 		fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
 		SDL_Quit();
 	}
-
 	info = SDL_GetVideoInfo();
 	if(!info)
 	{
@@ -37,20 +36,21 @@ int main()
 	police2 = TTF_OpenFont("liberation.ttf", 50);
 
 	ecran = menu(police1, police2, &size, &difficulte);
+
 	if (size != 0)
 	{
 		grille plateau = random_grille(size);
 
-		grille plateau_sol= copie(plateau,size);
+		grille plateau_sol = copie(plateau,size);
 
-		chemin_efficace=solution_rapide( plateau_sol,size,&nbr_coups_max);
-		for (i=0; i<nbr_coups_max;i++)
-			printf("%c",chemin_efficace[i] );
-		printf("\n");
+		solution_rapide(plateau_sol, size, &nbr_coups_max);
+		/*for (i=0 ; i<nbr_coups_max ; i++)
+			printf("%c", chemin_efficace[i]);
+		printf("\n");*/
 		
 		nbr_coups_max += 5/difficulte; /*niveau de difficulté*/
 
-		size_window =500-500%size;
+		size_window = 500-500%size;
 		ecran = initialize_screen(size_window);
 
 		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d.", nbr_coup, nbr_coups_max);
