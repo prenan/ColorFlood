@@ -15,7 +15,6 @@ int main()
 	char* chemin_efficace=malloc(100*sizeof(char));
 	SDL_Surface *ecran = NULL;
 	TTF_Font *police1 = NULL, *police2 = NULL;
-
 	/* initialisation da la SDL */
 	const SDL_VideoInfo *info = NULL;
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -70,7 +69,7 @@ int main()
 	TTF_CloseFont(police1);
 	TTF_CloseFont(police2);
 	TTF_Quit();
-		
+
 	SDL_Quit();
 
 	return 0;

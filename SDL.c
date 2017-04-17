@@ -89,6 +89,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			sprintf(niveau_txt, "Difficulte : %2d", niveau);
 			texte3 = TTF_RenderText_Blended(police2, niveau_txt, couleur_texte);
 
+			SDL_BlitSurface(fond, NULL, ecran, &positionFond);
 			SDL_BlitSurface(texte1, NULL, ecran, &position1);
 			SDL_BlitSurface(texte2, NULL, ecran, &position2);
 			SDL_BlitSurface(texte3, NULL, ecran, &position3);
