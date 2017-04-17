@@ -50,50 +50,50 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 		switch(event.type)
 		{
 			case SDL_QUIT:
-				*size = 0;
-				continuer = 0;
-				break;
+			*size = 0;
+			continuer = 0;
+			break;
 			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym)
-				{
+			switch(event.key.keysym.sym)
+			{
 					case SDLK_UP: // Flèche haut
 						if (compteur < 24) /* pour le solveur */
-							compteur ++;
-							break;
+					compteur ++;
+					break;
 					case SDLK_DOWN: // Flèche bas
-						if (compteur > 3)
-							compteur --;
-						break;
+					if (compteur > 3)
+						compteur --;
+					break;
 					case SDLK_RIGHT:
-						if (niveau < 3)
-							niveau++;
-							break;
+					if (niveau < 3)
+						niveau++;
+					break;
 					case SDLK_LEFT:
-						if (niveau > 1)
-							niveau--;
-							break;
+					if (niveau > 1)
+						niveau--;
+					break;
 					case SDLK_SPACE:
-						*size = compteur;
-						*difficulte = niveau;
-						continuer = 0;
-						break;
+					*size = compteur;
+					*difficulte = niveau;
+					continuer = 0;
+					break;
 					default:
-						break;
+					break;
 				}
 				break;
-		}
-		sprintf(compteur_txt, "Taille choisie : %d", compteur);
-		texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
-		sprintf(niveau_txt, "Difficulte : %2d", niveau);
-		texte3 = TTF_RenderText_Shaded(police2, niveau_txt, couleur_texte, fond_texte1);
+			}
+			sprintf(compteur_txt, "Taille choisie : %d", compteur);
+			texte2 = TTF_RenderText_Shaded(police2, compteur_txt, couleur_texte, fond_texte1);
+			sprintf(niveau_txt, "Difficulte : %2d", niveau);
+			texte3 = TTF_RenderText_Shaded(police2, niveau_txt, couleur_texte, fond_texte1);
 
-		fillScreen(ecran, V);
-		SDL_BlitSurface(texte1, NULL, ecran, &position1);
-		SDL_BlitSurface(texte2, NULL, ecran, &position2);
-		SDL_BlitSurface(texte3, NULL, ecran, &position3);
-		SDL_BlitSurface(texte4, NULL, ecran, &position4);
-		SDL_Flip(ecran);
-	}
+			fillScreen(ecran, V);
+			SDL_BlitSurface(texte1, NULL, ecran, &position1);
+			SDL_BlitSurface(texte2, NULL, ecran, &position2);
+			SDL_BlitSurface(texte3, NULL, ecran, &position3);
+			SDL_BlitSurface(texte4, NULL, ecran, &position4);
+			SDL_Flip(ecran);
+		}
 
 	SDL_FreeSurface(texte1); //libération de mémoire
 	SDL_FreeSurface(texte2);
@@ -265,7 +265,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				break;
 
 				case SDLK_s:
-				if(size > 7)
+				/*if(size > 7)
 				{
 					printf("Solveur brut non optimisé pour cette taille.\n");
 				}
@@ -275,7 +275,11 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					chemin = solveur_perf(plateau, size, &nbr_coups_min);
 					printf("[%s] en %d coups.\n", chemin, nbr_coups_min);
 					free(chemin);
-				}
+				}*/
+				printf("Solveur en cours...\n");
+				chemin = solveur_perf(plateau, size, &nbr_coups_min);
+				printf("[%s] en %d coups.\n", chemin, nbr_coups_min);
+				free(chemin);
 				break;
 
 				case SDLK_ESCAPE:
