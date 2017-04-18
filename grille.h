@@ -16,16 +16,6 @@
 #define GRILLE_H
 
 
-/**
- * \struct element
- * \brief Structure d'une case du plateau
- *
- * Pour une case, on a son appartenance à la tâche ou non (int)
- * ainsi que sa couleur (char).
- */
-
-typedef struct element element;
-
 typedef char ** grille;
 
 /**
@@ -96,7 +86,7 @@ bool if_flood(grille plateau, int size);
 
 /**
  * \fn void modif_color (coordonnees position, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
- * \brief modifier la couleur de l'ensemble des cases où appartenance = 1  (la tache connexe)
+ * \brief fait propager la couleur choisie sur la composante connexe à partir d'une case de départ (généralement pris (0,0) dans notre cas)
  *
  * \param position Position de la case à modifier.
  * \param couleur_choisie Couleur choisie.
