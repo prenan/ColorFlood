@@ -8,7 +8,6 @@ void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 	rect.x=py;
 	rect.h=rect.w=size;
 	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
-	SDL_Flip(ecran);
 }
 
 void fillScreen(SDL_Surface *ecran, RGB couleur)
@@ -60,14 +59,14 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			case SDL_KEYDOWN:
 			switch(event.key.keysym.sym)
 			{
-					case SDLK_ESCAPE:
-					*size = 0;
-					continuer = 0;
-					break;
+				case SDLK_ESCAPE:
+				*size = 0;
+				continuer = 0;
+				break;
 
 					case SDLK_UP: // Flèche haut
 					if (compteur < 24) /* pour le solveur */
-						compteur ++;
+					compteur ++;
 					break;
 
 					case SDLK_DOWN: // Flèche bas
@@ -202,9 +201,10 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 				break;
 			}
 		}
-	}
-}
 
+	}
+	SDL_Flip(ecran);
+}
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window)
 {
 	int continuer = 1, nbr_coup = 0;
@@ -217,7 +217,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 
 	int nbr_coups_min;
 	char* chemin;
-
+	bool flip = true;
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
 	{
 		char ancienne_couleur = plateau[0][0];
@@ -227,57 +227,26 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			case SDL_QUIT:
 			continuer = 0;
 			break;
+
+			case SDL_MOUSEBUTTONDOWN:
+			if (event.button.button == SDL_BUTTON_LEFT)
+			{
+				int x = event.button.x * size / size_window;
+				int y = event.button.y * size / size_window;
+				if(x >= 0 && x < size && y >= 0 && y < size)
+				{
+					if(plateau[y][x] != ancienne_couleur)
+					{
+						modif_color(0,0, plateau[y][x], ancienne_couleur, plateau, size);
+						nbr_coup++;
+						flip = true;
+					}
+				}
+			}break;
+
 			case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
-				case SDLK_b:
-				if (ancienne_couleur != 'B')
-				{
-					modif_color(0,0, 'B', ancienne_couleur, plateau, size);
-					nbr_coup++;
-				}
-				break;
-
-				case SDLK_v:
-				if (ancienne_couleur != 'V')
-				{
-					modif_color(0,0, 'V', ancienne_couleur, plateau, size);
-					nbr_coup++;
-				}
-				break;
-
-				case SDLK_r:
-				if (ancienne_couleur  != 'R')
-				{
-					modif_color(0,0, 'R', ancienne_couleur, plateau, size);
-					nbr_coup++;
-				}
-				break;
-
-				case SDLK_j:
-				if (ancienne_couleur != 'J')
-				{
-					modif_color(0,0, 'J', ancienne_couleur, plateau, size);
-					nbr_coup++;
-				}
-				break;
-
-				case SDLK_m:
-				if (ancienne_couleur != 'M')
-				{
-					modif_color(0,0, 'M', ancienne_couleur, plateau, size);
-					nbr_coup++;
-				}
-				break;
-
-				case SDLK_g:
-				if (ancienne_couleur != 'G')
-				{
-					modif_color(0,0, 'G', ancienne_couleur, plateau, size);
-					nbr_coup++;
-				}
-				break;
-
 				case SDLK_s:
 				printf("Solveur en cours...\n");
 				chemin = solveur_perf(plateau, size, &nbr_coups_min);
@@ -292,17 +261,21 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				default:
 				break;
 			}
+		}
 
+		if(flip)
+		{
+			flip = false;
 			sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
 			display_SDL(ecran, plateau, size,size_window);
+			SDL_Flip(ecran);
 			SDL_FreeSurface(texte);
 		}
 	}
 	return nbr_coup;
 }
-
 void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police)
 {
 	SDL_Color texteNoir = {0, 0, 0, 42};

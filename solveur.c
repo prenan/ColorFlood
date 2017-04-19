@@ -182,7 +182,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 				if(valeur[j]>min)
 				{
 					sol_plateau = copie(plateau, size);
-					chemins_2[l] = concatener(chemins_1[i], couleurs[j]);
+					chemins_2[l] = concatener(chemins_1[i], couleurs[j]);	
 					/*printf("%s\n", chemins_2[l]); */ //utile pour les tests
 					if(testeur_chemins(sol_plateau, size, chemins_2[l]) == 1)
 					{
