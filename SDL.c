@@ -70,7 +70,6 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	texte8 = TTF_RenderUTF8_Shaded(police, "Normal", couleur_texte, fondNoir);
 	texte9 = TTF_RenderUTF8_Shaded(police, "Expert", couleur_texte, fondNoir);
 
-	
 	while(continuer)
 	{
 		SDL_WaitEvent(&event);

@@ -85,8 +85,8 @@ grille random_grille(int size)
 
 grille change_color(coordonnees coord, char c, grille plateau)
 {
-	int i=coord.x;
-	int j=coord.y;
+	int i = coord.x;
+	int j = coord.y;
 
 	plateau[i][j] = c;
 
@@ -113,7 +113,7 @@ bool if_flood(grille plateau, int size)
 void free_space(grille plateau, int size)
 {
 	int i;
-	for (i=0; i<size; i++)
+	for (i=0 ; i<size ; i++)
 	{
 		free(plateau[i]);
 		plateau[i] = NULL;
@@ -142,12 +142,12 @@ void modif_color(int x,int y, char couleur_choisie, char ancienne_couleur, grill
 grille copie(grille plateau, int size)
 {
 	int i, j;
-	grille new_plateau=initialize(size);
-	for (i=0; i<size; i++)
+	grille new_plateau = initialize(size);
+	for (i=0 ; i<size ; i++)
 	{
-		for(j=0; j<size; j++)
+		for(j=0 ; j<size ; j++)
 		{
-			new_plateau[i][j]=plateau[i][j];
+			new_plateau[i][j] = plateau[i][j];
 		}
 	}
 	return new_plateau;
