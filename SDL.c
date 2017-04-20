@@ -195,13 +195,13 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_Surface *texte1, *texte2, *texte3;
 
 	texte1 = TTF_RenderUTF8_Shaded(police, "Jeu avec la souris.", texteNoir, fondBlanc);
-	texte2 = TTF_RenderUTF8_Shaded(police, "Pour le solveur : taper 'S'. Pour quitter : taper 'échap'.", texteNoir, fondBlanc);
+	texte2 = TTF_RenderUTF8_Shaded(police, "Pour le solveur : taper 'S'.", texteNoir, fondBlanc);
 	texte3 = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 
 	position1.x = 250;
 	position1.y = 510;
 	position2.x = 5;
-	position2.y = 560;
+	position2.y = 550;
 	position3.x = 5;
 	position3.y = 510;
 
