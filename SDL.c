@@ -28,6 +28,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	bool flip = true;
 	int continuer = 1, compteur = 3, niveau = 1;
 	char compteur_txt[50], niveau_txt[50];
+	char* difficulte_txt = "Facile";
 
 	positionFond.x = 0;
 	positionFond.y = 0;
@@ -38,20 +39,20 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	position4.y = 300;
 	position2.x = 80;
 	position2.y = 100;
-	position3.x = 50;
+	position3.x = 15;
 	position3.y = 165;
 
-	position5.x = 300;
+	position5.x = 310;
 	position5.y = 100;
-	position6.x = 302;
+	position6.x = 312;
 	position6.y = 130;
 
-	position7.x = 100;
-	position7.y = 215;
-	position8.x = 200;
-	position8.y = 215;
-	position9.x = 300;
-	position9.y = 215;
+	position7.x = 70;
+	position7.y = 225;
+	position8.x = 165;
+	position8.y = 225;
+	position9.x = 270;
+	position9.y = 225;
 
 	ecran = SDL_SetVideoMode(400, 400, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
 	fond = SDL_LoadBMP("fond2.bmp");
@@ -65,9 +66,9 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	texte5 = TTF_RenderUTF8_Shaded(police, "+", couleur_texte, fondNoir);
 	texte6 = TTF_RenderUTF8_Shaded(police, "-", couleur_texte, fondNoir);
 
-	texte7 = TTF_RenderUTF8_Shaded(police2, "1", couleur_texte, fondNoir);
-	texte8 = TTF_RenderUTF8_Shaded(police2, "2", couleur_texte, fondNoir);
-	texte9 = TTF_RenderUTF8_Shaded(police2, "3", couleur_texte, fondNoir);
+	texte7 = TTF_RenderUTF8_Shaded(police, "Facile", couleur_texte, fondNoir);
+	texte8 = TTF_RenderUTF8_Shaded(police, "Normal", couleur_texte, fondNoir);
+	texte9 = TTF_RenderUTF8_Shaded(police, "Expert", couleur_texte, fondNoir);
 
 	
 	while(continuer)
@@ -96,7 +97,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			{
 				int x = event.button.x;
 				int y = event.button.y;
-				if(x >= 299 && x < 316 && y >= 100 && y < 126)
+				if(x >= 309 && x < 326 && y >= 100 && y < 126)
 				{
 					if(compteur < 24)
 					{
@@ -104,7 +105,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 						flip = true;
 					}
 				}
-				if(x >= 299 && x < 316 && y >= 130 && y < 155)
+				if(x >= 309 && x < 326 && y >= 130 && y < 155)
 				{
 					if(compteur > 3)
 					{
@@ -112,20 +113,22 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 						flip = true;
 					}
 				}
-				if(x >= 96 && x < 118 && y >= 216 && y < 276)
+				if(x >= 68 && x < 128 && y >= 220 && y < 260)
 				{
-
 					niveau = 1;
+					difficulte_txt = "Facile";
 					flip = true;
 				}
-				if(x >= 197 && x < 228 && y >= 216 && y < 276)
+				if(x >= 163 && x < 237 && y >= 220 && y < 260)
 				{
 					niveau = 2;
+					difficulte_txt = "Normal";
 					flip = true;
 				}
-				if(x >= 299 && x < 330 && y >= 216 && y < 276)
+				if(x >= 269 && x < 330 && y >= 220 && y < 260)
 				{
 					niveau = 3;
+					difficulte_txt = "Expert";
 					flip = true;
 				}
 				if(x >= 109 && x < 288 && y >= 300 && y < 388)
@@ -141,7 +144,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			flip = false;
 			sprintf(compteur_txt, "Taille : %d", compteur);
 			texte2 = TTF_RenderUTF8_Blended(police2, compteur_txt, couleur_texte);
-			sprintf(niveau_txt, "Difficulté : %d", niveau);
+			sprintf(niveau_txt, "Niveau : %s", difficulte_txt);
 			texte3 = TTF_RenderUTF8_Blended(police2, niveau_txt, couleur_texte);
 
 			SDL_BlitSurface(fond, NULL, ecran, &positionFond);
@@ -170,7 +173,6 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	return ecran;
 }
 
-
 SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran = NULL;
@@ -179,7 +181,7 @@ SDL_Surface *initialize_screen(int size_window)
 
 	ecran = SDL_SetVideoMode(size_window, size_window+100, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
-	SDL_WM_SetCaption("Color Flood (THOR)", NULL);
+	SDL_WM_SetCaption("ColorFlood (THOR)", NULL);
 	/* écran tout blanc */
 	fillScreen(ecran, init_screen);
 
@@ -259,6 +261,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	}
 	SDL_Flip(ecran);
 }
+
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window)
 {
 	int continuer = 1, nbr_coup = 0;
@@ -296,7 +299,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						flip = true;
 					}
 				}
-			}break;
+			}
+			break;
 
 			case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
@@ -330,6 +334,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	}
 	return nbr_coup;
 }
+
 void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police)
 {
 	SDL_Color texteNoir = {0, 0, 0, 42};

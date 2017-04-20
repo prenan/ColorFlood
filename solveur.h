@@ -95,7 +95,7 @@ int minimum(int* valeur);
 char* solveur_perf(grille plateau, int size, int *nbr_coups_min);
 
 /**
- * \fn char* solveur_rapide(grille plateau, int size, int *nbr_coups)
+ * \fn char* solution_rapide(grille plateau, int size, int *nbr_coups)
  * \brief Solveur : détermine une solution rapidement du jeu (relativement optimisée).
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).

@@ -124,6 +124,7 @@ void comparateur_avancement(grille plateau, int size,int* valeur)
 		free_space(testeur,size);
 	}
 }
+
 int minimum(int* valeur)
 {
 	int i,mini=valeur[0];
