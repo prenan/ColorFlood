@@ -12,7 +12,7 @@ int main()
 	char nbr_coup_texte[50];
 
 	SDL_Surface *ecran = NULL;
-	TTF_Font *police1 = NULL, *police2 = NULL;
+	TTF_Font *police1 = NULL, *police2 = NULL, *police3 = NULL;
 
 	/*initialisation da la SDL*/
 	const SDL_VideoInfo *info = NULL;
@@ -33,8 +33,9 @@ int main()
 
 	police1 = TTF_OpenFont("orkney.ttf", 20);
 	police2 = TTF_OpenFont("orkney.ttf", 50);
+	police3 = TTF_OpenFont("orkney.ttf", 70);
 
-	ecran = menu(police1, police2, &size, &difficulte);
+	ecran = menu(police3, police2, &size, &difficulte);
 
 	if (size != 0)
 	{
@@ -49,7 +50,7 @@ int main()
 		size_window = 500-500%size;
 		ecran = initialize_screen(size_window);
 
-		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d.", nbr_coup, nbr_coups_max);
+		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
 
 		initialize_text(ecran, nbr_coup_texte, police1);
 		
@@ -64,6 +65,7 @@ int main()
 
 	TTF_CloseFont(police1);
 	TTF_CloseFont(police2);
+	TTF_CloseFont(police3);
 	TTF_Quit();
 
 	SDL_Quit();

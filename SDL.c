@@ -18,25 +18,40 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 
 SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte)
 {
-	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4,*fond;
+	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4, *texte5, *texte6, *texte7, *texte8, *texte9,  *fond;
 	SDL_Event event;
-	SDL_Rect position1, position2, position3, position4, positionFond;
-	SDL_Color couleur_texte = {255, 255, 255, 42};
+	SDL_Rect position1, position2, position3, position4, position5, position6, position7, position8, position9, positionFond;
+	SDL_Color couleur_texte = {255, 255, 255, 42}, fondNoir = {0, 0, 0, 42};
 
+	TTF_Font *police = NULL;
+	police = TTF_OpenFont("orkney.ttf", 20);
+	bool flip = true;
 	int continuer = 1, compteur = 3, niveau = 1;
 	char compteur_txt[50], niveau_txt[50];
 
 	positionFond.x = 0;
 	positionFond.y = 0;
 
-	position1.x = 1;
+	position1.x = 20;
 	position1.y = 5;
-	position4.x = 1;
-	position4.y = 30;
-	position2.x = 5;
-	position2.y = 120;
-	position3.x = 39;
-	position3.y = 220;
+	position4.x = 110;
+	position4.y = 300;
+	position2.x = 80;
+	position2.y = 100;
+	position3.x = 50;
+	position3.y = 165;
+
+	position5.x = 300;
+	position5.y = 100;
+	position6.x = 302;
+	position6.y = 130;
+
+	position7.x = 100;
+	position7.y = 215;
+	position8.x = 200;
+	position8.y = 215;
+	position9.x = 300;
+	position9.y = 215;
 
 	ecran = SDL_SetVideoMode(400, 400, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
 	fond = SDL_LoadBMP("fond2.bmp");
@@ -44,8 +59,17 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	SDL_Flip(ecran);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 	
-	texte1 = TTF_RenderUTF8_Blended(police1, "Flèches 'gauche/droite' : difficulté.", couleur_texte);
-	texte4 = TTF_RenderUTF8_Blended(police1, "Flèches 'haut/bas' : taille. Puis 'espace'", couleur_texte);
+	texte1 = TTF_RenderUTF8_Blended(police1, "ColorFlood", couleur_texte);
+	texte4 = TTF_RenderUTF8_Shaded(police1, "Jouer", couleur_texte, fondNoir);
+
+	texte5 = TTF_RenderUTF8_Shaded(police, "+", couleur_texte, fondNoir);
+	texte6 = TTF_RenderUTF8_Shaded(police, "-", couleur_texte, fondNoir);
+
+	texte7 = TTF_RenderUTF8_Shaded(police2, "1", couleur_texte, fondNoir);
+	texte8 = TTF_RenderUTF8_Shaded(police2, "2", couleur_texte, fondNoir);
+	texte9 = TTF_RenderUTF8_Shaded(police2, "3", couleur_texte, fondNoir);
+
+	
 	while(continuer)
 	{
 		SDL_WaitEvent(&event);
@@ -63,39 +87,59 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 				*size = 0;
 				continuer = 0;
 				break;
+				default:
+				break;
+				
+			}
+			case SDL_MOUSEBUTTONDOWN:
+			if (event.button.button == SDL_BUTTON_LEFT)
+			{
+				int x = event.button.x;
+				int y = event.button.y;
+				if(x >= 299 && x < 316 && y >= 100 && y < 126)
+				{
+					if(compteur < 24)
+					{
+						compteur++;
+						flip = true;
+					}
+				}
+				if(x >= 299 && x < 316 && y >= 130 && y < 155)
+				{
+					if(compteur > 3)
+					{
+						compteur--;
+						flip = true;
+					}
+				}
+				if(x >= 96 && x < 118 && y >= 216 && y < 276)
+				{
 
-					case SDLK_UP: // Flèche haut
-					if (compteur < 24) /* pour le solveur */
-					compteur ++;
-					break;
-
-					case SDLK_DOWN: // Flèche bas
-					if (compteur > 3)
-						compteur --;
-					break;
-
-					case SDLK_RIGHT:
-					if (niveau < 3)
-						niveau++;
-					break;
-
-					case SDLK_LEFT:
-					if (niveau > 1)
-						niveau--;
-					break;
-
-					case SDLK_SPACE:
+					niveau = 1;
+					flip = true;
+				}
+				if(x >= 197 && x < 228 && y >= 216 && y < 276)
+				{
+					niveau = 2;
+					flip = true;
+				}
+				if(x >= 299 && x < 330 && y >= 216 && y < 276)
+				{
+					niveau = 3;
+					flip = true;
+				}
+				if(x >= 109 && x < 288 && y >= 300 && y < 388)
+				{
 					*size = compteur;
 					*difficulte = niveau;
 					continuer = 0;
-					break;
-
-					default:
-					break;
 				}
-				break;
 			}
-			sprintf(compteur_txt, "Taille choisie : %d", compteur);
+		}
+		if(flip)
+		{
+			flip = false;
+			sprintf(compteur_txt, "Taille : %d", compteur);
 			texte2 = TTF_RenderUTF8_Blended(police2, compteur_txt, couleur_texte);
 			sprintf(niveau_txt, "Difficulté : %d", niveau);
 			texte3 = TTF_RenderUTF8_Blended(police2, niveau_txt, couleur_texte);
@@ -105,13 +149,23 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 			SDL_BlitSurface(texte2, NULL, ecran, &position2);
 			SDL_BlitSurface(texte3, NULL, ecran, &position3);
 			SDL_BlitSurface(texte4, NULL, ecran, &position4);
+			SDL_BlitSurface(texte5, NULL, ecran, &position5);
+			SDL_BlitSurface(texte6, NULL, ecran, &position6);
+			SDL_BlitSurface(texte7, NULL, ecran, &position7);
+			SDL_BlitSurface(texte8, NULL, ecran, &position8);
+			SDL_BlitSurface(texte9, NULL, ecran, &position9);
 			SDL_Flip(ecran);
 		}
-
+	}
 	SDL_FreeSurface(texte1); //libération de mémoire
 	SDL_FreeSurface(texte2);
 	SDL_FreeSurface(texte3);
 	SDL_FreeSurface(texte4);
+	SDL_FreeSurface(texte5);
+	SDL_FreeSurface(texte6);
+	SDL_FreeSurface(texte7);
+	SDL_FreeSurface(texte8);
+	SDL_FreeSurface(texte9);
 
 	return ecran;
 }
@@ -123,7 +177,7 @@ SDL_Surface *initialize_screen(int size_window)
 	
 	RGB init_screen = {255, 255, 255};	//blanc
 
-	ecran = SDL_SetVideoMode(size_window, size_window+200, 8, SDL_HWSURFACE);
+	ecran = SDL_SetVideoMode(size_window, size_window+100, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
 	SDL_WM_SetCaption("Color Flood (THOR)", NULL);
 	/* écran tout blanc */
@@ -138,14 +192,14 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};	/* 4ème paramètre inutile */
 	SDL_Surface *texte1, *texte2, *texte3;
 
-	texte1 = TTF_RenderUTF8_Shaded(police, "Pour jouer : taper 'B', 'V', 'R', 'J', 'M' ou 'G'.", texteNoir, fondBlanc);
+	texte1 = TTF_RenderUTF8_Shaded(police, "Jeu avec la souris.", texteNoir, fondBlanc);
 	texte2 = TTF_RenderUTF8_Shaded(police, "Pour le solveur : taper 'S'. Pour quitter : taper 'échap'.", texteNoir, fondBlanc);
 	texte3 = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 
-	position1.x = 5;
-	position1.y = 610;
+	position1.x = 250;
+	position1.y = 510;
 	position2.x = 5;
-	position2.y = 660;
+	position2.y = 560;
 	position3.x = 5;
 	position3.y = 510;
 
