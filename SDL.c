@@ -321,6 +321,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				texte2 = TTF_RenderUTF8_Blended(police, solveur, texteNoir);
 				SDL_BlitSurface(texte1, NULL, ecran, &position1);
 				SDL_BlitSurface(texte2, NULL, ecran, &position2);
+				flip = true;
 				free(chemin);
 				break;
 
