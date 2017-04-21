@@ -178,7 +178,7 @@ SDL_Surface *initialize_screen(int size_window)
 	
 	RGB init_screen = {255, 255, 255};	//blanc
 
-	ecran = SDL_SetVideoMode(size_window, size_window+100, 8, SDL_HWSURFACE);
+	ecran = SDL_SetVideoMode(size_window, size_window+120, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
 	SDL_WM_SetCaption("ColorFlood (THOR)", NULL);
 	/* écran tout blanc */
@@ -200,7 +200,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	position1.x = 250;
 	position1.y = 510;
 	position2.x = 5;
-	position2.y = 550;
+	position2.y = 535;
 	position3.x = 5;
 	position3.y = 510;
 
@@ -264,12 +264,19 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window)
 {
 	int continuer = 1, nbr_coup = 0;
-	SDL_Surface *texte;
+	SDL_Surface *texte, *texte1,*texte2;
+	char solveur_info[30],solveur[40];
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};
-	SDL_Rect position;
+	SDL_Rect position,position1,position2;
+
 	position.x = 5;
 	position.y = 510;
+	position1.x = 5;
+	position1.y = 560;
+	position2.x = 5;
+	position2.y = 585;
+
 
 	int nbr_coups_min;
 	char* chemin;
@@ -305,9 +312,15 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			switch (event.key.keysym.sym)
 			{
 				case SDLK_s:
-				printf("Solveur en cours...\n");
+				sprintf(solveur_info, "Solveur en cours...");
+			    texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 				chemin = solveur_perf(plateau, size, &nbr_coups_min);
-				printf("[%s] en %d coups.\n", chemin, nbr_coups_min);
+				//printf("Solveur en cours...\n");
+				//chemin = solveur_perf(plateau, size, &nbr_coups_min);
+				sprintf(solveur,"[%s] en %d coups", chemin, nbr_coups_min);
+				texte2 = TTF_RenderUTF8_Blended(police, solveur, texteNoir);
+				SDL_BlitSurface(texte1, NULL, ecran, &position1);
+				SDL_BlitSurface(texte2, NULL, ecran, &position2);
 				free(chemin);
 				break;
 
