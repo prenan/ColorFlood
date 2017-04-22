@@ -325,61 +325,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				free(chemin);
 				break;
 
-				case SDLK_b: 
-		        if (ancienne_couleur != 'B') 
-		        { 
-		          modif_color(0,0, 'B', ancienne_couleur, plateau, size); 
-		          nbr_coup++; 
-		        }
-		        flip = true; 
-		        break; 
-
-		         case SDLK_v: 
-		        if (ancienne_couleur != 'V') 
-		        { 
-		          modif_color(0,0, 'V', ancienne_couleur, plateau, size); 
-		          nbr_coup++; 
-		        } 
-		        flip = true;
-		        break; 
-		 
-		        case SDLK_r: 
-		        if (ancienne_couleur  != 'R') 
-		        { 
-		          modif_color(0,0, 'R', ancienne_couleur, plateau, size); 
-		          nbr_coup++; 
-		        } 
-		        flip = true;
-		        break; 
-		 
-		        case SDLK_j: 
-		        if (ancienne_couleur != 'J') 
-		        { 
-		          modif_color(0,0, 'J', ancienne_couleur, plateau, size); 
-		          nbr_coup++; 
-		        } 
-		        flip = true;
-		        break; 
-
-		        case SDLK_m: 
-		        if (ancienne_couleur != 'M') 
-		        { 
-		          modif_color(0,0, 'M', ancienne_couleur, plateau, size); 
-		          nbr_coup++; 
-		        } 
-		        flip = true;
-		        break; 
-
-		         case SDLK_g: 
-		        if (ancienne_couleur != 'G') 
-	            {	      
-		          modif_color(0,0, 'G', ancienne_couleur, plateau, size); 
-		          nbr_coup++; 
-		        }
-		        flip = true;
-		        break;
-
-
 				case SDLK_ESCAPE:
 				continuer = 0;
 				break;
