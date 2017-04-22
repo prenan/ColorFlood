@@ -1,5 +1,13 @@
+#include <sys/time.h>
 #include "solveur.h"
 
+/**
+ ** @brief compute time difference in seconds
+ **/
+static
+double timeval_diff(struct timeval tv1, struct timeval tv2) {
+  return (tv2.tv_sec-tv1.tv_sec) + (tv2.tv_usec-tv1.tv_usec)*1E-6;
+}
 
 bool testeur_chemins(grille plateau, int size, char* chemin)
 {
@@ -150,8 +158,8 @@ void free_c(char** chemins,int k)
 
 char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 {
-	time_t deb, fin; 
-	time(&deb);
+	struct timeval deb,fin;
+    gettimeofday(&deb, 0);
 	int i, j, k = 0, l = 0, min;
 	char* couleurs[6] = {"B\0", "V\0", "R\0", "J\0", "M\0", "G\0"};
 	char** chemins_1 = malloc(5*sizeof(char*));
@@ -192,8 +200,8 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 						free_c(chemins_1,k);
 						free_c(chemins_2,l);
 						free_space(sol_plateau, size);
-						time(&fin); 
-						printf("Le solveur a mis %lu seconde(s).\n", fin - deb); 
+						gettimeofday(&fin, 0);
+						printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
 						return solution;			
 					}
 					free_space(sol_plateau, size);
