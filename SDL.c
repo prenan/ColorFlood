@@ -314,12 +314,13 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				case SDLK_s:
 				sprintf(solveur_info, "Solveur en cours...");
 			    texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
+			    SDL_BlitSurface(texte1, NULL, ecran, &position1);
+			    SDL_Flip(ecran);
 				chemin = solveur_perf(plateau, size, &nbr_coups_min);
 				//printf("Solveur en cours...\n");
 				//chemin = solveur_perf(plateau, size, &nbr_coups_min);
 				sprintf(solveur,"[%s] en %d coups", chemin, nbr_coups_min);
 				texte2 = TTF_RenderUTF8_Blended(police, solveur, texteNoir);
-				SDL_BlitSurface(texte1, NULL, ecran, &position1);
 				SDL_BlitSurface(texte2, NULL, ecran, &position2);
 				flip = true;
 				free(chemin);
