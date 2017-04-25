@@ -17,7 +17,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
 }
 
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte)
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte,int *nbr_coups_max)
 {
 	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4, *texte5, *texte6, *texte7, *texte8, *texte9;//,  *fond;
 	SDL_Event event;
@@ -55,15 +55,15 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	position9.x = 270; 
 	position9.y = 225; 
 
-	int backgroud_size = 10;
-	grille plateau = random_grille(backgroud_size);
+	int background_size = 10,i = 0;
+	grille plateau = random_grille(background_size);
 
-	int size_window = 450;
+	int size_window = 430;
 	ecran = SDL_SetVideoMode(size_window, size_window, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
 //	fond = SDL_LoadBMP("fond2.bmp");
 	//SDL_BlitSurface(fond, NULL, ecran, &positionFond);
 	//SDL_Flip(ecran);
-	display_SDL(ecran, plateau, backgroud_size, size_window);
+	display_SDL(ecran, plateau, background_size, size_window);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 
 	texte1 = TTF_RenderUTF8_Blended(police1, "ColorFlood", couleur_texte);
@@ -77,7 +77,10 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	texte9 = TTF_RenderUTF8_Shaded(police, "Expert", couleur_texte, fondNoir); 
 
 	int time_between_moves = 1000;
-	char couleurs[6] = {'B', 'V', 'R', 'J', 'M', 'G'};
+	grille plateau_sol = copie(plateau,background_size);
+	char* chemin = malloc(50*sizeof(char));
+	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
+	free_space(plateau_sol,background_size);
 
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
@@ -155,28 +158,29 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 
 		if(time > time_next_move)
 		{
-			if(if_flood(plateau, backgroud_size) != 1)
+			if(if_flood(plateau, background_size) != 1)
 			{
 				time_next_move = time + time_between_moves;
-				char couleur;
-				do
-				{
-					couleur = couleurs[rand()%6];
-				}while(couleur == plateau[0][0]);
-
-				modif_color(0,0, couleur, plateau[0][0], plateau, backgroud_size);
+				char couleur = chemin[i];
+				i++;
+				modif_color(0,0, couleur, plateau[0][0], plateau, background_size);
 			}
 			else
 			{
-				free_space(plateau, backgroud_size);
-				plateau = random_grille(backgroud_size);
+				free_space(plateau, background_size);
+				free(chemin);
+				i=0;
+				plateau = random_grille(background_size);
+				grille plateau_sol = copie(plateau, background_size);
+				chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
+				free_space(plateau_sol,background_size);
 			}
 			flip = true;
 		}
 
 		if(flip)
 		{
-			display_SDL(ecran, plateau, backgroud_size, size_window);
+			display_SDL(ecran, plateau, background_size, size_window);
 
 			flip = false;
 			sprintf(compteur_txt, "Taille : %d", compteur);
@@ -205,7 +209,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 		}
 		time = new_time;
 	}
-	free_space(plateau, backgroud_size);
+	free_space(plateau, background_size);
 	SDL_FreeSurface(texte1); //libération de mémoire
 	SDL_FreeSurface(texte2);
 	SDL_FreeSurface(texte3);

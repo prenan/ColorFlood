@@ -60,7 +60,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur);
  * \param difficulte Pointeur pour enregistrer la difficultée choisie 
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte);
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte, int *nbr_coups_max );
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)
