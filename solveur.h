@@ -99,7 +99,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min);
  * \brief Solveur : détermine une solution rapidement du jeu (relativement optimisée).
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
- * \param nbr_coups_min Le nombre de coups du chemin le plus court trouvé.
+ * \param nbr_coups Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé.
  * \return Une chaîne de caractères contenant une solution proche de la minimale.
  */
 char* solution_rapide(grille plateau, int size, int *nbr_coups);

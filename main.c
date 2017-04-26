@@ -7,7 +7,7 @@
 
 int main()
 {
-	int size = 0, difficulte = 0, nbr_coup = 0, nbr_coups_max=0;
+	int size = 0, difficulte = 0, nbr_coup = 0, nbr_coups_max = 0;
 	int size_window = 0;	/*taille de la fenetre dépendra de size*/
 	char nbr_coup_texte[50];
 
@@ -35,7 +35,7 @@ int main()
 	police2 = TTF_OpenFont("orkney.ttf", 50);
 	police3 = TTF_OpenFont("orkney.ttf", 70);
 
-	ecran = menu(police3, police2, &size, &difficulte ,&nbr_coups_max);
+	ecran = menu(police3, police2, &size, &difficulte, &nbr_coups_max);
 
 	if (size != 0)
 	{

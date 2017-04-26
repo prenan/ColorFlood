@@ -56,11 +56,12 @@ void fillScreen(SDL_Surface *ecran, RGB couleur);
  * \brief Affiche un menu pour choisir la taille du jeu 
  * \param police1 Police du texte 'indications' et sa taille
  * \param police1 Police du texte 'compteur' et sa taille
- * \param size Pointeur pour enregistrer la taille choisie 
- * \param difficulte Pointeur pour enregistrer la difficultée choisie 
+ * \param size Pointeur pour enregistrer la taille choisie
+ * \param difficulte Pointeur pour enregistrer la difficultée choisie
+ * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte, int *nbr_coups_max );
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte, int *nbr_coups_max);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)
