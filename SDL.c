@@ -259,12 +259,12 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
-	RGB J = {255, 215, 0};
-	RGB R = {219, 23, 2};
-	RGB G = {127, 127, 127};
-	RGB V = {1, 215, 88};
-	RGB B = {0, 127, 255};
-	RGB M = {128, 0, 128};
+	RGB J = {153, 255, 0}; //from B
+	RGB R = {204, 0, 51};  //R
+	RGB G = {0, 102, 255}; //B
+	RGB V = {102, 204, 204}; //Q
+	RGB B = {255,255,102}; //J
+	RGB M = {153, 0, 255}; //V
 	int i, j;
 	char couleur;
 
