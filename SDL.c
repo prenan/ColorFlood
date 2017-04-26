@@ -21,7 +21,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4, *texte5, *texte6, *texte7, *texte8, *texte9;
 	SDL_Event event;
 	SDL_Rect position1, position2, position3, position4, position5, position6, position7, position8, position9;
-	SDL_Color couleur_texte = {255, 255, 255, 42}, fondNoir = {0, 0, 0, 42};
+	SDL_Color couleur_texte = {0, 0, 0, 42};
 
 	TTF_Font *police = NULL;
 	char* difficulte_txt = "Facile"; 
@@ -60,14 +60,14 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 
 	texte1 = TTF_RenderUTF8_Blended(police1, "ColorFlood", couleur_texte);
-	texte4 = TTF_RenderUTF8_Shaded(police1, "Jouer", couleur_texte, fondNoir);
+	texte4 = TTF_RenderUTF8_Blended(police1, "Jouer", couleur_texte);
 
-	texte5 = TTF_RenderUTF8_Shaded(police, "+", couleur_texte, fondNoir);
-	texte6 = TTF_RenderUTF8_Shaded(police, "-", couleur_texte, fondNoir);
+	texte5 = TTF_RenderUTF8_Blended(police, "+", couleur_texte);
+	texte6 = TTF_RenderUTF8_Blended(police, "-", couleur_texte);
 
-	texte7 = TTF_RenderUTF8_Shaded(police, "Facile", couleur_texte, fondNoir); 
-	texte8 = TTF_RenderUTF8_Shaded(police, "Normal", couleur_texte, fondNoir); 
-	texte9 = TTF_RenderUTF8_Shaded(police, "Expert", couleur_texte, fondNoir); 
+	texte7 = TTF_RenderUTF8_Blended(police, "Facile", couleur_texte); 
+	texte8 = TTF_RenderUTF8_Blended(police, "Normal", couleur_texte); 
+	texte9 = TTF_RenderUTF8_Blended(police, "Expert", couleur_texte); 
 
 	int time_between_moves = 1000;
 	grille plateau_sol = copie(plateau,background_size);
