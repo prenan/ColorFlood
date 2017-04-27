@@ -269,15 +269,26 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 
 SDL_Surface *initialize_screen(int size_window)
 {
-	SDL_Surface *ecran = NULL;
 
+	SDL_Surface *ecran = NULL;
 	RGB init_screen = {255, 255, 255};	//blanc
 
 	ecran = SDL_SetVideoMode(2*size_window, size_window+120, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
 	SDL_WM_SetCaption("Color Flood (THOR)", NULL);
+
+	/*
+	SDL_Rect positionFond;
+	positionFond.x = 0;
+	positionFond.y = 0;
+	SDL_Surface *ima1=NULL;
+	ima1 = SDL_LoadBMP("./fond1.bmp");
+	SDL_BlitSurface(ima1, NULL, ecran, &positionFond);
+	*/
+	
 	/* écran tout blanc */
 	fillScreen(ecran, init_screen);
+	
 
 	return ecran;
 }
@@ -312,14 +323,6 @@ void initialize_text(SDL_Surface *ecran,char *nbr_coup_texte, TTF_Font *police)
 	SDL_FreeSurface(texte2);
 	SDL_FreeSurface(texte3);
 	SDL_FreeSurface(texte4);
-}
-
-void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima) {
-	SDL_Rect rect;
-    rect.x=px;
-    rect.y=py;
-	SDL_BlitSurface(ima, NULL, ecran, &rect);
-	SDL_Flip(ecran);
 }
 
 void color_box(SDL_Surface *ecran,int size_window)
@@ -405,12 +408,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	position2.y = 580;
 
 	color_box(ecran,size_window);
-	/*
-	SDL_Surface *ima=NULL;
-	ima = SDL_LoadBMP("ourteam.bmp");
-	drawTexture(ecran, 0, 0, ima);
-	*/
-
+	
 	int nbr_coups_min;
 	char* chemin;
 	bool flip = true;
