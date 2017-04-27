@@ -296,13 +296,17 @@ SDL_Surface *initialize_screen(int size_window)
 void initialize_text(SDL_Surface *ecran,char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1,position2,position3,position4;
+	SDL_Rect position_menu, position_home;
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};	/* 4ème paramètre inutile */
 	SDL_Surface *texte1,*texte2,*texte3,*texte4;
+	SDL_Surface *menu, *home;
 
 	texte1 = TTF_RenderUTF8_Shaded(police, "Jeu avec la souris.", texteNoir, fondBlanc);
 	texte2 = TTF_RenderUTF8_Shaded(police, "Afficher le solveur ", texteNoir, fondBlanc);
 	texte3 = TTF_RenderUTF8_Shaded(police, "Nombre de coups ", texteNoir, fondBlanc);
 	texte4 = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
+	menu = TTF_RenderUTF8_Shaded(police, "Menu", texteNoir, fondBlanc);
+	home = TTF_RenderUTF8_Shaded(police, "Home", texteNoir, fondBlanc);
 
 	position1.x = 45;
 	position1.y = 520;
@@ -313,16 +317,25 @@ void initialize_text(SDL_Surface *ecran,char *nbr_coup_texte, TTF_Font *police)
 	position4.x = 500*(3/2.0)+90;
 	position4.y = 500/2.0+30;
 
+	position_menu.x = 802;
+	position_menu.y = 100;
+	position_home.x = 897;
+	position_home.y = 100;
+
 
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
 	SDL_BlitSurface(texte2, NULL, ecran, &position2);
 	SDL_BlitSurface(texte3, NULL, ecran, &position3);
 	SDL_BlitSurface(texte4, NULL, ecran, &position4);
+	SDL_BlitSurface(menu, NULL, ecran, &position_menu);
+	SDL_BlitSurface(home, NULL, ecran, &position_home);
 	
 	SDL_FreeSurface(texte1);
 	SDL_FreeSurface(texte2);
 	SDL_FreeSurface(texte3);
 	SDL_FreeSurface(texte4);
+	SDL_FreeSurface(menu);
+	SDL_FreeSurface(home);
 }
 
 void color_box(SDL_Surface *ecran,int size_window)
@@ -333,14 +346,18 @@ void color_box(SDL_Surface *ecran,int size_window)
 	RGB V = {102, 204, 204}; //Q
 	RGB B = {255,255,102}; //J
 	RGB M = {153, 0, 255}; //V
-	RGB S = {66,66,66};
+	RGB solveur = {66,66,66};
+	RGB menu = {100,100,100};
+	RGB home = {150,150,150};
 	drawRectangle(ecran, size_window*(0.0/6)+20, size_window/4.0-40, (size_window-40)/6, G);
 	drawRectangle(ecran, size_window*(1.0/6)+20,size_window/4.0-40, (size_window-40)/6, R);
 	drawRectangle(ecran, size_window*(2.0/6)+20,size_window/4.0-40, (size_window-40)/6, J);
 	drawRectangle(ecran, size_window*(3.0/6)+20,size_window/4.0-40, (size_window-40)/6, V);
 	drawRectangle(ecran, size_window*(4.0/6)+20,size_window/4.0-40, (size_window-40)/6, B);
 	drawRectangle(ecran, size_window*(5.0/6)+20,size_window/4.0-40, (size_window-40)/6, M);	
-	drawRectangle(ecran, size_window/2.0+100,size_window*(3/2.0)+80, (size_window-40)/6, S);	
+	drawRectangle(ecran, size_window/2.0+100,size_window*(3/2.0)+80, (size_window-40)/6, solveur);	
+	drawRectangle(ecran, 25,size_window*(3/2.0)+40, (size_window-40)/6, menu);	
+	drawRectangle(ecran, 25,size_window*(3/2.0)+135, (size_window-40)/6, home);	
 }
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
@@ -466,6 +483,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					nbr_coup++;
 					flip = true;
 				}
+				// solveur
 				if(y >= (size_window/2.0+100) && y < (size_window/2.0+100+cons) && x >= (size_window*(3/2.0)+80) && x < (size_window*(3/2.0)+80+cons))
 				{
 					sprintf(solveur_info, "Solveur en cours...");
@@ -478,6 +496,29 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					SDL_BlitSurface(texte2, NULL, ecran, &position2);
 					flip = true;
 					free(chemin);
+				}
+			
+			    // menu
+				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+40+cons))
+				{
+					//do something
+					int size = 0, difficulte = 0, nbr_coups_max = 0;
+
+					ecran = NULL;
+					TTF_Font *police2 = NULL, *police3 = NULL;
+
+					TTF_Init();
+
+					//police1 = TTF_OpenFont("orkney.ttf", 20);
+					police2 = TTF_OpenFont("orkney.ttf", 50);
+					police3 = TTF_OpenFont("orkney.ttf", 70);
+
+					ecran = menu(police3, police2, &size, &difficulte, &nbr_coups_max);
+				}
+				// home 
+				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+135+cons))
+				{
+					//do something
 				}
 	
 			}
@@ -520,7 +561,7 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 	if (nbr_coup >= nbr_coups_max && if_flood(plateau, size) == 0)
 	{
 		texte = TTF_RenderUTF8_Blended(police, "GAME OVER", texteNoir);
-		position.x = 110;
+		position.x = 350;
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
@@ -529,7 +570,7 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nb
 	if (if_flood(plateau, size) == 1)
 	{
 		texte = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
-		position.x = 190;
+		position.x = 450;
 		position.y = 230;
 		SDL_BlitSurface(texte, NULL, ecran, &position);
 		SDL_Flip(ecran);
