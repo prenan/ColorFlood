@@ -47,10 +47,10 @@ int main()
 		
 		nbr_coups_max += 5/difficulte; /*niveau de difficulté*/
 
-		size_window = 500-500%size;
+		size_window = 500;
 		ecran = initialize_screen(size_window);
 
-		sprintf(nbr_coup_texte, "Nombre de coups : %d/%d", nbr_coup, nbr_coups_max);
+		sprintf(nbr_coup_texte, "%d/%d", nbr_coup, nbr_coups_max);
 
 		initialize_text(ecran, nbr_coup_texte, police1);
 		
