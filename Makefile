@@ -1,5 +1,5 @@
 APPLI = colorflood
-CSRC = grille.c fichier.c pile.c coordonnees.c SDL.c solveur.c main.c
+CSRC = grille.c fichier.c SDL.c solveur.c main.c
 CC = gcc
 
 CFLAGS = -Wall -Wextra -g
@@ -13,10 +13,10 @@ $(APPLI):	$(COBJ)
 	$(CC) -o $(APPLI) $(COBJ) $(LFLAGS)
 
 console:
-	$(CC) -o $(APPLI) grille.c fichier.c pile.c coordonnees.c solveur.c main_console.c -o console -lm
+	$(CC) -o $(APPLI) grille.c fichier.c solveur.c main_console.c -o console -lm
 
 test:
-	$(CC) $(CFLAGS) grille.c fichier.c pile.c coordonnees.c tests_unitaires.c -o test -lcunit -g -lm
+	$(CC) $(CFLAGS) grille.c fichier.c tests_unitaires.c -o test -lcunit -g -lm
 
 valgrind:
 	valgrind --leak-check=yes ./colorflood

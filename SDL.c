@@ -67,16 +67,14 @@ void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	SDL_Flip(ecran);
 }
 
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte, int *nbr_coups_max)
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max)
 {
 	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4, *texte5, *texte6, *texte7, *texte8, *texte9;
 	SDL_Event event;
 	SDL_Rect position1, position2, position3, position4, position5, position6, position7, position8, position9;
 	SDL_Color couleur_texte = {0, 0, 0, 42};
 
-	TTF_Font *police = NULL;
 	char* difficulte_txt = "Facile"; 
-	police = TTF_OpenFont("orkney.ttf", 20);
 	bool flip = true;
 	int continuer = 1, compteur = 3, niveau = 1;
 	char compteur_txt[50], niveau_txt[50];
@@ -110,21 +108,21 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	display_SDL(ecran, plateau, background_size, size_window);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 
-	texte1 = TTF_RenderUTF8_Blended(police1, "ColorFlood", couleur_texte);
-	texte4 = TTF_RenderUTF8_Blended(police1, "Jouer", couleur_texte);
+	texte1 = TTF_RenderUTF8_Blended(police3, "ColorFlood", couleur_texte);
+	texte4 = TTF_RenderUTF8_Blended(police3, "Jouer", couleur_texte);
 
-	texte5 = TTF_RenderUTF8_Blended(police, "+", couleur_texte);
-	texte6 = TTF_RenderUTF8_Blended(police, "-", couleur_texte);
+	texte5 = TTF_RenderUTF8_Blended(police1, "+", couleur_texte);
+	texte6 = TTF_RenderUTF8_Blended(police1, "-", couleur_texte);
 
-	texte7 = TTF_RenderUTF8_Blended(police, "Facile", couleur_texte); 
-	texte8 = TTF_RenderUTF8_Blended(police, "Normal", couleur_texte); 
-	texte9 = TTF_RenderUTF8_Blended(police, "Expert", couleur_texte); 
+	texte7 = TTF_RenderUTF8_Blended(police1, "Facile", couleur_texte); 
+	texte8 = TTF_RenderUTF8_Blended(police1, "Normal", couleur_texte); 
+	texte9 = TTF_RenderUTF8_Blended(police1, "Expert", couleur_texte); 
 
 	int time_between_moves = 875;
 	grille plateau_sol = copie(plateau,background_size);
 	char* chemin = malloc(50*sizeof(char));
 	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
-	free_space(plateau_sol,background_size);
+	free_space(plateau_sol, background_size);
 
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
@@ -496,6 +494,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					flip = true;
 					free(chemin);
 				}
+				/*NE FONCTIONNE PAS
 				// menu
 				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+40+cons))
 				{
@@ -503,17 +502,20 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					int size = 0, difficulte = 0, nbr_coups_max = 0;
 
 					ecran = NULL;
-					TTF_Font *police2 = NULL, *police3 = NULL;
+					TTF_Font *police1 = NULL, *police2 = NULL, *police3 = NULL;
 
 					TTF_Init();
 
-					//police1 = TTF_OpenFont("orkney.ttf", 20);
+					police1 = TTF_OpenFont("orkney.ttf", 20);
 					police2 = TTF_OpenFont("orkney.ttf", 50);
 					police3 = TTF_OpenFont("orkney.ttf", 70);
 
-					ecran = menu(police3, police2, &size, &difficulte, &nbr_coups_max);
-					/*ne fonctionne pas ici*/
+					ecran = menu(police1, police2, police3, &size, &difficulte, &nbr_coups_max);
+					TTF_CloseFont(police1);
+					TTF_CloseFont(police2);
+					TTF_CloseFont(police3);
 				}
+				*/
 				// home 
 				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+135+cons))
 				{

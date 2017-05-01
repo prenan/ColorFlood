@@ -52,16 +52,16 @@ void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
 /**
- * \fn SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size)
+ * \fn SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max)
  * \brief Affiche un menu pour choisir la taille du jeu 
- * \param police1 Police du texte 'indications' et sa taille
- * \param police1 Police du texte 'compteur' et sa taille
+ *
+ * \param police1, police2, police3 Police du texte et ses différentes tailles
  * \param size Pointeur pour enregistrer la taille choisie
  * \param difficulte Pointeur pour enregistrer la difficultée choisie
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficulte, int *nbr_coups_max);
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)

@@ -83,16 +83,6 @@ grille random_grille(int size)
 	return plateau;
 }
 
-grille change_color(coordonnees coord, char c, grille plateau)
-{
-	int i = coord.x;
-	int j = coord.y;
-
-	plateau[i][j] = c;
-
-	return plateau;
-}
-
 bool if_flood(grille plateau, int size)
 {
 	int i, j;

@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-#include "pile.h"
-#include "coordonnees.h"
 
 #ifndef GRILLE_H
 #define GRILLE_H
@@ -62,17 +60,6 @@ grille random_grille(int size);
  * \param size Taille du jeu (grille size*size).
  */
 void free_space(grille plateau, int size);
-
-/**
- * \fn grille change_color(coordonnees coord, char c, grille plateau)
- * \brief Fonction de changement de la couleur d'une case donnée.
- *
- * \param coord Coordonnée de la case.
- * \param c Couleur choisie.
- * \param plateau Grille en cours.
- * \return Grille avec changement de couleur de la case donnée.
- */
-grille change_color(coordonnees coord, char c, grille plateau);
 
 /**
  * \fn bool if_flood(grille plateau, int size)

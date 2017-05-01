@@ -1,7 +1,5 @@
 #include "fichier.h"
 #include "grille.h"
-#include "pile.h"
-#include "coordonnees.h"
 #include "SDL.h"
 #include "solveur.h"
 
@@ -37,7 +35,7 @@ int main()
 
 	SDL_WM_SetIcon(SDL_LoadBMP("img/colorflood.bmp"), NULL);	/*icône de la fenêtre*/
 
-	ecran = menu(police3, police2, &size, &difficulte, &nbr_coups_max);
+	ecran = menu(police1, police2, police3, &size, &difficulte, &nbr_coups_max);
 
 	if (size != 0)
 	{
