@@ -85,16 +85,16 @@ grille change_color(coordonnees coord, char c, grille plateau);
 bool if_flood(grille plateau, int size);
 
 /**
- * \fn void modif_color (coordonnees position, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
+ * \fn void modif_color (int x, int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
  * \brief fait propager la couleur choisie sur la composante connexe à partir d'une case de départ (généralement pris (0,0) dans notre cas)
  *
- * \param position Position de la case à modifier.
+ * \param x, y Position de la case à modifier.
  * \param couleur_choisie Couleur choisie.
  * \param ancienne_couleur Ancienne couleur.
  * \param plateau Grille en cours.
  * \param size Taille du jeu (grille size*size).
  */
-void modif_color (int x,int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size);
+void modif_color (int x, int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size);
 
 /**
  * \fn grille copie(grille plateau, int size)

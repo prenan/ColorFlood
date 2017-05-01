@@ -207,7 +207,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 				time_next_move = time + time_between_moves;
 				char couleur = chemin[i];
 				i++;
-				modif_color(0,0, couleur, plateau[0][0], plateau, background_size);
+				modif_color(0, 0, couleur, plateau[0][0], plateau, background_size);
 			}
 			else
 			{
@@ -449,37 +449,37 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	
 				if(y >= (size_window*(0.0/6)+20) && y < (size_window*(0.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
 				{
-					modif_color(0,0, 'G', ancienne_couleur, plateau, size);
+					modif_color(0, 0, 'G', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
 				if(y >= (size_window*(1.0/6)+20) && y < (size_window*(1.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
 				{
-					modif_color(0,0, 'R', ancienne_couleur, plateau, size);
+					modif_color(0, 0, 'R', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
 				if(y >= (size_window*(2.0/6)+20) && y < (size_window*(2.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
 				{
-					modif_color(0,0, 'J', ancienne_couleur, plateau, size);
+					modif_color(0, 0, 'J', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
 				if(y >= (size_window*(3.0/6)+20) && y < (size_window*(3.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
 				{
-					modif_color(0,0, 'V', ancienne_couleur, plateau, size);
+					modif_color(0, 0, 'V', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
 				if(y >= (size_window*(4.0/6)+20) && y < (size_window*(4.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
 				{
-					modif_color(0,0, 'B', ancienne_couleur, plateau, size);
+					modif_color(0, 0, 'B', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
 				if(y >= (size_window*(5.0/6)+20) && y < (size_window*(5.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
 				{
-					modif_color(0,0, 'M', ancienne_couleur, plateau, size);
+					modif_color(0, 0, 'M', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}

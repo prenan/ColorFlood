@@ -13,7 +13,7 @@ $(APPLI):	$(COBJ)
 	$(CC) -o $(APPLI) $(COBJ) $(LFLAGS)
 
 console:
-	$(CC) -o $(APPLI) grille.c fichier.c pile.c coordonnees.c main_console.c -o console -lm
+	$(CC) -o $(APPLI) grille.c fichier.c pile.c coordonnees.c solveur.c main_console.c -o console -lm
 
 test:
 	$(CC) $(CFLAGS) grille.c fichier.c pile.c coordonnees.c tests_unitaires.c -o test -lcunit -g -lm

@@ -35,6 +35,8 @@ int main()
 	police2 = TTF_OpenFont("orkney.ttf", 50);
 	police3 = TTF_OpenFont("orkney.ttf", 70);
 
+	SDL_WM_SetIcon(SDL_LoadBMP("colorflood.bmp"), NULL);	/*icône de la fenêtre*/
+
 	ecran = menu(police3, police2, &size, &difficulte, &nbr_coups_max);
 
 	if (size != 0)
