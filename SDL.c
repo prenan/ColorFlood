@@ -120,7 +120,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	texte8 = TTF_RenderUTF8_Blended(police, "Normal", couleur_texte); 
 	texte9 = TTF_RenderUTF8_Blended(police, "Expert", couleur_texte); 
 
-	int time_between_moves = 1000;
+	int time_between_moves = 875;
 	grille plateau_sol = copie(plateau,background_size);
 	char* chemin = malloc(50*sizeof(char));
 	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
@@ -266,7 +266,6 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, int *size, int *difficul
 	return ecran;
 }
 
-
 SDL_Surface *initialize_screen(int size_window)
 {
 
@@ -275,21 +274,20 @@ SDL_Surface *initialize_screen(int size_window)
 
 	ecran = SDL_SetVideoMode(2*size_window, size_window+120, 8, SDL_HWSURFACE);
 	/* nom de la fenêtre */
-	SDL_WM_SetCaption("Color Flood (THOR)", NULL);
+	SDL_WM_SetCaption("ColorFlood (THOR)", NULL);
 
 	/*
 	SDL_Rect positionFond;
 	positionFond.x = 0;
 	positionFond.y = 0;
 	SDL_Surface *ima1=NULL;
-	ima1 = SDL_LoadBMP("./fond1.bmp");
+	ima1 = SDL_LoadBMP("img/fond1.bmp");
 	SDL_BlitSurface(ima1, NULL, ecran, &positionFond);
 	*/
 	
 	/* écran tout blanc */
 	fillScreen(ecran, init_screen);
 	
-
 	return ecran;
 }
 
@@ -359,6 +357,7 @@ void color_box(SDL_Surface *ecran,int size_window)
 	drawRectangle(ecran, 25,size_window*(3/2.0)+40, (size_window-40)/6, menu);	
 	drawRectangle(ecran, 25,size_window*(3/2.0)+135, (size_window-40)/6, home);	
 }
+
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
 	RGB J = {153, 255, 0}; //from B
@@ -497,8 +496,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					flip = true;
 					free(chemin);
 				}
-			
-			    // menu
+				// menu
 				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+40+cons))
 				{
 					//do something
@@ -514,6 +512,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					police3 = TTF_OpenFont("orkney.ttf", 70);
 
 					ecran = menu(police3, police2, &size, &difficulte, &nbr_coups_max);
+					/*ne fonctionne pas ici*/
 				}
 				// home 
 				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+135+cons))

@@ -1,12 +1,13 @@
 #include "fichier.h"
 
+
 int open_file(char const* file_name)
 {
 	int file_in;
 	file_in = open(file_name, O_RDONLY);
 	if (-1 == file_in) 
 	{
-		perror("problème d'ouverture de fichier");
+		perror("Problème d'ouverture de fichier");
 	}
 	return file_in;
 }
@@ -26,7 +27,7 @@ int size_file(char* file_name)
 
 	if (-1 == n)
 	{
-		perror("problème de lecture de fichier");
+		perror("Problème de lecture de fichier");
 	}
 
 	while (text[nb_char] != '\n')	/*compte le nb de caractères sur la 1ère ligne*/
@@ -56,7 +57,7 @@ int size_file(char* file_name)
 
 	if (size == -1)
 	{
-		printf("contenu du fichier %s erroné\n", file_name);
+		printf("Contenu du fichier %s erroné\n", file_name);
 		exit(1);
 	}
 
@@ -73,7 +74,7 @@ grille init_file(int size, char* file_name)
 
 	if (-1 == r)
 	{
-		perror("problème de lecture de fichier");
+		perror("Problème de lecture de fichier");
 	}
 
 	grille plateau = initialize(size);
@@ -98,7 +99,7 @@ void export_file(grille plateau, int size)
 
 	if (!file_out)
 	{
-		perror("problème d'écriture de fichier");
+		perror("Problème d'écriture de fichier");
 		exit(1);
 	}
 
