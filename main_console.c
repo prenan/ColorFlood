@@ -37,6 +37,7 @@ int main()
 			printf("\nLa couleur choisie n'est pas possible.\n");
 		}
 		display(M, size);
+		ancienne_couleur = couleur;
 		printf("%d/%d coups\n", nbr_coup, nbr_coups_max);
 	}
 	if(if_flood(M,size)==1 && nbr_coup<=nbr_coups_max)
