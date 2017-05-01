@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <sys/time.h>
 #include "grille.h"
 
 #ifndef SOLVEUR_H

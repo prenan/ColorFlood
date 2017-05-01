@@ -54,7 +54,7 @@ int main()
 
 		initialize_text(ecran, nbr_coup_texte, police1);
 		
-		display_SDL(ecran, plateau, size,size_window);
+		display_SDL(ecran, plateau, size, size_window);
 
 		nbr_coup = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coup_texte, police1, size_window);
 		end_game(ecran, plateau, size, nbr_coup, nbr_coups_max, police2);

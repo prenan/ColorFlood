@@ -7,10 +7,10 @@ int choose_size()
 	printf("Entrer la taille du jeu (entre 4 et 24) :\n"); 
 	scanf("%d", &size); 
 	while(size<4 || size>24) 
-	{ 
+	{
 		printf("La taille doit être comprise entre 4 et 24.\n"); 
 		scanf("%d", &size); 
-	} 
+	}
 	return size;
 }
 
@@ -94,13 +94,13 @@ grille change_color(coordonnees coord, char c, grille plateau)
 }
 
 bool if_flood(grille plateau, int size)
-{     
-	int i, j; 
+{
+	int i, j;
 	bool res = 1;
 	for(i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
-		{   
+		{
 			if(plateau[0][0] != plateau[i][j])
 			{
 				return res = 0;
@@ -122,21 +122,17 @@ void free_space(grille plateau, int size)
 	plateau = NULL;
 }
 
-void modif_color(int x,int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
+void modif_color(int x, int y, char couleur_choisie, char ancienne_couleur, grille plateau, int size)
 {
-
 	if(x >= 0 && x < size && y >= 0 && y < size && plateau[x][y] == ancienne_couleur && plateau[x][y] != couleur_choisie)
-    {
-     	plateau[x][y] = couleur_choisie; //set color before starting recursion
+	{
+		plateau[x][y] = couleur_choisie; //set color before starting recursion
 
-    	modif_color(x+1, y, couleur_choisie, ancienne_couleur,plateau,size);
-    	
-    	modif_color(x-1, y, couleur_choisie, ancienne_couleur,plateau,size);
-    	
-    	modif_color(x, y-1, couleur_choisie, ancienne_couleur,plateau,size);
- 		
-    	modif_color(x, y+1, couleur_choisie, ancienne_couleur,plateau,size);
-  	}
+		modif_color(x+1, y, couleur_choisie, ancienne_couleur, plateau, size);
+		modif_color(x-1, y, couleur_choisie, ancienne_couleur, plateau, size);
+		modif_color(x, y-1, couleur_choisie, ancienne_couleur, plateau, size);
+		modif_color(x, y+1, couleur_choisie, ancienne_couleur, plateau, size);
+	}
 }
 
 grille copie(grille plateau, int size)

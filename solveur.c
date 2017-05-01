@@ -1,12 +1,12 @@
-#include <sys/time.h>
 #include "solveur.h"
+
 
 /**
  ** @brief compute time difference in seconds
  **/
 static
 double timeval_diff(struct timeval tv1, struct timeval tv2) {
-  return (tv2.tv_sec-tv1.tv_sec) + (tv2.tv_usec-tv1.tv_usec)*1E-6;
+	return (tv2.tv_sec-tv1.tv_sec) + (tv2.tv_usec-tv1.tv_usec)*1E-6;
 }
 
 bool testeur_chemins(grille plateau, int size, char* chemin)
