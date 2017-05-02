@@ -316,13 +316,15 @@ SDL_Surface *initialize_screen(int size_window)
 
 void solveur_box(SDL_Surface *ecran,char* chemin,int nbr_coups_min)
 {
+	RGB W = {255, 255, 255}; //blanc
 	RGB V = {153, 255, 0}; //vert
 	RGB R = {204, 0, 51};  //Rouge
 	RGB B = {0, 102, 255}; //blue
 	RGB G = {102, 204, 204}; //Qing
-	RGB J = {255,255,102}; //Jeune
+	RGB J = {255, 255, 102}; //Jeune
 	RGB M = {153, 0, 255}; //M
-	int i=0;
+	int i = 0;
+	drawRectangle(ecran, 580, 85, 500, W);
 	while(i<nbr_coups_min)
 	{
 		if(chemin[i]=='J')
@@ -345,8 +347,9 @@ void solveur_box(SDL_Surface *ecran,char* chemin,int nbr_coups_min)
 		dprintf(2,"%c",chemin[i]);
 		i++;
 	}
-
+	printf("\n");
 }
+
 void initialize_text(SDL_Surface *ecran,char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1,position2,position3,position4;
