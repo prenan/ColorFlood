@@ -324,7 +324,7 @@ void solveur_box(SDL_Surface *ecran,char* chemin,int nbr_coups_min)
 	RGB J = {255, 255, 102}; //Jeune
 	RGB M = {153, 0, 255}; //M
 	int i = 0;
-	drawRectangle(ecran, 580, 85, 500, W);
+	drawRectangle(ecran, 550, 80, 500, W); //clear solveur
 	while(i<nbr_coups_min)
 	{
 		if(chemin[i]=='J')
@@ -578,14 +578,14 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					sprintf(solveur_info, "Solveur en cours...");
 					texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 					SDL_BlitSurface(texte1, NULL, ecran, &position1);
-						
+					SDL_Flip(ecran);
 					chemin = solveur_perf(plateau, size, &nbr_coups_min);
 					SDL_FreeSurface(texte1);
-					sprintf(solveur_info, "Une solution possible:");
-					texte2 = TTF_RenderUTF8_Blended(police, solveur_info_efface, texteNoir);
-					SDL_BlitSurface(texte2, NULL, ecran, &position2);
-					SDL_Flip(ecran);
 					solveur_box(ecran,chemin,nbr_coups_min);
+					sprintf(solveur_info, "Une solution possible : ");
+					texte2 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
+					SDL_BlitSurface(texte2, NULL, ecran, &position1);
+					SDL_Flip(ecran);
 					flip = true;
 					free(chemin);
 				

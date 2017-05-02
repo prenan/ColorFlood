@@ -1,4 +1,12 @@
+<<<<<<< Updated upstream
 GRMG
 VGVJ
 BRRJ
 RGGJ
+=======
+GVVMJ
+JMMRR
+BRRRR
+VGMVJ
+JRGVB
+>>>>>>> Stashed changes
