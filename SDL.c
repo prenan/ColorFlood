@@ -417,7 +417,7 @@ void color_box(SDL_Surface *ecran,int size_window)
 	drawRectangle(ecran, 25,size_window*(3/2.0)+135, (size_window-40)/6, home);	
 }
 
-void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,bool border_flag)
+void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window, bool border_flag)
 {
 	RGB V = {153, 255, 0}; //vert
 	RGB R = {204, 0, 51};  //Rouge
@@ -426,11 +426,8 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,b
 	RGB J = {255,255,102}; //Jeune
 	RGB M = {153, 0, 255}; //M
 
-	//SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 245, 240, 240));
 	int i, j;
 	char couleur;
-
-	dprintf(2,"%d",border_flag);
 
 	for (i=0 ; i<size ; i++)
 	{
@@ -496,28 +493,26 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,b
 	SDL_Flip(ecran);
 }
 
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window,bool border_flag)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, bool border_flag, int* bouton, int* out)
 {
-	int continuer = 1, nbr_coup = 0;
+	int continuer = 1, nbr_coup = 0, exit = 0;
 	SDL_Surface *texte, *texte1,*texte2;
-	char solveur_info[30],solveur_info_efface[30];
+	char solveur_info[30];
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {245, 240, 240, 42};
-	SDL_Rect position,position1,position2;
+	SDL_Rect position, position1;
 
 	position.x = 500*(3/2.0)+90;
 	position.y = 500/2.0+30;
 	position1.x = 80;
 	position1.y = 550;
-	position2.x = 45;
-	position2.y = 550;
 
 	color_box(ecran,size_window);
 	
 	int nbr_coups_min;
 	char* chemin;
 	bool flip = true;
-	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
+	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer && exit == 0)
 	{
 		char ancienne_couleur = plateau[0][0];
 		SDL_WaitEvent(&event);
@@ -588,34 +583,20 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					SDL_Flip(ecran);
 					flip = true;
 					free(chemin);
-				
 				}
-				/*NE FONCTIONNE PAS
-				// menu
+				// bouton menu
 				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+40+cons))
 				{
-					//do something
-					int size = 0, difficulte = 0, nbr_coups_max = 0;
-
-					ecran = NULL;
-					TTF_Font *police1 = NULL, *police2 = NULL, *police3 = NULL;
-
-					TTF_Init();
-
-					police1 = TTF_OpenFont("orkney.ttf", 20);
-					police2 = TTF_OpenFont("orkney.ttf", 50);
-					police3 = TTF_OpenFont("orkney.ttf", 70);
-
-					ecran = menu(police1, police2, police3, &size, &difficulte, &nbr_coups_max);
-					TTF_CloseFont(police1);
-					TTF_CloseFont(police2);
-					TTF_CloseFont(police3);
+					*bouton = 1;
+					exit = 1;
+					break;
 				}
-				*/
-				// home 
+				// bouton rejouer
 				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+135+cons))
 				{
-					//do something
+					*bouton = 2;
+					exit = 1;
+					break;
 				}
 	
 			}
@@ -624,8 +605,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
-
 				case SDLK_ESCAPE:
+				*out = 1;
 				continuer = 0;
 				break;
 
@@ -634,7 +615,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			}
 		}
 
-		if(flip)
+		if (flip)
 		{
 			flip = false;
 			sprintf(nbr_coup_texte, "%d/%d", nbr_coup, nbr_coups_max);

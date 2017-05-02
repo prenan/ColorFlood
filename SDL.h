@@ -105,7 +105,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,b
  * \param size_window Taille de l'écran de jeu.
  * \return Le nombre de coups en cours.
  */
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, bool border_flag);
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, bool border_flag, int* bouton, int* out);
 
 /**
  * \fn void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
