@@ -67,11 +67,11 @@ void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	SDL_Flip(ecran);
 }
 
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max)
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max,bool *border_flag)
 {
-	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4, *texte5, *texte6, *texte7, *texte8, *texte9;
+	SDL_Surface *ecran, *texte1, *texte2, *texte3, *texte4, *texte5, *texte6, *texte7, *texte8, *texte9,*texte10;
 	SDL_Event event;
-	SDL_Rect position1, position2, position3, position4, position5, position6, position7, position8, position9;
+	SDL_Rect position1, position2, position3, position4, position5, position6, position7, position8, position9,position10;
 	SDL_Color couleur_texte = {0, 0, 0, 42};
 
 	char* difficulte_txt = "Facile"; 
@@ -100,12 +100,15 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *
 	position9.x = 270;
 	position9.y = 225;
 
+	position10.x = 140;
+	position10.y = 270;
+
 	int background_size = 10, i = 0;
 	grille plateau = random_grille(background_size);
 
 	int size_window = 429;
 	ecran = SDL_SetVideoMode(size_window, size_window, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
-	display_SDL(ecran, plateau, background_size, size_window);
+	display_SDL(ecran, plateau, background_size, size_window,1);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 
 	texte1 = TTF_RenderUTF8_Blended(police3, "ColorFlood", couleur_texte);
@@ -117,6 +120,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *
 	texte7 = TTF_RenderUTF8_Blended(police1, "Facile", couleur_texte); 
 	texte8 = TTF_RenderUTF8_Blended(police1, "Normal", couleur_texte); 
 	texte9 = TTF_RenderUTF8_Blended(police1, "Expert", couleur_texte); 
+	texte10 = TTF_RenderUTF8_Blended(police1, "Sans border", couleur_texte); 
 
 	int time_between_moves = 875;
 	grille plateau_sol = copie(plateau,background_size);
@@ -194,6 +198,14 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *
 						*difficulte = niveau;
 						continuer = 0;
 					}
+					position10.x = 120;
+					position10.y = 270;
+					if(x >= 140 && x < 260 && y >= 270 && y < 310)
+					{
+						*border_flag=true;
+						flip = true;
+						//continuer = 0;
+					}
 				}
 			}
 		}
@@ -239,6 +251,7 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *
 			SDL_BlitSurface(texte7, NULL, ecran, &position7);
 			SDL_BlitSurface(texte8, NULL, ecran, &position8);
 			SDL_BlitSurface(texte9, NULL, ecran, &position9);
+			SDL_BlitSurface(texte10, NULL, ecran, &position10);
 			SDL_Flip(ecran);
 		}
 
@@ -401,7 +414,7 @@ void color_box(SDL_Surface *ecran,int size_window)
 	drawRectangle(ecran, 25,size_window*(3/2.0)+135, (size_window-40)/6, home);	
 }
 
-void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
+void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,bool border_flag)
 {
 	RGB V = {153, 255, 0}; //vert
 	RGB R = {204, 0, 51};  //Rouge
@@ -414,43 +427,73 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	int i, j;
 	char couleur;
 
+	dprintf(2,"%d",border_flag);
+
 	for (i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
 		{
 			couleur = plateau[i][j];
-			switch (couleur)
-			{
-				case 'B':
-				drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, B);
-				break;
+			if(border_flag==false)
+				switch (couleur)
+				{
+					case 'B':
+					drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, B);
+					break;
 
-				case 'V':
-				drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, V);
-				break;
+					case 'V':
+					drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, V);
+					break;
 
-				case 'R':
-				drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, R);
-				break;
+					case 'R':
+					drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, R);
+					break;
 
-				case 'J':
-				drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, J);
-				break;
+					case 'J':
+					drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, J);
+					break;
 
-				case 'M':
-				drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, M);
-				break;
+					case 'M':
+					drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, M);
+					break;
 
-				case 'G':
-				drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, G);
-				break;
-			}
+					case 'G':
+					drawRectangle(ecran, i*size_window/size+10+i*2, j*size_window/size+size_window*(1.0/2)+j*2-size, size_window/size, G);
+					break;
+				}
+			else
+				switch (couleur)
+				{
+					case 'B':
+					drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, B);
+					break;
+
+					case 'V':
+					drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, V);
+					break;
+
+					case 'R':
+					drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, R);
+					break;
+
+					case 'J':
+					drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, J);
+					break;
+
+					case 'M':
+					drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, M);
+					break;
+
+					case 'G':
+					drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, G);
+					break;
+				}
 		}
 	}
 	SDL_Flip(ecran);
 }
 
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window,bool border_flag)
 {
 	int continuer = 1, nbr_coup = 0;
 	SDL_Surface *texte, *texte1,*texte2;
@@ -594,7 +637,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			sprintf(nbr_coup_texte, "%d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
-			display_SDL(ecran, plateau, size,size_window);
+			display_SDL(ecran, plateau, size,size_window,border_flag);
 			SDL_Flip(ecran);
 			SDL_FreeSurface(texte);
 		}
