@@ -468,7 +468,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 
 	color_box(ecran,size_window);
 	
-	int nbr_coups_min,flag=0;
+	int nbr_coups_min;
 	char* chemin;
 	bool flip = true;
 	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer)
@@ -528,23 +528,21 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				// solveur
 				if(y >= (size_window/2.0+100) && y < (size_window/2.0+100+cons) && x >= (size_window*(3/2.0)+80) && x < (size_window*(3/2.0)+80+cons))
 				{
-					if(flag==0)
-					{
-						sprintf(solveur_info, "Solveur en cours...");
-						texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
-						SDL_BlitSurface(texte1, NULL, ecran, &position1);
+					
+					sprintf(solveur_info, "Solveur en cours...");
+					texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
+					SDL_BlitSurface(texte1, NULL, ecran, &position1);
 						
-						chemin = solveur_perf(plateau, size, &nbr_coups_min);
-						SDL_FreeSurface(texte1);
-						sprintf(solveur_info, "Une solution possible:");
-						texte2 = TTF_RenderUTF8_Blended(police, solveur_info_efface, texteNoir);
-						SDL_BlitSurface(texte2, NULL, ecran, &position2);
-						SDL_Flip(ecran);
-						solveur_box(ecran,chemin,nbr_coups_min);
-						flip = true;
-						free(chemin);
-						flag=1;
-					}
+					chemin = solveur_perf(plateau, size, &nbr_coups_min);
+					SDL_FreeSurface(texte1);
+					sprintf(solveur_info, "Une solution possible:");
+					texte2 = TTF_RenderUTF8_Blended(police, solveur_info_efface, texteNoir);
+					SDL_BlitSurface(texte2, NULL, ecran, &position2);
+					SDL_Flip(ecran);
+					solveur_box(ecran,chemin,nbr_coups_min);
+					flip = true;
+					free(chemin);
+				
 				}
 				/*NE FONCTIONNE PAS
 				// menu
