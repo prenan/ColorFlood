@@ -150,7 +150,6 @@ SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *
 					break;
 					default:
 					break;
-
 				}
 
 				case SDL_MOUSEBUTTONDOWN:
@@ -353,17 +352,17 @@ void solveur_box(SDL_Surface *ecran,char* chemin,int nbr_coups_min)
 void initialize_text(SDL_Surface *ecran,char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1,position2,position3,position4;
-	SDL_Rect position_menu, position_home;
+	SDL_Rect position_menu, position_rejouer;
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};	/* 4ème paramètre inutile */
 	SDL_Surface *texte1,*texte2,*texte3,*texte4;
-	SDL_Surface *menu, *home;
+	SDL_Surface *menu, *rejouer;
 
 	texte1 = TTF_RenderUTF8_Shaded(police, "Color Box", texteNoir, fondBlanc);
 	texte2 = TTF_RenderUTF8_Shaded(police, "Afficher le solveur ", texteNoir, fondBlanc);
 	texte3 = TTF_RenderUTF8_Shaded(police, "Nombre de coups ", texteNoir, fondBlanc);
 	texte4 = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 	menu = TTF_RenderUTF8_Shaded(police, "Menu", texteNoir, fondBlanc);
-	home = TTF_RenderUTF8_Shaded(police, "Home", texteNoir, fondBlanc);
+	rejouer = TTF_RenderUTF8_Shaded(police, "Rejouer", texteNoir, fondBlanc);
 
 	position1.x = 80;
 	position1.y = 520;
@@ -376,23 +375,22 @@ void initialize_text(SDL_Surface *ecran,char *nbr_coup_texte, TTF_Font *police)
 
 	position_menu.x = 802;
 	position_menu.y = 100;
-	position_home.x = 897;
-	position_home.y = 100;
-
+	position_rejouer.x = 890;
+	position_rejouer.y = 100;
 
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
 	SDL_BlitSurface(texte2, NULL, ecran, &position2);
 	SDL_BlitSurface(texte3, NULL, ecran, &position3);
 	SDL_BlitSurface(texte4, NULL, ecran, &position4);
 	SDL_BlitSurface(menu, NULL, ecran, &position_menu);
-	SDL_BlitSurface(home, NULL, ecran, &position_home);
+	SDL_BlitSurface(rejouer, NULL, ecran, &position_rejouer);
 	
 	SDL_FreeSurface(texte1);
 	SDL_FreeSurface(texte2);
 	SDL_FreeSurface(texte3);
 	SDL_FreeSurface(texte4);
 	SDL_FreeSurface(menu);
-	SDL_FreeSurface(home);
+	SDL_FreeSurface(rejouer);
 }
 
 void color_box(SDL_Surface *ecran,int size_window)
@@ -405,7 +403,7 @@ void color_box(SDL_Surface *ecran,int size_window)
 	RGB M = {153, 0, 255}; //M
 	RGB solveur = {66,66,66};
 	RGB menu = {100,100,100};
-	RGB home = {150,150,150};
+	RGB rejouer = {150,150,150};
 	drawRectangle(ecran, size_window*(0.0/6)+20, size_window/4.0-40, (size_window-40)/6, G);
 	drawRectangle(ecran, size_window*(1.0/6)+20,size_window/4.0-40, (size_window-40)/6, R);
 	drawRectangle(ecran, size_window*(2.0/6)+20,size_window/4.0-40, (size_window-40)/6, J);
@@ -414,7 +412,7 @@ void color_box(SDL_Surface *ecran,int size_window)
 	drawRectangle(ecran, size_window*(5.0/6)+20,size_window/4.0-40, (size_window-40)/6, M);	
 	drawRectangle(ecran, size_window/2.0+100,size_window*(3/2.0)+80, (size_window-40)/6, solveur);	
 	drawRectangle(ecran, 25,size_window*(3/2.0)+40, (size_window-40)/6, menu);	
-	drawRectangle(ecran, 25,size_window*(3/2.0)+135, (size_window-40)/6, home);	
+	drawRectangle(ecran, 25,size_window*(3/2.0)+135, (size_window-40)/6, rejouer);	
 }
 
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window, bool border_flag)
@@ -519,6 +517,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 		switch (event.type)
 		{
 			case SDL_QUIT:
+			*out = 1;
 			continuer = 0;
 			break;
 
@@ -568,8 +567,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				}
 				// solveur
 				if(y >= (size_window/2.0+100) && y < (size_window/2.0+100+cons) && x >= (size_window*(3/2.0)+80) && x < (size_window*(3/2.0)+80+cons))
-				{
-					
+				{	
 					sprintf(solveur_info, "Solveur en cours...");
 					texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 					SDL_BlitSurface(texte1, NULL, ecran, &position1);
@@ -577,7 +575,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					chemin = solveur_perf(plateau, size, &nbr_coups_min);
 					SDL_FreeSurface(texte1);
 					solveur_box(ecran,chemin,nbr_coups_min);
-					sprintf(solveur_info, "Une solution possible : ");
+					sprintf(solveur_info, "Solution possible :");
 					texte2 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 					SDL_BlitSurface(texte2, NULL, ecran, &position1);
 					SDL_Flip(ecran);

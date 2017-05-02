@@ -43,6 +43,7 @@ int main()
 		{
 			grille plateau = random_grille(size);
 			grille plateau_sol = copie(plateau, size);
+			grille plateau_copie;
 
 			solution_rapide(plateau_sol, size, &nbr_coups_max);	/*utile pour le niveau de difficulté*/
 			
@@ -69,7 +70,7 @@ int main()
 			free_space(plateau_sol, size);
 			/*free_space(plateau_copie, size); FAIT PLANTER LE MENU*/
 		}
-	} while (bouton == 1 && size != 0);
+	} while (bouton == 1 && size != 0 && out != 1);
 
 	TTF_CloseFont(police1);
 	TTF_CloseFont(police2);
