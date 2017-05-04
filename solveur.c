@@ -159,7 +159,7 @@ void free_c(char** chemins,int k)
 char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 {
 	struct timeval deb,fin;
-    gettimeofday(&deb, 0);
+	gettimeofday(&deb, 0);
 	int i, j, k = 0, l = 0, min;
 	char* couleurs[6] = {"B\0", "V\0", "R\0", "J\0", "M\0", "G\0"};
 	char** chemins_1 = malloc(5*sizeof(char*));
@@ -174,6 +174,19 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 		if(valeur[i]>min)
 		{
 			chemins_1[k] = couleurs[i];
+			sol_plateau = copie(plateau, size);
+			if(testeur_chemins(sol_plateau, size, chemins_1[k]) == 1)
+			{
+				char* solution = chemins_1[k];
+				*nbr_coups_min = strlen(solution);
+				free_c(chemins_1,k);
+				free_c(chemins_2,l);
+				free_space(sol_plateau, size);
+				gettimeofday(&fin, 0);
+				printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
+				return solution;
+			}
+			free_space(sol_plateau, size);
 			k++;
 		}
 	}
@@ -202,7 +215,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 						free_space(sol_plateau, size);
 						gettimeofday(&fin, 0);
 						printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
-						return solution;			
+						return solution;
 					}
 					free_space(sol_plateau, size);
 					l++;
