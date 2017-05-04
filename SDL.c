@@ -296,8 +296,8 @@ SDL_Surface *initialize_screen(int size_window)
 	position_menu.y = 25;
 	position_rejouer.x = size_window*(3/2.0)+135;
 	position_rejouer.y = 25;
-	position_solveur.x = size_window*(3/2.0)+80;
-	position_solveur.y = size_window/2.0+100;
+	position_solveur.x = size_window*(3/2.0)+85;
+	position_solveur.y = 440;
 	position_retour.x = size_window*(3/2.0)+40;
 	position_retour.y = 150;
 	position_exit.x = size_window*(3/2.0)+135;
@@ -363,31 +363,37 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 {
 	SDL_Rect position1, position2, position3, position4;
-	SDL_Rect position_menu, position_rejouer;
+	SDL_Rect position_menu, position_rejouer, position_retour, position_exit;
 	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};	/* 4ème paramètre inutile */
 	SDL_Surface *texte1,*texte2,*texte3,*texte4;
-	SDL_Surface *menu, *rejouer;
+	SDL_Surface *menu, *rejouer, *retour, *exit;
 
 	texte1 = TTF_RenderUTF8_Shaded(police, "Color Box", texteNoir, fondBlanc);
-	texte2 = TTF_RenderUTF8_Shaded(police, "Afficher le solveur ", texteNoir, fondBlanc);
+	texte2 = TTF_RenderUTF8_Shaded(police, "Afficher une solution", texteNoir, fondBlanc);
 	texte3 = TTF_RenderUTF8_Shaded(police, "Nombre de coups ", texteNoir, fondBlanc);
 	texte4 = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 	menu = TTF_RenderUTF8_Shaded(police, "Menu", texteNoir, fondBlanc);
 	rejouer = TTF_RenderUTF8_Shaded(police, "Rejouer", texteNoir, fondBlanc);
+	retour = TTF_RenderUTF8_Shaded(police, "Retour", texteNoir, fondBlanc);
+	exit = TTF_RenderUTF8_Shaded(police, "Exit", texteNoir, fondBlanc);
 
 	position1.x = 80;
 	position1.y = 520;
-	position2.x = 785;
-	position2.y = 455;
+	position2.x = 770;
+	position2.y = 520;
 	position3.x = 500*(3/2.0)+40;
-	position3.y = 500/2.0;
+	position3.y = 300;
 	position4.x = 500*(3/2.0)+90;
-	position4.y = 500/2.0+30;
+	position4.y = 330;
 
-	position_menu.x = 802;
-	position_menu.y = 100;
-	position_rejouer.x = 890;
-	position_rejouer.y = 100;
+	position_menu.x = 797;
+	position_menu.y = 95;
+	position_rejouer.x = 885;
+	position_rejouer.y = 95;
+	position_retour.x = 792;
+	position_retour.y = 217;
+	position_exit.x = 901;
+	position_exit.y = 217;
 
 	SDL_BlitSurface(texte1, NULL, ecran, &position1);
 	SDL_BlitSurface(texte2, NULL, ecran, &position2);
@@ -395,6 +401,8 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_BlitSurface(texte4, NULL, ecran, &position4);
 	SDL_BlitSurface(menu, NULL, ecran, &position_menu);
 	SDL_BlitSurface(rejouer, NULL, ecran, &position_rejouer);
+	SDL_BlitSurface(retour, NULL, ecran, &position_retour);
+	SDL_BlitSurface(exit, NULL, ecran, &position_exit);
 	
 	SDL_FreeSurface(texte1);
 	SDL_FreeSurface(texte2);
@@ -402,6 +410,8 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
 	SDL_FreeSurface(texte4);
 	SDL_FreeSurface(menu);
 	SDL_FreeSurface(rejouer);
+	SDL_FreeSurface(retour);
+	SDL_FreeSurface(exit);
 }
 
 void color_box(SDL_Surface *ecran,int size_window)
@@ -499,26 +509,30 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window, 
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, bool border_flag, int* bouton, int* out)
 {
-	int continuer = 1, nbr_coup = 0, exit = 0;
+	int continuer = 1, nbr_coup = 0, exit = 0, nbr_coups_min;
+	char solveur_info[30], ancienne_couleur, *chemin_solveur, chemin_joueur[100];
+	bool flip = true;
+	grille plateau_copie = copie(plateau, size);
+	grille plateau_initial = copie(plateau, size);
 	SDL_Surface *texte, *texte1,*texte2;
-	char solveur_info[30];
 	SDL_Event event;
-	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {245, 240, 240, 42};
+	SDL_Color texteNoir = {0, 0, 0, 42}, fondBlanc = {255, 255, 255, 42};
 	SDL_Rect position, position1;
 
 	position.x = 500*(3/2.0)+90;
-	position.y = 500/2.0+30;
+	position.y = 330;
 	position1.x = 80;
 	position1.y = 550;
 
 	color_box(ecran,size_window);
 
-	int nbr_coups_min;
-	char* chemin;
-	bool flip = true;
-	while(if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer && exit == 0)
+	while (if_flood(plateau, size) != 1 && nbr_coup < nbr_coups_max && continuer && exit == 0)
 	{
-		char ancienne_couleur = plateau[0][0];
+		ancienne_couleur = plateau[0][0];
+
+		chemin_joueur[nbr_coup] = ancienne_couleur;
+		chemin_joueur[nbr_coup+1] = '\0';
+
 		SDL_WaitEvent(&event);
 		switch (event.type)
 		{
@@ -531,78 +545,92 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				int x = event.button.x;
-				int y = event.button.y;
-				int cons=(size_window-40)/6;
-				
+				int y = event.button.y;				
 
-				if(y >= (size_window*(0.0/6)+20) && y < (size_window*(0.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
+				if (ancienne_couleur != 'G' && y >= (size_window*(0.0/6)+20) && y < (size_window*(0.0/6)+84) && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					modif_color(0, 0, 'G', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
-				if(y >= (size_window*(1.0/6)+20) && y < (size_window*(1.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
+				if (ancienne_couleur != 'R' && y >= (size_window*(1.0/6)+20) && y < (size_window*(1.0/6)+84) && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					modif_color(0, 0, 'R', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
-				if(y >= (size_window*(2.0/6)+20) && y < (size_window*(2.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
+				if (ancienne_couleur != 'J' && y >= (size_window*(2.0/6)+20) && y < (size_window*(2.0/6)+84) && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					modif_color(0, 0, 'J', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
-				if(y >= (size_window*(3.0/6)+20) && y < (size_window*(3.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
+				if (ancienne_couleur != 'V' && y >= (size_window*(3.0/6)+20) && y < (size_window*(3.0/6)+84) && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					modif_color(0, 0, 'V', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
-				if(y >= (size_window*(4.0/6)+20) && y < (size_window*(4.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
+				if (ancienne_couleur != 'B' && y >= (size_window*(4.0/6)+20) && y < (size_window*(4.0/6)+84) && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					modif_color(0, 0, 'B', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
-				if(y >= (size_window*(5.0/6)+20) && y < (size_window*(5.0/6)+20+cons) && x >= (size_window/4.0-40) && x < (size_window/4.0-40+cons))
+				if (ancienne_couleur != 'M' && y >= (size_window*(5.0/6)+20) && y < (size_window*(5.0/6)+84) && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					modif_color(0, 0, 'M', ancienne_couleur, plateau, size);
 					nbr_coup++;
 					flip = true;
 				}
 				// solveur
-				if(y >= (size_window/2.0+100) && y < (size_window/2.0+100+cons) && x >= (size_window*(3/2.0)+80) && x < (size_window*(3/2.0)+80+cons))
+				if (y >= 440 && y < 505 && x >= size_window*(3/2.0)+85 && x < size_window*(3/2.0)+150)
 				{	
 					sprintf(solveur_info, "Solveur en cours...");
 					texte1 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 					SDL_BlitSurface(texte1, NULL, ecran, &position1);
 					SDL_Flip(ecran);
-					chemin = solveur_perf(plateau, size, &nbr_coups_min);
+					chemin_solveur = solveur_perf(plateau, size, &nbr_coups_min);
 					SDL_FreeSurface(texte1);
-					solveur_box(ecran,chemin,nbr_coups_min);
+					solveur_box(ecran, chemin_solveur, nbr_coups_min);
 					sprintf(solveur_info, "Solution possible :");
 					texte2 = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 					SDL_BlitSurface(texte2, NULL, ecran, &position1);
 					SDL_Flip(ecran);
 					flip = true;
-					free(chemin);
+					free(chemin_solveur);
 				}
 				// bouton menu
-				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+40+cons))
+				if (y >= 25 && y < 89 && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+104))
 				{
 					*bouton = 1;
 					exit = 1;
 					break;
 				}
 				// bouton rejouer
-				if(y >= 25 && y < (25+cons) && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+135+cons))
+				if (y >= 25 && y < 89 && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+199))
 				{
 					*bouton = 2;
 					exit = 1;
 					break;
 				}
-
+				// bouton retour
+				if (nbr_coup > 0 && y >= 150 && y < 214 && x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+104))
+				{
+					chemin_joueur[nbr_coup] = '\0';
+					testeur_chemins(plateau_copie, size, chemin_joueur);
+					plateau = copie(plateau_copie, size);
+					plateau_copie = copie(plateau_initial, size);
+					nbr_coup--;
+					flip = true;
+				}
+				// bouton exit
+				if (y >= 150 && y < 214 && x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+199))
+				{
+					*out = 1;
+					continuer = 0;
+					break;
+				}
 			}
 			break;
 
@@ -625,11 +653,12 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			sprintf(nbr_coup_texte, "%d/%d", nbr_coup, nbr_coups_max);
 			texte = TTF_RenderUTF8_Shaded(police, nbr_coup_texte, texteNoir, fondBlanc);
 			SDL_BlitSurface(texte, NULL, ecran, &position);
-			display_SDL(ecran, plateau, size,size_window,border_flag);
+			display_SDL(ecran, plateau, size, size_window, border_flag);
 			SDL_Flip(ecran);
 			SDL_FreeSurface(texte);
 		}
 	}
+
 	return nbr_coup;
 }
 
