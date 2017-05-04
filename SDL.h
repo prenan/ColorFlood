@@ -61,7 +61,9 @@ void fillScreen(SDL_Surface *ecran, RGB couleur);
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max);
+SDL_Surface *menu(TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max);
+
+void niveau_du_jeu(int niveau, SDL_Surface **ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)
