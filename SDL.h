@@ -61,7 +61,7 @@ void fillScreen(SDL_Surface *ecran, RGB couleur);
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max,bool *border_flag);
+SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)
@@ -90,7 +90,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
  * \param size Taille du jeu (grille size*size).
  * \param size_window Taille de l'écran de jeu.
  */
-void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,bool border_flag);
+void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window);
 
 /**
  * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
@@ -105,7 +105,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window,b
  * \param size_window Taille de l'écran de jeu.
  * \return Le nombre de coups en cours.
  */
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, bool border_flag, int* bouton, int* out);
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, int* bouton, int* out);
 
 /**
  * \fn void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
