@@ -296,7 +296,7 @@ void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
 SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran;
-	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_annuler, *icone_exit, *icone_like, *icone_son, *icone_muet;
+	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_annuler, *icone_exit, *icone_like, *icone_son;
 	SDL_Rect position_menu, position_rejouer, position_solveur, position_annuler, position_exit, position_like, position_son;
 	RGB init_screen = {255,255,255};	//blanc
 
@@ -329,7 +329,6 @@ SDL_Surface *initialize_screen(int size_window)
 	icone_exit = SDL_LoadBMP("img/exit.bmp");
 	icone_like = SDL_LoadBMP("img/donate.bmp");
 	icone_son = SDL_LoadBMP("img/son.bmp");
-	icone_muet = SDL_LoadBMP("img/muet.bmp");
 
 	SDL_BlitSurface(icone_menu, NULL, ecran, &position_menu);
 	SDL_BlitSurface(icone_rejouer, NULL, ecran, &position_rejouer);
@@ -507,15 +506,15 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coups_texte, TTF_Font *police, int size_window, int* bouton, int* out)
 {
-	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min;
+	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1;
 	char solveur_info[30], ancienne_couleur, *chemin_solveur, chemin_joueur[100];
 	bool flip = true;
 	grille plateau_copie = copie(plateau, size);
 	grille plateau_initial = copie(plateau, size);
-	SDL_Surface *valeur_nrb_coups, *texte_solveur_en_cours, *texte_solveur_fini, *texte_rectangle, *rectangle;
+	SDL_Surface *valeur_nrb_coups, *texte_solveur_en_cours, *texte_solveur_fini, *texte_rectangle, *rectangle, *icone_son;
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42};
-	SDL_Rect position_valeur_nbr_coups, position_solveur, position_texte_rectangle, position_rectangle;
+	SDL_Rect position_valeur_nbr_coups, position_solveur, position_texte_rectangle, position_rectangle, position_son;
 
 	position_valeur_nbr_coups.x = 500*(3/2.0)+105;
 	position_valeur_nbr_coups.y = 330;
@@ -525,9 +524,12 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	position_texte_rectangle.y = 300;
 	position_rectangle.x = 500*(3/2.0)+23;
 	position_rectangle.y = 287;
+	position_son.x = size_window*(3/2.0)+40;
+	position_son.y = 402;
 
 	color_box(ecran,size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
+	icone_son = SDL_LoadBMP("img/son.bmp");
 
 	Mix_Music *musique; //Création du pointeur de type Mix_Music
 	musique = Mix_LoadMUS("son/musique_jeu.mp3"); //Chargement de la musique
@@ -606,8 +608,20 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						flip = true;
 					}
 					else if (y >= 402 && y < 467) // bouton son
-					{
-						/*ici le son*/
+					{				
+						if (son == 1)
+						{
+							Mix_PauseMusic();
+							icone_son = SDL_LoadBMP("img/muet.bmp");
+							son = 0;
+						}
+						else
+						{
+							Mix_ResumeMusic();
+							icone_son = SDL_LoadBMP("img/son.bmp");
+							son = 1;
+						}
+						flip = true;
 					}
 				}
 				else if (x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+200))
@@ -629,6 +643,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						sprintf(solveur_info, "Solution possible :");
 						texte_solveur_fini = TTF_RenderUTF8_Blended(police, solveur_info, texteNoir);
 						SDL_BlitSurface(texte_solveur_fini, NULL, ecran, &position_solveur);
+						SDL_BlitSurface(icone_son, NULL, ecran, &position_son);
 						SDL_Flip(ecran);
 						SDL_FreeSurface(texte_solveur_fini);
 						if(strlen(chemin_solveur) != 1)	// free ssi pas un char
@@ -669,6 +684,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			valeur_nrb_coups = TTF_RenderUTF8_Blended(police, nbr_coups_texte, texteNoir);
 			SDL_BlitSurface(valeur_nrb_coups, NULL, ecran, &position_valeur_nbr_coups);
 			SDL_BlitSurface(texte_rectangle, NULL, ecran, &position_texte_rectangle);
+			SDL_BlitSurface(icone_son, NULL, ecran, &position_son);
 			display_SDL(ecran, plateau, size, size_window);
 			SDL_Flip(ecran);
 			SDL_FreeSurface(valeur_nrb_coups);
