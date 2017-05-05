@@ -433,6 +433,8 @@ void color_box(SDL_Surface *ecran,int size_window)
 
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
+	size_window = 500-500%size;
+
 	RGB V = {153, 255, 0}; //vert
 	RGB R = {204, 0, 51};  //Rouge
 	RGB B = {0, 102, 255}; //blue
@@ -451,27 +453,27 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 			switch (couleur)
 			{
 				case 'B':
-				drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, B);
+				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, B);
 				break;
 
 				case 'V':
-				drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, V);
+				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, V);
 				break;
 
 				case 'R':
-				drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, R);
+				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, R);
 				break;
 
 				case 'J':
-				drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, J);
+				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, J);
 				break;
 
 				case 'M':
-				drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, M);
+				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, M);
 				break;
 
 				case 'G':
-				drawRectangle(ecran, i*size_window/size+10, j*size_window/size+size_window*(1.0/2)-size, size_window/size+size_window%size, G);
+				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, G);
 				break;
 			}
 		}
