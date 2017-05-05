@@ -240,6 +240,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	Mix_FreeMusic(musique);
 	return ecran;
 }
+
 void niveau_du_jeu(int niveau, SDL_Surface **ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
 {
 	TTF_Font *police_petite = TTF_OpenFont("orkney.ttf", 20);
@@ -295,8 +296,8 @@ void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
 SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran;
-	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_annuler, *icone_exit;
-	SDL_Rect position_menu, position_rejouer, position_solveur, position_annuler, position_exit;
+	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_annuler, *icone_exit, *icone_like;
+	SDL_Rect position_menu, position_rejouer, position_solveur, position_annuler, position_exit, position_like;
 	RGB init_screen = {255,255,255};	//blanc
 
 	position_menu.x = size_window*(3/2.0)+40;
@@ -309,6 +310,8 @@ SDL_Surface *initialize_screen(int size_window)
 	position_annuler.y = 150;
 	position_exit.x = size_window*(3/2.0)+135;
 	position_exit.y = 150;
+	position_like.x = 936;
+	position_like.y = 556;
 
 	ecran = SDL_SetVideoMode(2*size_window, size_window+120, 32, SDL_HWSURFACE);
 	/* nom de la fenêtre */
@@ -322,18 +325,21 @@ SDL_Surface *initialize_screen(int size_window)
 	icone_solveur = SDL_LoadBMP("img/solveur.bmp");
 	icone_annuler = SDL_LoadBMP("img/annuler.bmp");
 	icone_exit = SDL_LoadBMP("img/exit.bmp");
+	icone_like = SDL_LoadBMP("img/like.bmp");
 
 	SDL_BlitSurface(icone_menu, NULL, ecran, &position_menu);
 	SDL_BlitSurface(icone_rejouer, NULL, ecran, &position_rejouer);
 	SDL_BlitSurface(icone_solveur, NULL, ecran, &position_solveur);
 	SDL_BlitSurface(icone_annuler, NULL, ecran, &position_annuler);
 	SDL_BlitSurface(icone_exit, NULL, ecran, &position_exit);
+	SDL_BlitSurface(icone_like, NULL, ecran, &position_like);
 
 	SDL_FreeSurface(icone_menu);
 	SDL_FreeSurface(icone_rejouer);
 	SDL_FreeSurface(icone_solveur);
 	SDL_FreeSurface(icone_annuler);
 	SDL_FreeSurface(icone_exit);
+	SDL_FreeSurface(icone_like);
 
 	return ecran;
 }
@@ -506,8 +512,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	position_solveur.y = 550;
 	position_texte_rectangle.x = 500*(3/2.0)+40;
 	position_texte_rectangle.y = 300;
-	position_rectangle.x = 500*(3/2.0)+27;
-	position_rectangle.y = 285;
+	position_rectangle.x = 500*(3/2.0)+23;
+	position_rectangle.y = 287;
 
 	color_box(ecran,size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
@@ -592,12 +598,12 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				}
 				else if (x >= size_window*(3/2.0)+40 && x < (size_window*(3/2.0)+104))
 				{
-					if(y >= 25 && y < 89)// bouton menu
+					if (y >= 25 && y < 89) // bouton menu
 					{
 						*bouton = 1;
 						exit = 1;
 					}
-					else if(nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
+					else if (nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
 					{
 						chemin_joueur[nbr_coups] = '\0';
 						testeur_chemins(plateau_copie, size, chemin_joueur);
@@ -609,16 +615,20 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				}
 				if (x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+199))
 				{
-					if(y >= 25 && y < 89)// bouton rejouer
+					if (y >= 25 && y < 89) // bouton rejouer
 					{
 						*bouton = 2;
 						exit = 1;
 					}
-					else if(y >= 150 && y < 214)// bouton exit
+					else if (y >= 150 && y < 214) // bouton exit
 					{
 						*out = 1;
 						continuer = 0;
 					}
+				}
+				else if (x >= 936 && x < 1000 && y >= 556 && y < 620) // bouton like
+				{
+					system("xdg-open https://facebook.com/unistra/");
 				}
 			}
 			break;
@@ -640,7 +650,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			flip = false;
 			SDL_BlitSurface(rectangle, NULL, ecran, &position_rectangle);
 			sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
-			texte_rectangle = TTF_RenderUTF8_Blended(police, "Nombre de coup(s)", texteNoir);
+			texte_rectangle = TTF_RenderUTF8_Blended(police, "Nombre de coups", texteNoir);
 			valeur_nrb_coups = TTF_RenderUTF8_Blended(police, nbr_coups_texte, texteNoir);
 			SDL_BlitSurface(valeur_nrb_coups, NULL, ecran, &position_valeur_nbr_coups);
 			SDL_BlitSurface(texte_rectangle, NULL, ecran, &position_texte_rectangle);
