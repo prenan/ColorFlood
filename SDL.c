@@ -288,8 +288,8 @@ void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
 SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran;
-	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_retour, *icone_exit;
-	SDL_Rect position_menu, position_rejouer, position_solveur, position_retour, position_exit;
+	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_annuler, *icone_exit;
+	SDL_Rect position_menu, position_rejouer, position_solveur, position_annuler, position_exit;
 	RGB init_screen = {255,255,255};	//blanc
 
 	position_menu.x = size_window*(3/2.0)+40;
@@ -298,8 +298,8 @@ SDL_Surface *initialize_screen(int size_window)
 	position_rejouer.y = 25;
 	position_solveur.x = size_window*(3/2.0)+85;
 	position_solveur.y = 440;
-	position_retour.x = size_window*(3/2.0)+40;
-	position_retour.y = 150;
+	position_annuler.x = size_window*(3/2.0)+40;
+	position_annuler.y = 150;
 	position_exit.x = size_window*(3/2.0)+135;
 	position_exit.y = 150;
 
@@ -313,19 +313,19 @@ SDL_Surface *initialize_screen(int size_window)
 	icone_menu = SDL_LoadBMP("img/menu.bmp");
 	icone_rejouer = SDL_LoadBMP("img/rejouer.bmp");
 	icone_solveur = SDL_LoadBMP("img/solveur.bmp");
-	icone_retour = SDL_LoadBMP("img/retour.bmp");
+	icone_annuler = SDL_LoadBMP("img/annuler.bmp");
 	icone_exit = SDL_LoadBMP("img/exit.bmp");
 
 	SDL_BlitSurface(icone_menu, NULL, ecran, &position_menu);
 	SDL_BlitSurface(icone_rejouer, NULL, ecran, &position_rejouer);
 	SDL_BlitSurface(icone_solveur, NULL, ecran, &position_solveur);
-	SDL_BlitSurface(icone_retour, NULL, ecran, &position_retour);
+	SDL_BlitSurface(icone_annuler, NULL, ecran, &position_annuler);
 	SDL_BlitSurface(icone_exit, NULL, ecran, &position_exit);
 
 	SDL_FreeSurface(icone_menu);
 	SDL_FreeSurface(icone_rejouer);
 	SDL_FreeSurface(icone_solveur);
-	SDL_FreeSurface(icone_retour);
+	SDL_FreeSurface(icone_annuler);
 	SDL_FreeSurface(icone_exit);
 
 	return ecran;
@@ -363,10 +363,10 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police)
 {
 	SDL_Rect position_color_box, position_afficher_solution, position_texte_nbr_coups, position_valeur_nbr_coups;
-	SDL_Rect position_menu, position_rejouer, position_retour, position_exit;
+	SDL_Rect position_menu, position_rejouer, position_annuler, position_exit;
 	SDL_Color texteNoir = {0, 0, 0, 42};
 	SDL_Surface *color_box, *afficher_solution, *texte_nbr_coups, *valeur_nrb_coups;
-	SDL_Surface *menu, *rejouer, *retour, *exit;
+	SDL_Surface *menu, *rejouer, *annuler, *exit;
 
 	color_box = TTF_RenderUTF8_Blended(police, "Color Box", texteNoir);
 	afficher_solution = TTF_RenderUTF8_Blended(police, "Afficher une solution", texteNoir);
@@ -374,7 +374,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	valeur_nrb_coups = TTF_RenderUTF8_Blended(police, nbr_coups_texte, texteNoir);
 	menu = TTF_RenderUTF8_Blended(police, "Menu", texteNoir);
 	rejouer = TTF_RenderUTF8_Blended(police, "Rejouer", texteNoir);
-	retour = TTF_RenderUTF8_Blended(police, "Retour", texteNoir);
+	annuler = TTF_RenderUTF8_Blended(police, "Annuler", texteNoir);
 	exit = TTF_RenderUTF8_Blended(police, "Exit", texteNoir);
 
 	position_color_box.x = 80;
@@ -390,8 +390,8 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	position_menu.y = 95;
 	position_rejouer.x = 885;
 	position_rejouer.y = 95;
-	position_retour.x = 792;
-	position_retour.y = 217;
+	position_annuler.x = 786;
+	position_annuler.y = 217;
 	position_exit.x = 901;
 	position_exit.y = 217;
 
@@ -401,7 +401,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	SDL_BlitSurface(valeur_nrb_coups, NULL, ecran, &position_valeur_nbr_coups);
 	SDL_BlitSurface(menu, NULL, ecran, &position_menu);
 	SDL_BlitSurface(rejouer, NULL, ecran, &position_rejouer);
-	SDL_BlitSurface(retour, NULL, ecran, &position_retour);
+	SDL_BlitSurface(annuler, NULL, ecran, &position_annuler);
 	SDL_BlitSurface(exit, NULL, ecran, &position_exit);
 	
 	SDL_FreeSurface(color_box);
@@ -410,7 +410,7 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	SDL_FreeSurface(valeur_nrb_coups);
 	SDL_FreeSurface(menu);
 	SDL_FreeSurface(rejouer);
-	SDL_FreeSurface(retour);
+	SDL_FreeSurface(annuler);
 	SDL_FreeSurface(exit);
 }
 
@@ -585,7 +585,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						*bouton = 1;
 						exit = 1;
 					}
-					else if(nbr_coups > 0 && y >= 150 && y < 214)// bouton retour
+					else if(nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
 					{
 						chemin_joueur[nbr_coups] = '\0';
 						testeur_chemins(plateau_copie, size, chemin_joueur);
