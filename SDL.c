@@ -150,6 +150,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 							compteur++;
 						else if(y >= 132 && y < 176 && compteur > 3)
 							compteur--;
+						flip = true;
 					}
 					if(y >= 264 && y < 318)
 					{
@@ -159,6 +160,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 							niveau = 2;
 						else if(x >= 308 && x < 396)
 							niveau = 3;
+						flip = true;
 					}
 					else if(x >= 176 && x < 264 && y >= 352 && y < 440)
 					{
@@ -166,7 +168,6 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 						*difficulte = niveau;
 						continuer = 0;
 					}
-					flip = true;
 				}
 			}
 		}
@@ -444,7 +445,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 
 	int i, j;
 	char couleur;
-
+	size_window-=500%size;
 	for (i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
