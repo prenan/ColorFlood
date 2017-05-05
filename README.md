@@ -18,6 +18,11 @@ Pour installer la bibliothèque FreeType dans un terminal :
 ```
 sudo apt-get install libfreetype6-dev
 ```
+Pour installer la bibliothèque SDl_Mixer dans un terminal :
+```
+sudo apt-get install libsdl-mixer1.2
+sudo apt-get install libsdl-mixer1.2-dev
+```
 Pour la documentation avec Doxygen :
 ```
 sudo apt-get install doxygen
