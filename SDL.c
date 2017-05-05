@@ -445,7 +445,7 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 
 	int i, j;
 	char couleur;
-	size_window-=500%size;
+
 	for (i=0 ; i<size ; i++)
 	{
 		for (j=0 ; j<size ; j++)
