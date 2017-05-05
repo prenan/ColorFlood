@@ -310,7 +310,7 @@ SDL_Surface *initialize_screen(int size_window)
 	position_annuler.y = 150;
 	position_exit.x = size_window*(3/2.0)+135;
 	position_exit.y = 150;
-	position_like.x = 936;
+	position_like.x = 880;
 	position_like.y = 556;
 
 	ecran = SDL_SetVideoMode(2*size_window, size_window+120, 32, SDL_HWSURFACE);
@@ -325,7 +325,7 @@ SDL_Surface *initialize_screen(int size_window)
 	icone_solveur = SDL_LoadBMP("img/solveur.bmp");
 	icone_annuler = SDL_LoadBMP("img/annuler.bmp");
 	icone_exit = SDL_LoadBMP("img/exit.bmp");
-	icone_like = SDL_LoadBMP("img/like.bmp");
+	icone_like = SDL_LoadBMP("img/donate.bmp");
 
 	SDL_BlitSurface(icone_menu, NULL, ecran, &position_menu);
 	SDL_BlitSurface(icone_rejouer, NULL, ecran, &position_rejouer);
@@ -626,7 +626,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						continuer = 0;
 					}
 				}
-				else if (x >= 936 && x < 1000 && y >= 556 && y < 620) // bouton like
+				else if (x >= 880 && x < 1000 && y >= 556 && y < 620) // bouton like
 				{
 					system("xdg-open https://facebook.com/unistra/");
 				}
