@@ -19,6 +19,12 @@ int main()
 		fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
 		SDL_Quit();
 	}
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+	{
+		printf("%s", Mix_GetError());
+	}
+
 	info = SDL_GetVideoInfo();
 	if(!info)
 	{

@@ -114,6 +114,13 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	char* chemin = malloc(100*sizeof(char));
 	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
 	free_space(plateau_sol, background_size);
+	
+
+	Mix_Music *musique; //Création du pointeur de type Mix_Music
+	musique = Mix_LoadMUS("son/musique_menu.mp3"); //Chargement de la musique
+	Mix_VolumeMusic(30);
+	Mix_PlayMusic(musique, -1);
+
 
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
@@ -179,6 +186,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 				char couleur = chemin[i];
 				i++;
 				modif_color(0, 0, couleur, plateau[0][0], plateau, background_size);
+				flip = true;
 			}
 			else
 			{
@@ -190,7 +198,6 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 				chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
 				free_space(plateau_sol, background_size);
 			}
-			flip = true;
 		}
 
 		if(flip)
@@ -231,7 +238,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	SDL_FreeSurface(icone_plus);
 	SDL_FreeSurface(icone_moins);
 	SDL_FreeSurface(icone_jouer);
-
+	Mix_FreeMusic(musique);
 	return ecran;
 }
 void niveau_du_jeu(int niveau, SDL_Surface **ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
@@ -506,6 +513,11 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	color_box(ecran,size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
 
+	Mix_Music *musique; //Création du pointeur de type Mix_Music
+	musique = Mix_LoadMUS("son/musique_jeu.mp3"); //Chargement de la musique
+	Mix_VolumeMusic(30);
+	Mix_PlayMusic(musique, -1);
+
 	while (if_flood(plateau, size) != 1 && nbr_coups < nbr_coups_max && continuer && exit == 0)
 	{
 		ancienne_couleur = plateau[0][0];
@@ -638,7 +650,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			SDL_FreeSurface(valeur_nrb_coups);
 		}
 	}
-
+	Mix_FreeMusic(musique);
 	return nbr_coups;
 }
 

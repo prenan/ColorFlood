@@ -3,7 +3,7 @@ CSRC = grille.c fichier.c SDL.c solveur.c main.c
 CC = gcc
 
 CFLAGS = -Wall -Wextra -g
-LFLAGS = -lm -lSDL -lSDL_ttf
+LFLAGS = -lm -lSDL -lSDL_ttf -lSDL_mixer
 COBJ = $(CSRC:.c=.o)
 
 .c.o:
