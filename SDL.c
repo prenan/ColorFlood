@@ -61,7 +61,6 @@ void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
 			}
 		}
 	}
-	SDL_Flip(ecran);
 }
 
 SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max)
