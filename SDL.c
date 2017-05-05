@@ -577,7 +577,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					}
 					flip = true;
 				}
-				// solveur
+				// bouton solveur
 				else if ((nbr_coups_max-nbr_coups) < 15 && y >= 440 && y < 505 && x >= size_window*(3/2.0)+85 && x < size_window*(3/2.0)+150)
 				{	
 					sprintf(solveur_info, "Solveur en cours...");
@@ -592,7 +592,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					SDL_BlitSurface(texte_solveur_fini, NULL, ecran, &position_solveur);
 					SDL_Flip(ecran);
 					SDL_FreeSurface(texte_solveur_fini);
-					if(strlen(chemin_solveur)!=1)	/*free ssi pas un char*/
+					if(strlen(chemin_solveur) != 1)	// free ssi pas un char
 					free(chemin_solveur);
 					flip = true;
 				}

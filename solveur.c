@@ -210,7 +210,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 					{
 						char* solution = chemins_2[l];
 						*nbr_coups_min = strlen(solution);
-						free_c(chemins_1,k);
+						//free_c(chemins_1,k);
 						free_c(chemins_2,l);
 						free_space(sol_plateau, size);
 						gettimeofday(&fin, 0);
