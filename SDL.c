@@ -502,8 +502,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 
 	color_box(ecran,size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
-	out = 0;
-	bouton = 0;
 
 	while (if_flood(plateau, size) != 1 && nbr_coups < nbr_coups_max && continuer && exit == 0)
 	{
@@ -647,21 +645,24 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int n
 
 	SDL_Surface *texte_denouement = NULL;
 	SDL_Rect position_denouement;
-
-	if (nbr_coups >= nbr_coups_max && if_flood(plateau, size) == 0)
+	int victoire = if_flood(plateau, size);
+	if (nbr_coups >= nbr_coups_max && victoire == 0)
 	{
 		texte_denouement = TTF_RenderUTF8_Blended(police, "GAME OVER", texteNoir);
 		position_denouement.x = 350;
 		position_denouement.y = 230;
+		SDL_BlitSurface(texte_denouement, NULL, ecran, &position_denouement);
+		SDL_Flip(ecran);
+		sleep(3);
 	}
-	else
+	else if (victoire == 1 )
 	{
 		texte_denouement = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
 		position_denouement.x = 450;
 		position_denouement.y = 230;
-	}
 		SDL_BlitSurface(texte_denouement, NULL, ecran, &position_denouement);
 		SDL_Flip(ecran);
 		sleep(3);
+	}
 	SDL_FreeSurface(texte_denouement);
 }
