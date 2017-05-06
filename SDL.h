@@ -48,7 +48,7 @@ void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
  * \brief Dessine une surface (image ou texte) sur l'écran
  
  * \param ecran L'écran de la fenêtre en cours
- * \param px, py Coordonnées horizontale, verticale du pixel
+ * \param px, py Coordonnées horizontale, verticale du pixel (coin supérieur gauche)
  * \param ima Surface "à coller" sur l'écran
  */
 void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima);
@@ -62,7 +62,17 @@ void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima);
  */
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
-void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window);
+/**
+ * \fn void display_plateau(SDL_Surface *ecran, grille plateau, int size, int size_window, int px, int py)
+ * \brief Affichage du plateau avec SDL à partir d'une grille
+ *
+ * \param ecran L'écran de la fenêtre en cours
+ * \param plateau Grille en cours
+ * \param size Taille du jeu (grille size*size)
+ * \param size_window Taille de la fenêtre
+ * \param px, py Coordonnées horizontale, verticale du pixel (coin supérieur gauche)
+ */
+void display_plateau(SDL_Surface *ecran, grille plateau, int size, int size_window, int px, int py);
 
 /**
  * \fn void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)
@@ -125,17 +135,6 @@ void color_box(SDL_Surface *ecran, int size_window);
  * \param nbr_coups_min La longueur du chemin
  */
 void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min);
-
-/**
- * \fn void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
- * \brief Affichage du plateau avec SDL à partir d'une grille
- *
- * \param ecran L'écran de la fenêtre en cours
- * \param plateau Grille en cours
- * \param size Taille du jeu (grille size*size)
- * \param size_window Taille de la fenêtre
- */
-void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window);
 
 /**
  * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
