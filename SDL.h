@@ -52,6 +52,10 @@ void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
  */
 void fillScreen(SDL_Surface *ecran, RGB couleur);
 
+SDL_Rect position_SDL(SDL_Rect position, int px, int py);
+
+void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window);
+
 /**
  * \fn SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max)
  * \brief Affiche un menu pour choisir la taille du jeu 

@@ -16,14 +16,21 @@ void fillScreen(SDL_Surface *ecran, RGB couleur)
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
 }
 
+SDL_Rect position_SDL(SDL_Rect position, int px, int py)
+{
+	position.x = px;
+	position.y = py;
+	return position;
+}
+
 void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
 {
-	RGB V = {153, 255, 0}; //vert
-	RGB R = {204, 0, 51};  //Rouge
-	RGB B = {0, 102, 255}; //blue
-	RGB G = {102, 204, 204}; //Qing
-	RGB J = {255, 255, 102}; //Jeune
-	RGB M = {153, 0, 255}; //M
+	RGB V = {153, 255, 0};		// vert
+	RGB R = {204, 0, 51};		// rouge-rose
+	RGB B = {0, 102, 255};		// bleu
+	RGB G = {102, 204, 204};	// bleu pastel
+	RGB J = {255, 255, 102};	// jaune pastel
+	RGB M = {153, 0, 255};		// violet
 
 	int i, j;
 	char couleur;
@@ -75,12 +82,15 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	int continuer = 1, compteur = 3, niveau = 2;
 	char compteur_txt[50];
 
-	position_nom_jeu.x = 41;
+	position_SDL(position_nom_jeu, 41, 5);
+	position_SDL(position_taille_jeu, 78, 100);
+	position_SDL(position_niveau_jeu, 125, 195);
+	/*position_nom_jeu.x = 41;
 	position_nom_jeu.y = 5;
 	position_taille_jeu.x = 78;
 	position_taille_jeu.y = 100;
 	position_niveau_jeu.x = 125;
-	position_niveau_jeu.y = 195;
+	position_niveau_jeu.y = 195;*/
 
 	position_facile.x = 62;
 	position_facile.y = 274;
