@@ -84,15 +84,16 @@ void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Sur
  * \param size Pointeur pour enregistrer la taille choisie
  * \param difficulte Pointeur pour enregistrer le niveau choisi
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
- * \return La surface menu 
+ * \return La surface, ie. l'écran de la fenêtre du menu 
  */
 SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)
  * \brief Initialisation de la fenêtre du jeu (après le menu)
- * \param size_window Taille de l'écran de jeu.
- * \return La surface, ie. l'écran de la fenêtre.
+ *
+ * \param size_window Taille de l'écran du jeu
+ * \return La surface, ie. l'écran de la fenêtre du jeu
  */
 SDL_Surface *initialize_screen(int size_window);
 
@@ -107,42 +108,62 @@ SDL_Surface *initialize_screen(int size_window);
 void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
 
 /**
- * \fn void display_SDL(grille plateau, int size, SDL_Surface *ecran, int size_window)
- * \brief Affichage du plateau avec SDL à partir d'une grille.
+ * \fn void color_box(SDL_Surface *ecran,int size_window)
+ * \brief Barre latérale pour choisir la couleur pendant le jeu
  *
- * \param ecran L'écran de la fenêtre en cours.
- * \param plateau Grille en cours.
- * \param size Taille du jeu (grille size*size).
- * \param size_window Taille de l'écran de jeu.
+ * \param ecran L'écran de la fenêtre en cours
+ * \param size_window Taille de la fenêtre
+ */
+void color_box(SDL_Surface *ecran, int size_window);
+
+/**
+ * \fn void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
+ * \brief Barre qui affiche le résultat du solveur
+ *
+ * \param ecran L'écran de la fenêtre en cours
+ * \param chemin Le chemin trouvé par le solveur
+ * \param nbr_coups_min La longueur du chemin
+ */
+void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min);
+
+/**
+ * \fn void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
+ * \brief Affichage du plateau avec SDL à partir d'une grille
+ *
+ * \param ecran L'écran de la fenêtre en cours
+ * \param plateau Grille en cours
+ * \param size Taille du jeu (grille size*size)
+ * \param size_window Taille de la fenêtre
  */
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window);
 
 /**
  * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police)
- * \brief Boucle du jeu.
+ * \brief Boucle du jeu
  *
- * \param ecran L'écran de la fenêtre en cours.
- * \param plateau Grille en cours.
- * \param size Taille du jeu (grille size*size).
- * \param nbr_coups_max Le nombre de coups maximum autorisés.
- * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
- * \param police La police du texte et sa taille.
- * \param size_window Taille de l'écran de jeu.
- * \return Le nombre de coups en cours.
+ * \param ecran L'écran de la fenêtre en cours
+ * \param plateau Grille en cours
+ * \param size Taille du jeu (grille size*size)
+ * \param nbr_coups_max Le nombre de coups maximum autorisés
+ * \param nbr_coup_texte Le texte pour afficher le nb de coups restants
+ * \param police La police du texte
+ * \param size_window Taille de la fenêtre
+ * \param bouton Pointeur ??
+ * \param out Pointeur ??
+ * \return Le nombre de coups en cours
  */
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, int* bouton, int* out);
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police, int size_window, int *bouton, int *out);
 
 /**
  * \fn void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
- * \brief Affichage lors de la fin du jeu (victoire ou défaite).
+ * \brief Affichage lors de la fin du jeu (victoire ou défaite)
  *
- * \param ecran L'écran de la fenêtre en cours.
- * \param plateau Grille en cours.
- * \param size Taille du jeu (grille size*size).
- * \param nbr_coup Le nombre de coups effectués (en cours).
- * \param nbr_coups_max Le nombre de coups maximum autorisés.
- * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
- * \param police La police du texte et sa taille.
+ * \param ecran L'écran de la fenêtre en cours
+ * \param plateau Grille en cours
+ * \param size Taille du jeu (grille size*size)
+ * \param nbr_coup Le nombre de coups effectués (en cours)
+ * \param nbr_coups_max Le nombre de coups maximum autorisés
+ * \param police Police du texte
  */
 void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
 
