@@ -82,9 +82,9 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	int continuer = 1, compteur = 3, niveau = 2;
 	char compteur_txt[50];
 
-	position_SDL(position_nom_jeu, 41, 5);
-	position_SDL(position_taille_jeu, 78, 100);
-	position_SDL(position_niveau_jeu, 125, 195);
+	position_nom_jeu = position_SDL(position_nom_jeu, 41, 5);
+	position_taille_jeu = position_SDL(position_taille_jeu, 78, 100);
+	position_niveau_jeu = position_SDL(position_niveau_jeu, 125, 195);
 	/*position_nom_jeu.x = 41;
 	position_nom_jeu.y = 5;
 	position_taille_jeu.x = 78;
