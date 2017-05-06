@@ -34,41 +34,59 @@ typedef struct RGB RGB;
 
 /**
  * \fn void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
- * \brief Dessine un rectangle sur l'écran.
- *
- * \param ecran L'écran de la fenêtre en cours.
- * \param px, py Coordonnées horizontale, verticale du pixel.
- * \param size Taille du carré.
- * \param couleur Couleur du carré.
+ * \brief Dessine un rectangle sur l'écran
+ 
+ * \param ecran L'écran de la fenêtre en cours
+ * \param px, py Coordonnées horizontale, verticale du pixel
+ * \param size Taille du carré
+ * \param couleur Couleur du carré
  */
 void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 
 /**
+ * \fn void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
+ * \brief Dessine une surface (image ou texte) sur l'écran
+ 
+ * \param ecran L'écran de la fenêtre en cours
+ * \param px, py Coordonnées horizontale, verticale du pixel
+ * \param ima Surface "à coller" sur l'écran
+ */
+void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima);
+
+/**
  * \fn void fillScreen(SDL_Surface *ecran, RGB couleur)
- * \brief Remplie l'écran entier d'une couleur et refresh.
+ * \brief Remplie l'écran entier d'une couleur et refresh
  *
- * \param ecran L'écran de la fenêtre en cours.
- * \param couleur Couleur choisie pour l'écran.
+ * \param ecran L'écran de la fenêtre en cours
+ * \param couleur Couleur choisie pour l'écran
  */
 void fillScreen(SDL_Surface *ecran, RGB couleur);
-
-SDL_Rect position_SDL(SDL_Rect position, int px, int py);
 
 void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window);
 
 /**
- * \fn SDL_Surface *menu(TTF_Font *police1, TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max)
+ * \fn void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)
+ * \brief Affichage du choix du niveau du jeu
+ *
+ * \param niveau Le niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
+ * \param ecran L'écran du menu
+ * \param facile, normal, expert Pointeurs du texte correspondant
+ * \param size Taille du jeu (grille size*size)
+ * \param couleur_texte_W, couleur_texte_G La couleur du texte (W pour blanc, G pour gris)
+ */
+void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
+
+/**
+ * \fn SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
  * \brief Affiche un menu pour choisir la taille du jeu 
  *
- * \param police1, police2, police3 Police du texte et ses différentes tailles
+ * \param police_moyenne, police_grande Différentes polices du texte
  * \param size Pointeur pour enregistrer la taille choisie
- * \param difficulte Pointeur pour enregistrer la difficultée choisie
+ * \param difficulte Pointeur pour enregistrer le niveau choisi
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
  * \return La surface menu 
  */
-SDL_Surface *menu(TTF_Font *police2, TTF_Font *police3, int *size, int *difficulte, int *nbr_coups_max);
-
-void niveau_du_jeu(int niveau, SDL_Surface **ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
+SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
 
 /**
  * \fn SDL_Surface *initialize_screen(int size_window)

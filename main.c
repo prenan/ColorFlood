@@ -5,8 +5,7 @@
 
 int main()
 {
-	int size = 0, difficulte = 0, nbr_coups = 0, nbr_coups_max = 0, bouton, out;
-	int size_window = 0;	/*taille de la fenetre dépendra de size*/
+	int size_window, size = 0, difficulte = 0, nbr_coups = 0, nbr_coups_max = 0, bouton, out;
 	char nbr_coups_texte[50];
 
 	SDL_Surface *ecran = NULL;
@@ -20,10 +19,8 @@ int main()
 		SDL_Quit();
 	}
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
-	{
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) // initialisation de l'API Mixer
 		printf("%s", Mix_GetError());
-	}
 
 	info = SDL_GetVideoInfo();
 	if(!info)
@@ -39,16 +36,14 @@ int main()
 	police_moyenne = TTF_OpenFont("orkney.ttf", 50);
 	police_grande = TTF_OpenFont("orkney.ttf", 70);
 
-	SDL_WM_SetIcon(SDL_LoadBMP("img/colorflood.bmp"), NULL);	/*icône de la fenêtre*/
+	SDL_WM_SetIcon(SDL_LoadBMP("img/colorflood.bmp"), NULL);	// icône de la fenêtre
 	
 	do {
 		ecran = menu(police_moyenne, police_grande, &size, &difficulte, &nbr_coups_max);
 
 		if (size != 0)
 		{
-			grille plateau = random_grille(size);
-			grille plateau_sol = copie(plateau, size);
-			grille plateau_copie;
+			grille plateau = random_grille(size), plateau_sol = copie(plateau, size), plateau_copie;
 
 			solution_rapide(plateau_sol, size, &nbr_coups_max);	/*utile pour le niveau de difficulté*/
 			

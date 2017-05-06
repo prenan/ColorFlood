@@ -10,17 +10,18 @@ void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
 }
 
+void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
+{
+	SDL_Rect rect;
+	rect.x = px;
+	rect.y = py;
+	SDL_BlitSurface(ima, NULL, ecran, &rect);
+}
+
 void fillScreen(SDL_Surface *ecran, RGB couleur)
 {
 	SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
 	SDL_Flip(ecran);	/*MàJ de l'écran*/
-}
-
-SDL_Rect position_SDL(SDL_Rect position, int px, int py)
-{
-	position.x = px;
-	position.y = py;
-	return position;
 }
 
 void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
@@ -70,74 +71,88 @@ void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
 	}
 }
 
+void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
+{
+	TTF_Font *police_petite = TTF_OpenFont("orkney.ttf", 20);
+	RGB G = {51, 51, 51};
+	RGB W = {255, 255, 255};
+	if (niveau == 1)	// niveau facile
+	{
+		drawSquare(ecran, 44, 264, 44, G);
+		drawSquare(ecran, 88, 264, 44, G);
+		drawSquare(ecran, 176, 264, 44, W);
+		drawSquare(ecran, 220, 264, 44, W);
+		drawSquare(ecran, 308, 264, 44, W);
+		drawSquare(ecran, 352, 264, 44, W);
+		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_W); 
+		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
+		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_G); 
+	}
+	if (niveau == 2)	// niveau normal
+	{
+		drawSquare(ecran, 44, 264, 44, W);
+		drawSquare(ecran, 88, 264, 44, W);
+		drawSquare(ecran, 176, 264, 44, G);
+		drawSquare(ecran, 220, 264, 44, G);
+		drawSquare(ecran, 308, 264, 44, W);
+		drawSquare(ecran, 352, 264, 44, W);
+		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_G); 
+		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_W); 
+		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_G); 
+	}
+	if (niveau == 3)	// niveau expert
+	{
+		drawSquare(ecran, 44, 264, 44, W);
+		drawSquare(ecran, 88, 264, 44, W);
+		drawSquare(ecran, 176, 264, 44, W);
+		drawSquare(ecran, 220, 264, 44, W);
+		drawSquare(ecran, 308, 264, 44, G);
+		drawSquare(ecran, 352, 264, 44, G);
+		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_G); 
+		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
+		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_W); 
+	}
+	TTF_CloseFont(police_petite);
+}
+
 SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max)
 {
 	SDL_Surface *ecran, *nom_jeu, *taille_jeu, *niveau_jeu, *facile, *normal, *expert, *icone_plus, *icone_moins, *icone_jouer;
 	SDL_Event event;
-	SDL_Rect position_nom_jeu, position_taille_jeu, position_niveau_jeu, position_facile, position_normal, position_expert;
-	SDL_Rect position_plus, position_moins, position_jouer;
 	SDL_Color couleur_texte_W = {255, 255, 255, 42}, couleur_texte_G = {51, 51, 51, 42};
 
 	bool flip = true;
-	int continuer = 1, compteur = 3, niveau = 2;
+	int continuer = 1, compteur = 3, niveau = 2, size_window = 440, background_size = 10, i = 0;
 	char compteur_txt[50];
 
-	position_nom_jeu = position_SDL(position_nom_jeu, 41, 5);
-	position_taille_jeu = position_SDL(position_taille_jeu, 78, 100);
-	position_niveau_jeu = position_SDL(position_niveau_jeu, 125, 195);
-	/*position_nom_jeu.x = 41;
-	position_nom_jeu.y = 5;
-	position_taille_jeu.x = 78;
-	position_taille_jeu.y = 100;
-	position_niveau_jeu.x = 125;
-	position_niveau_jeu.y = 195;*/
-
-	position_facile.x = 62;
-	position_facile.y = 274;
-	position_normal.x = 184;
-	position_normal.y = 274;
-	position_expert.x = 326;
-	position_expert.y = 274;
-	position_plus.x = 308;
-	position_plus.y = 88;
-	position_moins.x = 308;
-	position_moins.y = 132;
-	position_jouer.x = 176;
-	position_jouer.y = 352;
-
-	int background_size = 10, i = 0;
-	grille plateau = random_grille(background_size);
-
-	int size_window = 440;
-	ecran = SDL_SetVideoMode(size_window, size_window, 32, SDL_HWSURFACE); /*fenêtre au début à cette taille par défaut*/
+	ecran = SDL_SetVideoMode(size_window, size_window, 32, SDL_HWSURFACE);
 	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 
 	nom_jeu = TTF_RenderUTF8_Blended(police_grande, "ColorFlood", couleur_texte_G);
+	niveau_jeu = TTF_RenderUTF8_Blended(police_moyenne, "Niveau :", couleur_texte_G);
 
 	icone_plus = SDL_LoadBMP("img/plus.bmp");
 	icone_moins = SDL_LoadBMP("img/moins.bmp");
 	icone_jouer = SDL_LoadBMP("img/jouer.bmp");
 
 	int time_between_moves = 875;
-	grille plateau_sol = copie(plateau,background_size);
 	char* chemin = malloc(100*sizeof(char));
+	grille plateau = random_grille(background_size), plateau_sol = copie(plateau, background_size);
 	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
 	free_space(plateau_sol, background_size);
 	
-
-	Mix_Music *musique; //Création du pointeur de type Mix_Music
-	musique = Mix_LoadMUS("son/musique_menu.mp3"); //Chargement de la musique
+	Mix_Music *musique; // création du pointeur de type Mix_Music
+	musique = Mix_LoadMUS("son/musique_menu.mp3"); // chargement de la musique
 	Mix_VolumeMusic(30);
 	Mix_PlayMusic(musique, -1);
 
-
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
-	while(continuer)
+	while (continuer)
 	{
-		while(SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event))
 		{
-			switch(event.type)
+			switch (event.type)
 			{
 				case SDL_QUIT:
 				*size = 0;
@@ -147,7 +162,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 				case SDL_KEYDOWN:
 				switch(event.key.keysym.sym)
 				{
-					case SDLK_ESCAPE:	/*touche échap*/
+					case SDLK_ESCAPE:	// touche échap
 					*size = 0;
 					continuer = 0;
 					break;
@@ -160,25 +175,25 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 				{
 					int x = event.button.x;
 					int y = event.button.y;
-					if(x >= 308 && x < 352)
+					if (x >= 308 && x < 352)
 					{
-						if(y >= 88 && y < 132 && compteur < 24)
+						if (y >= 88 && y < 132 && compteur < 24)
 							compteur++;
-						else if(y >= 132 && y < 176 && compteur > 3)
+						else if (y >= 132 && y < 176 && compteur > 3)
 							compteur--;
 						flip = true;
 					}
-					if(y >= 264 && y < 318)
+					if (y >= 264 && y < 318)
 					{
-						if(x >= 44 && x < 132 )
+						if (x >= 44 && x < 132 )
 							niveau = 1;
-						else if(x >= 176 && x < 264)
+						else if ( x >= 176 && x < 264)
 							niveau = 2;
-						else if(x >= 308 && x < 396)
+						else if (x >= 308 && x < 396)
 							niveau = 3;
 						flip = true;
 					}
-					else if(x >= 176 && x < 264 && y >= 352 && y < 440)
+					else if (x >= 176 && x < 264 && y >= 352 && y < 440)
 					{
 						*size = compteur;
 						*difficulte = niveau;
@@ -187,9 +202,9 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 				}
 			}
 		}
-		if(time > time_next_move)
+		if (time > time_next_move)
 		{
-			if(if_flood(plateau, background_size) != 1)
+			if (if_flood(plateau, background_size) != 1)
 			{
 				time_next_move = time + time_between_moves;
 				char couleur = chemin[i];
@@ -209,23 +224,22 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 			}
 		}
 
-		if(flip)
+		if (flip)
 		{
 			flip = false;
 			display_menu(ecran, plateau, background_size, size_window);
 			sprintf(compteur_txt, "Taille : %2d", compteur);
 			taille_jeu = TTF_RenderUTF8_Blended(police_moyenne, compteur_txt, couleur_texte_G);
-			niveau_jeu = TTF_RenderUTF8_Blended(police_moyenne, "Niveau :", couleur_texte_G);
-			niveau_du_jeu (niveau, &ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
-			SDL_BlitSurface(nom_jeu, NULL, ecran, &position_nom_jeu);
-			SDL_BlitSurface(taille_jeu, NULL, ecran, &position_taille_jeu);
-			SDL_BlitSurface(niveau_jeu, NULL, ecran, &position_niveau_jeu);
-			SDL_BlitSurface(facile, NULL, ecran, &position_facile);
-			SDL_BlitSurface(normal, NULL, ecran, &position_normal);
-			SDL_BlitSurface(expert, NULL, ecran, &position_expert);
-			SDL_BlitSurface(icone_plus, NULL, ecran, &position_plus);
-			SDL_BlitSurface(icone_moins, NULL, ecran, &position_moins);
-			SDL_BlitSurface(icone_jouer, NULL, ecran, &position_jouer);
+			niveau_du_jeu (niveau, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
+			drawTexture(ecran, 41, 5, nom_jeu);
+			drawTexture(ecran, 78, 100, taille_jeu);
+			drawTexture(ecran, 125, 195, niveau_jeu);
+			drawTexture(ecran, 62, 274, facile);
+			drawTexture(ecran, 184, 274, normal);
+			drawTexture(ecran, 326, 274, expert);
+			drawTexture(ecran, 308, 88, icone_plus);
+			drawTexture(ecran, 308, 132, icone_moins);
+			drawTexture(ecran, 176, 352, icone_jouer);
 			SDL_Flip(ecran);
 		}
 
@@ -249,58 +263,6 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	SDL_FreeSurface(icone_jouer);
 	Mix_FreeMusic(musique);
 	return ecran;
-}
-
-void niveau_du_jeu(int niveau, SDL_Surface **ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
-{
-	TTF_Font *police_petite = TTF_OpenFont("orkney.ttf", 20);
-	RGB G = {51, 51, 51};
-	RGB W = {255, 255, 255};
-	if (niveau == 1)
-	{
-		drawSquare(*ecran, 44, 264, 44, G);
-		drawSquare(*ecran, 88, 264, 44, G);
-		drawSquare(*ecran, 176, 264, 44, W);
-		drawSquare(*ecran, 220, 264, 44, W);
-		drawSquare(*ecran, 308, 264, 44, W);
-		drawSquare(*ecran, 352, 264, 44, W);
-		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_W); 
-		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
-		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_G); 
-	}
-	if (niveau == 2)
-	{
-		drawSquare(*ecran, 44, 264, 44, W);
-		drawSquare(*ecran, 88, 264, 44, W);
-		drawSquare(*ecran, 176, 264, 44, G);
-		drawSquare(*ecran, 220, 264, 44, G);
-		drawSquare(*ecran, 308, 264, 44, W);
-		drawSquare(*ecran, 352, 264, 44, W);
-		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_G); 
-		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_W); 
-		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_G); 
-	}
-	if (niveau == 3)
-	{
-		drawSquare(*ecran, 44, 264, 44, W);
-		drawSquare(*ecran, 88, 264, 44, W);
-		drawSquare(*ecran, 176, 264, 44, W);
-		drawSquare(*ecran, 220, 264, 44, W);
-		drawSquare(*ecran, 308, 264, 44, G);
-		drawSquare(*ecran, 352, 264, 44, G);
-		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_G); 
-		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
-		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_W); 
-	}
-}
-
-void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
-{
-	SDL_Rect rect;
-	rect.x=px;
-	rect.y=py;
-	SDL_BlitSurface(ima, NULL, ecran, &rect);
-	SDL_Flip(ecran);
 }
 
 SDL_Surface *initialize_screen(int size_window)
