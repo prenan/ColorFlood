@@ -33,15 +33,15 @@ struct RGB
 typedef struct RGB RGB;
 
 /**
- * \fn void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
+ * \fn void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
  * \brief Dessine un rectangle sur l'écran.
  *
  * \param ecran L'écran de la fenêtre en cours.
- * \param px, py Coordonnées haut, gauche du pixel.
+ * \param px, py Coordonnées horizontale, verticale du pixel.
  * \param size Taille du carré.
  * \param couleur Couleur du carré.
  */
-void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
+void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 
 /**
  * \fn void fillScreen(SDL_Surface *ecran, RGB couleur)

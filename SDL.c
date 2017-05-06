@@ -1,12 +1,12 @@
 #include "SDL.h"
 
 
-void drawRectangle(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
+void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
 {
 	SDL_Rect rect;
-	rect.y=px;
-	rect.x=py;
-	rect.h=rect.w=size;
+	rect.x = px;
+	rect.y = py;
+	rect.h = rect.w = size;
 	SDL_FillRect(ecran, &rect, SDL_MapRGB(ecran->format, couleur.r, couleur.g, couleur.b));
 }
 
@@ -36,27 +36,27 @@ void display_menu(SDL_Surface *ecran, grille plateau, int size, int size_window)
 			switch (couleur)
 			{
 				case 'B':
-				drawRectangle(ecran, i*size_window/size, j*size_window/size, size_window/size, B);
+				drawSquare(ecran, j*size_window/size, i*size_window/size, size_window/size, B);
 				break;
 
 				case 'V':
-				drawRectangle(ecran, i*size_window/size, j*size_window/size, size_window/size, V);
+				drawSquare(ecran, j*size_window/size, i*size_window/size, size_window/size, V);
 				break;
 
 				case 'R':
-				drawRectangle(ecran, i*size_window/size, j*size_window/size, size_window/size, R);
+				drawSquare(ecran, j*size_window/size, i*size_window/size, size_window/size, R);
 				break;
 
 				case 'J':
-				drawRectangle(ecran, i*size_window/size, j*size_window/size, size_window/size, J);
+				drawSquare(ecran, j*size_window/size, i*size_window/size, size_window/size, J);
 				break;
 
 				case 'M':
-				drawRectangle(ecran, i*size_window/size, j*size_window/size, size_window/size, M);
+				drawSquare(ecran, j*size_window/size, i*size_window/size, size_window/size, M);
 				break;
 
 				case 'G':
-				drawRectangle(ecran, i*size_window/size, j*size_window/size, size_window/size, G);
+				drawSquare(ecran, j*size_window/size, i*size_window/size, size_window/size, G);
 				break;
 			}
 		}
@@ -248,36 +248,36 @@ void niveau_du_jeu(int niveau, SDL_Surface **ecran, SDL_Surface **facile, SDL_Su
 	RGB W = {255, 255, 255};
 	if (niveau == 1)
 	{
-		drawRectangle(*ecran, 264, 44, 44, G);
-		drawRectangle(*ecran, 264, 88, 44, G);
-		drawRectangle(*ecran, 264, 176, 44, W);
-		drawRectangle(*ecran, 264, 220, 44, W);
-		drawRectangle(*ecran, 264, 308, 44, W);
-		drawRectangle(*ecran, 264, 352, 44, W);
+		drawSquare(*ecran, 44, 264, 44, G);
+		drawSquare(*ecran, 88, 264, 44, G);
+		drawSquare(*ecran, 176, 264, 44, W);
+		drawSquare(*ecran, 220, 264, 44, W);
+		drawSquare(*ecran, 308, 264, 44, W);
+		drawSquare(*ecran, 352, 264, 44, W);
 		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_W); 
 		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
 		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_G); 
 	}
 	if (niveau == 2)
 	{
-		drawRectangle(*ecran, 264, 44, 44, W);
-		drawRectangle(*ecran, 264, 88, 44, W);
-		drawRectangle(*ecran, 264, 176, 44, G);
-		drawRectangle(*ecran, 264, 220, 44, G);
-		drawRectangle(*ecran, 264, 308, 44, W);
-		drawRectangle(*ecran, 264, 352, 44, W);
+		drawSquare(*ecran, 44, 264, 44, W);
+		drawSquare(*ecran, 88, 264, 44, W);
+		drawSquare(*ecran, 176, 264, 44, G);
+		drawSquare(*ecran, 220, 264, 44, G);
+		drawSquare(*ecran, 308, 264, 44, W);
+		drawSquare(*ecran, 352, 264, 44, W);
 		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_G); 
 		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_W); 
 		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_G); 
 	}
 	if (niveau == 3)
 	{
-		drawRectangle(*ecran, 264, 44, 44, W);
-		drawRectangle(*ecran, 264, 88, 44, W);
-		drawRectangle(*ecran, 264, 176, 44, W);
-		drawRectangle(*ecran, 264, 220, 44, W);
-		drawRectangle(*ecran, 264, 308, 44, G);
-		drawRectangle(*ecran, 264, 352, 44, G);
+		drawSquare(*ecran, 44, 264, 44, W);
+		drawSquare(*ecran, 88, 264, 44, W);
+		drawSquare(*ecran, 176, 264, 44, W);
+		drawSquare(*ecran, 220, 264, 44, W);
+		drawSquare(*ecran, 308, 264, 44, G);
+		drawSquare(*ecran, 352, 264, 44, G);
 		*facile = TTF_RenderUTF8_Blended(police_petite, "Facile", couleur_texte_G); 
 		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
 		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_W); 
@@ -361,21 +361,21 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 	RGB J = {255, 255, 102}; //Jeune
 	RGB M = {153, 0, 255}; //M
 	int i = 0;
-	drawRectangle(ecran, 550, 80, 500, W); // clear solveur
+	drawSquare(ecran, 80, 550, 500, W); // clear solveur
 	while (i<nbr_coups_min)
 	{
-		if (chemin[i]=='J')
-			drawRectangle(ecran,580,85+i*27,25, J);	
-		if (chemin[i]=='R')
-			drawRectangle(ecran,580,85+i*27,25, R);	
-		if (chemin[i]=='G')
-			drawRectangle(ecran,580,85+i*27,25, G);	
-		if (chemin[i]=='V')
-			drawRectangle(ecran,580,85+i*27,25, V);	
-		if (chemin[i]=='B')
-			drawRectangle(ecran,580,85+i*27,25, B);	
-		if (chemin[i]=='M')
-			drawRectangle(ecran,580,85+i*27,25, M);	
+		if (chemin[i] == 'J')
+			drawSquare(ecran, 85+i*27, 580, 25, J);
+		if (chemin[i] == 'R')
+			drawSquare(ecran, 85+i*27, 580, 25, R);
+		if (chemin[i] == 'G')
+			drawSquare(ecran, 85+i*27, 580, 25, G);	
+		if (chemin[i] == 'V')
+			drawSquare(ecran, 85+i*27, 580, 25, V);	
+		if (chemin[i] == 'B')
+			drawSquare(ecran, 85+i*27, 580, 25, B);	
+		if (chemin[i] == 'M')
+			drawSquare(ecran, 85+i*27, 580, 25, M);	
 		i++;
 	}
 }
@@ -448,12 +448,12 @@ void color_box(SDL_Surface *ecran,int size_window)
 	RGB J = {255,255,102}; //Jeune
 	RGB M = {153, 0, 255}; //M
 
-	drawRectangle(ecran, size_window*(0.0/6)+20, size_window/4.0-40, (size_window-40)/6, G);
-	drawRectangle(ecran, size_window*(1.0/6)+20,size_window/4.0-40, (size_window-40)/6, R);
-	drawRectangle(ecran, size_window*(2.0/6)+20,size_window/4.0-40, (size_window-40)/6, J);
-	drawRectangle(ecran, size_window*(3.0/6)+20,size_window/4.0-40, (size_window-40)/6, V);
-	drawRectangle(ecran, size_window*(4.0/6)+20,size_window/4.0-40, (size_window-40)/6, B);
-	drawRectangle(ecran, size_window*(5.0/6)+20,size_window/4.0-40, (size_window-40)/6, M);		
+	drawSquare(ecran, size_window/4.0-40, size_window*(0.0/6)+20, (size_window-40)/6, G);
+	drawSquare(ecran, size_window/4.0-40, size_window*(1.0/6)+20, (size_window-40)/6, R);
+	drawSquare(ecran, size_window/4.0-40, size_window*(2.0/6)+20, (size_window-40)/6, J);
+	drawSquare(ecran, size_window/4.0-40, size_window*(3.0/6)+20, (size_window-40)/6, V);
+	drawSquare(ecran, size_window/4.0-40, size_window*(4.0/6)+20, (size_window-40)/6, B);
+	drawSquare(ecran, size_window/4.0-40, size_window*(5.0/6)+20, (size_window-40)/6, M);	
 }
 
 void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
@@ -478,27 +478,27 @@ void display_SDL(SDL_Surface *ecran, grille plateau, int size, int size_window)
 			switch (couleur)
 			{
 				case 'B':
-				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, B);
+				drawSquare(ecran, j*size_window/size+size_window*0.5-10, i*size_window/size+20, (size_window-size_window%size)/size, B);
 				break;
 
 				case 'V':
-				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, V);
+				drawSquare(ecran, j*size_window/size+size_window*0.5-10, i*size_window/size+20, (size_window-size_window%size)/size, V);
 				break;
 
 				case 'R':
-				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, R);
+				drawSquare(ecran, j*size_window/size+size_window*0.5-10, i*size_window/size+20, (size_window-size_window%size)/size, R);
 				break;
 
 				case 'J':
-				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, J);
+				drawSquare(ecran, j*size_window/size+size_window*0.5-10, i*size_window/size+20, (size_window-size_window%size)/size, J);
 				break;
 
 				case 'M':
-				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, M);
+				drawSquare(ecran, j*size_window/size+size_window*0.5-10, i*size_window/size+20, (size_window-size_window%size)/size, M);
 				break;
 
 				case 'G':
-				drawRectangle(ecran, i*size_window/size+20, j*size_window/size+size_window*0.5-10, (size_window-size_window%size)/size, G);
+				drawSquare(ecran, j*size_window/size+size_window*0.5-10, i*size_window/size+20, (size_window-size_window%size)/size, G);
 				break;
 			}
 		}
@@ -533,8 +533,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
 	icone_son = SDL_LoadBMP("img/son.bmp");
 
-	Mix_Music *musique; //Création du pointeur de type Mix_Music
-	musique = Mix_LoadMUS("son/musique_jeu.mp3"); //Chargement de la musique
+	Mix_Music *musique; // Création du pointeur de type Mix_Music
+	musique = Mix_LoadMUS("son/musique_jeu.mp3"); // Chargement de la musique
 	Mix_VolumeMusic(30);
 	Mix_PlayMusic(musique, -1);
 
