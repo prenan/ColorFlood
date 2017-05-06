@@ -626,6 +626,14 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						flip = true;
 					}
 				}
+				else if (x >= 875 && x < 908 && y >= 580 && y < 613) // bouton like
+				{
+					system("xdg-open https://facebook.com/unistra/");
+				}
+				else if (x >= 923 && x < 988 && y >= 587 && y < 609) // bouton like
+				{
+					system("xdg-open http://www.cts-strasbourg.eu/");
+				}
 				else if (x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+200))
 				{
 					if (y >= 25 && y < 89) // bouton rejouer
@@ -657,14 +665,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						*out = 1;
 						continuer = 0;
 					}
-				}
-				else if (x >= 875 && x < 908 && y >= 580 && y < 613) // bouton like
-				{
-					system("xdg-open https://facebook.com/unistra/");
-				}
-				else if (x >= 923 && x < 988 && y >= 587 && y < 609) // bouton like
-				{
-					system("xdg-open http://www.cts-strasbourg.eu/");
 				}
 			}
 			break;
