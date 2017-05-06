@@ -5,7 +5,7 @@
 
 int main()
 {
-	int size_window, size = 0, difficulte = 0, nbr_coups = 0, nbr_coups_max = 0, bouton, out;
+	int size_window = 500, size = 0, difficulte = 0, nbr_coups = 0, nbr_coups_max = 0, bouton, out;
 	char nbr_coups_texte[50];
 
 	SDL_Surface *ecran = NULL;
@@ -44,22 +44,17 @@ int main()
 		if (size != 0)
 		{
 			grille plateau = random_grille(size), plateau_sol = copie(plateau, size), plateau_copie;
-
-			solution_rapide(plateau_sol, size, &nbr_coups_max);	/*utile pour le niveau de difficulté*/
+			solution_rapide(plateau_sol, size, &nbr_coups_max);	// utile pour le niveau de difficulté
+			nbr_coups_max += 5/difficulte; // niveau de difficulté
 			
-			nbr_coups_max += 5/difficulte; /*niveau de difficulté*/
 			do {
 				plateau_copie = copie(plateau, size);
-				size_window = 500;
+				
 				ecran = initialize_screen(size_window);
-				
 				initialize_text(ecran, nbr_coups_texte, police_petite);
-				
 				display_plateau(ecran, plateau, size, size_window, size_window*0.5-10, 20);
 
-				nbr_coups = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coups_texte, police_petite, size_window, &bouton, &out);
-
-				end_game(ecran, plateau, size, nbr_coups, nbr_coups_max, police_moyenne);
+				nbr_coups = loop_game(ecran, plateau, size, nbr_coups_max, nbr_coups_texte, police_petite, police_moyenne, size_window, &bouton, &out);
 
 				plateau = plateau_copie;
 			} while (bouton == 2 && out != 1);

@@ -389,7 +389,7 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 	}
 }
 
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coups_texte, TTF_Font *police, int size_window, int *bouton, int *out)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
 	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1;
 	char ancienne_couleur, *chemin_solveur, chemin_joueur[100];
@@ -403,18 +403,20 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	color_box(ecran, size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
 	icone_son = SDL_LoadBMP("img/son.bmp");
-	texte_rectangle = TTF_RenderUTF8_Blended(police, "Nombre de coups", texteNoir);
+	texte_rectangle = TTF_RenderUTF8_Blended(police_petite, "Nombre de coups", texteNoir);
 
 	Mix_Music *musique; // Création du pointeur de type Mix_Music
 	musique = Mix_LoadMUS("son/musique_jeu.mp3"); // Chargement de la musique
 	Mix_VolumeMusic(30);
 	Mix_PlayMusic(musique, -1);
 
-	while (if_flood(plateau, size) != 1 && nbr_coups < nbr_coups_max && continuer && exit == 0)
+	while (continuer && exit == 0)
 	{
 		ancienne_couleur = plateau[0][0];
 		chemin_joueur[nbr_coups] = ancienne_couleur;
 		chemin_joueur[nbr_coups+1] = '\0';
+
+		end_game(ecran, plateau, size, nbr_coups, nbr_coups_max, police_moyenne);
 
 		SDL_WaitEvent(&event);
 		switch (event.type)
@@ -514,12 +516,12 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					}
 					else if (y >= 150 && y < 214 && (nbr_coups_max-nbr_coups) < 15) // bouton solution
 					{
-						solveur = TTF_RenderUTF8_Blended(police, "Solveur en cours...", texteNoir);
+						solveur = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
 						drawTexture(ecran, 80, 550, solveur);
 						SDL_Flip(ecran);
 
 						chemin_solveur = solveur_perf(plateau, size, &nbr_coups_min);
-						solveur = TTF_RenderUTF8_Blended(police, "Solution possible :", texteNoir);
+						solveur = TTF_RenderUTF8_Blended(police_petite, "Solution possible :", texteNoir);
 						solveur_box(ecran, chemin_solveur, nbr_coups_min);
 
 						drawTexture(ecran, 80, 550, solveur);
@@ -556,7 +558,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			flip = false;
 			drawTexture(ecran, 500*(3/2.0)+23, 287, rectangle);
 			sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
-			valeur_nbr_coups = TTF_RenderUTF8_Blended(police, nbr_coups_texte, texteNoir);
+			valeur_nbr_coups = TTF_RenderUTF8_Blended(police_petite, nbr_coups_texte, texteNoir);
 			drawTexture(ecran, 500*(3/2.0)+40, 300, texte_rectangle);
 			drawTexture(ecran, 500*(3/2.0)+105, 330, valeur_nbr_coups);
 			drawTexture(ecran, size_window*(3/2.0)+40, 402, icone_son);
@@ -580,14 +582,12 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int n
 		texte_denouement = TTF_RenderUTF8_Blended(police, "GAME OVER", texteNoir);
 		drawTexture(ecran, 350, 230, texte_denouement);
 		SDL_Flip(ecran);
-		sleep(3);
 	}
-	else if (victoire == 1 )
+	else if (victoire == 1)
 	{
 		texte_denouement = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
 		drawTexture(ecran, 450, 230, texte_denouement);
 		SDL_Flip(ecran);
-		sleep(3);
 	}
 	SDL_FreeSurface(texte_denouement);
 }
