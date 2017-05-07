@@ -35,7 +35,7 @@ typedef struct RGB RGB;
 /**
  * \fn void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur)
  * \brief Dessine un rectangle sur l'écran
- 
+ *
  * \param ecran L'écran de la fenêtre en cours
  * \param px, py Coordonnées horizontale, verticale du pixel
  * \param size Taille du carré
@@ -46,7 +46,7 @@ void drawSquare(SDL_Surface *ecran, int px, int py, int size, RGB couleur);
 /**
  * \fn void drawTexture(SDL_Surface *ecran, int px, int py, SDL_Surface *ima)
  * \brief Dessine une surface (image ou texte) sur l'écran
- 
+ *
  * \param ecran L'écran de la fenêtre en cours
  * \param px, py Coordonnées horizontale, verticale du pixel (coin supérieur gauche)
  * \param ima Surface "à coller" sur l'écran

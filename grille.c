@@ -4,9 +4,9 @@
 int choose_size()
 {
 	int size; 
-	printf("Entrer la taille du jeu (entre 4 et 24) :\n"); 
+	printf("Entrer la taille du jeu (entre 3 et 24) :\n"); 
 	scanf("%d", &size); 
-	while(size<4 || size>24) 
+	while(size<3 || size>24) 
 	{
 		printf("La taille doit être comprise entre 4 et 24.\n"); 
 		scanf("%d", &size); 

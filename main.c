@@ -3,12 +3,13 @@
 #include "SDL.h"
 #include "solveur.h"
 
+
 int main()
 {
 	int size_window = 500, size = 0, difficulte = 0, nbr_coups = 0, nbr_coups_max = 0, bouton, out;
 	char nbr_coups_texte[50];
 
-	SDL_Surface *ecran = NULL;
+	SDL_Surface *ecran = NULL, *icone_colorflood = NULL;
 	TTF_Font *police_petite = NULL, *police_moyenne = NULL, *police_grande = NULL;
 
 	/*initialisation da la SDL*/
@@ -30,14 +31,17 @@ int main()
 	}
 	/*fin d'initialisation de la SDL*/ 
 
+	/*icône de la fenêtre*/
+	icone_colorflood = SDL_LoadBMP("img/colorflood.bmp");
+	SDL_WM_SetIcon(icone_colorflood, NULL);
+	SDL_FreeSurface(icone_colorflood);
+	
 	TTF_Init();
 
 	police_petite = TTF_OpenFont("orkney.ttf", 20);
 	police_moyenne = TTF_OpenFont("orkney.ttf", 50);
 	police_grande = TTF_OpenFont("orkney.ttf", 70);
 
-	SDL_WM_SetIcon(SDL_LoadBMP("img/colorflood.bmp"), NULL);	// icône de la fenêtre
-	
 	do {
 		ecran = menu(police_moyenne, police_grande, &size, &difficulte, &nbr_coups_max);
 

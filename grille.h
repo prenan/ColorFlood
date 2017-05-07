@@ -20,7 +20,7 @@ typedef char ** grille;
  * \fn int choose_size()
  * \brief Choix de la taille.
  *
- * \return Taille du jeu, doit être comprise entre 4 et 24.
+ * \return Taille du jeu, doit être comprise entre 3 et 24.
  */
 int choose_size();
 
@@ -92,5 +92,6 @@ void modif_color (int x, int y, char couleur_choisie, char ancienne_couleur, gri
  * \return La nouvelle grille qui est égale à la grille mise en paramètre.
  */
 grille copie(grille plateau, int size);
+
 
 #endif

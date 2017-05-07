@@ -4,12 +4,13 @@
 #include "solveur.h"
 #include "math.h"
 
+
 int main()
 {
 	int i, size, nbr_coup=0, nbr_coups_min;
 	size = choose_size();
 
-	int nbr_coups_max = floor(2.1*size-1 + 0.5); /*formule déduite du jeu original*/
+	int nbr_coups_max = floor(2.1*size-1 + 0.5); // formule déduite du jeu original
 	grille M = random_grille(size);
 	char ancienne_couleur = M[0][0], buffer[2], couleur;
 	char* chemin;

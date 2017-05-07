@@ -230,7 +230,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 			display_plateau(ecran, plateau, background_size, size_window, 0, 0);
 			sprintf(compteur_txt, "Taille : %2d", compteur);
 			taille_jeu = TTF_RenderUTF8_Blended(police_moyenne, compteur_txt, couleur_texte_G);
-			niveau_du_jeu (niveau, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
+			niveau_du_jeu(niveau, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
 			drawTexture(ecran, 41, 5, nom_jeu);
 			drawTexture(ecran, 78, 100, taille_jeu);
 			drawTexture(ecran, 125, 195, niveau_jeu);
@@ -583,6 +583,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			SDL_FreeSurface(valeur_nbr_coups);
 		}
 	}
+	SDL_FreeSurface(rectangle);
+	SDL_FreeSurface(icone_son);
+	SDL_FreeSurface(texte_rectangle);
 	Mix_FreeMusic(musique);
 	return nbr_coups;
 }
