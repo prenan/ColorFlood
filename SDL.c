@@ -306,11 +306,21 @@ SDL_Surface *initialize_screen(int size_window)
 	return ecran;
 }
 
-void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police)
+void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte)
 {
 	SDL_Surface *colorbox, *solution, *nbr_coups, *valeur_nbr_coups;
 	SDL_Surface *menu, *rejouer, *annuler, *exit, *son;
+	SDL_Surface *taille, *niveau;
 	SDL_Color texteNoir = {0, 0, 0, 42};
+	char taille_txt[20], niveau_txt[20];
+	
+	sprintf(taille_txt, "Taille : %2d", size);
+	if (difficulte == 1)
+		sprintf(niveau_txt, "%s", "Facile");
+	if (difficulte == 2)
+		sprintf(niveau_txt, "%s", "Normal");
+	if (difficulte == 3)
+		sprintf(niveau_txt, "%s", "Expert");
 
 	colorbox = TTF_RenderUTF8_Blended(police, "Color Box", texteNoir);
 	nbr_coups = TTF_RenderUTF8_Blended(police, "Nombre de coup(s) ", texteNoir);
@@ -321,6 +331,8 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	solution = TTF_RenderUTF8_Blended(police, "Solution", texteNoir);
 	son = TTF_RenderUTF8_Blended(police, "Son", texteNoir);
 	exit = TTF_RenderUTF8_Blended(police, "Exit", texteNoir);
+	taille = TTF_RenderUTF8_Blended(police, taille_txt, texteNoir);
+	niveau = TTF_RenderUTF8_Blended(police, niveau_txt, texteNoir);
 
 	drawTexture(ecran, 80, 520, colorbox);
 	drawTexture(ecran, 500*(3/2.0)+40, 300, nbr_coups);
@@ -331,6 +343,8 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	drawTexture(ecran, 882, 217, solution);
 	drawTexture(ecran, 804, 468, son);
 	drawTexture(ecran, 902, 468, exit);
+	drawTexture(ecran, 0, 0, taille);
+	drawTexture(ecran, 0, 20, niveau);
 	
 	SDL_FreeSurface(colorbox);
 	SDL_FreeSurface(nbr_coups);
@@ -341,6 +355,8 @@ void initialize_text(SDL_Surface *ecran, char *nbr_coups_texte, TTF_Font *police
 	SDL_FreeSurface(solution);
 	SDL_FreeSurface(son);
 	SDL_FreeSurface(exit);
+	SDL_FreeSurface(taille);
+	SDL_FreeSurface(niveau);
 }
 
 void color_box(SDL_Surface *ecran, int size_window)

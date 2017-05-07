@@ -78,7 +78,7 @@ void display_plateau(SDL_Surface *ecran, grille plateau, int size, int size_wind
  * \fn void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)
  * \brief Affichage du choix du niveau du jeu
  *
- * \param niveau Le niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
+ * \param niveau Niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
  * \param ecran L'écran du menu
  * \param facile, normal, expert Pointeurs du texte correspondant
  * \param size Taille du jeu (grille size*size)
@@ -108,14 +108,16 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 SDL_Surface *initialize_screen(int size_window);
 
 /**
- * \fn void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police)
- * \brief Initialisation du texte pour les règles et le nombre de coups.
+ * \fn void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte)
+ * \brief Initialisation du texte pour les règles et le nombre de coups
  *
- * \param ecran L'écran de la fenêtre en cours.
- * \param nbr_coup_texte Le texte pour afficher le nb de coups restants.
- * \param police La police du texte et sa taille.
+ * \param ecran L'écran de la fenêtre en cours
+ * \param police Police du texte
+ * \param nbr_coup_texte Le texte pour afficher le nb de coups restants
+ * \param size Taille du jeu (grille size*size)
+ * \param difficulte Niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
  */
-void initialize_text(SDL_Surface *ecran, char *nbr_coup_texte, TTF_Font *police);
+void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte);
 
 /**
  * \fn void color_box(SDL_Surface *ecran,int size_window)
