@@ -407,7 +407,7 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
-	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1;
+	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end;
 	char ancienne_couleur, *chemin_solveur, chemin_joueur[100];
 	bool flip = true;
 	grille plateau_copie = copie(plateau, size);
@@ -432,7 +432,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 		chemin_joueur[nbr_coups] = ancienne_couleur;
 		chemin_joueur[nbr_coups+1] = '\0';
 
-		end_game(ecran, plateau, size, nbr_coups, nbr_coups_max, police_moyenne);
+		end = end_game(ecran, plateau, size, nbr_coups, nbr_coups_max, police_moyenne);
 
 		SDL_WaitEvent(&event);
 		switch (event.type)
@@ -447,7 +447,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 			{
 				int x = event.button.x;
 				int y = event.button.y;				
-				if(x >= (size_window/4.0-40) && x < (size_window/4.0+24))
+				if(!end && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
 					if (ancienne_couleur != 'G' && y >= (size_window*(0.0/6)+20) && y < (size_window*(0.0/6)+84))
 					{
@@ -489,7 +489,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						*bouton = 1;
 						exit = 1;
 					}
-					else if (nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
+					else if (!end && nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
 					{
 						chemin_joueur[nbr_coups] = '\0';
 						testeur_chemins(plateau_copie, size, chemin_joueur);
@@ -530,7 +530,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 						*bouton = 2;
 						exit = 1;
 					}
-					else if (y >= 150 && y < 214 && (nbr_coups_max-nbr_coups) < 15) // bouton solution
+					else if (!end && y >= 150 && y < 214 && (nbr_coups_max-nbr_coups) < 15) // bouton solution
 					{
 						solveur = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
 						drawTexture(ecran, 80, 550, solveur);
@@ -590,9 +590,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 	return nbr_coups;
 }
 
-void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nbr_coups_max, TTF_Font *police)
+int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nbr_coups_max, TTF_Font *police)
 {
-	int victoire = if_flood(plateau, size);
+	int victoire = if_flood(plateau, size), end = 0;
 	SDL_Surface *texte_denouement = NULL;
 	SDL_Color texteNoir = {0, 0, 0, 42};
 
@@ -601,12 +601,15 @@ void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int n
 		texte_denouement = TTF_RenderUTF8_Blended(police, "GAME OVER", texteNoir);
 		drawTexture(ecran, 350, 230, texte_denouement);
 		SDL_Flip(ecran);
+		end = 1;
 	}
 	else if (victoire == 1)
 	{
 		texte_denouement = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
 		drawTexture(ecran, 450, 230, texte_denouement);
 		SDL_Flip(ecran);
+		end = 1;
 	}
 	SDL_FreeSurface(texte_denouement);
+	return end;
 }

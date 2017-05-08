@@ -156,7 +156,7 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min);
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out);
 
 /**
- * \fn void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
+ * \fn int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
  * \brief Affichage lors de la fin du jeu (victoire ou défaite)
  *
  * \param ecran L'écran de la fenêtre en cours
@@ -165,8 +165,10 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
  * \param nbr_coup Le nombre de coups effectués (en cours)
  * \param nbr_coups_max Le nombre de coups maximum autorisés
  * \param police Police du texte
+ * \return 1 si la partie est terminée (victoire ou défaite),
+ 	0 sinon.
  */
-void end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
+int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
 
 
 #endif
