@@ -44,6 +44,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
  */
 int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);
 
-void game_choice (int size, int difficulte, int *nb_coups_max, int *nb_annuler);
+void game_choice(int size, int difficulte, int *nb_coups_max, int *nb_annuler);
 
 #endif

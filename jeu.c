@@ -3,18 +3,31 @@
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
 	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end;
-	char ancienne_couleur, *chemin_solveur, chemin_joueur[100];
+	char ancienne_couleur, *chemin_solveur, chemin_joueur[100], nb_annuler_txt[5];
 	bool flip = true;
 	grille plateau_copie = copie(plateau, size);
 	grille plateau_initial = copie(plateau, size);
-	SDL_Surface *valeur_nbr_coups, *solveur, *texte_rectangle, *rectangle, *icone_son;
+	SDL_Surface *valeur_nbr_coups, *solveur, *texte_rectangle, *rectangle, *icone_son, *nb_annuler_surf;
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42};
+	RGB W = {255, 255, 255};	//blanc
 
 	color_box(ecran, size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
 	icone_son = SDL_LoadBMP("img/son.bmp");
 	texte_rectangle = TTF_RenderUTF8_Blended(police_petite, "Nombre de coups", texteNoir);
+	
+	if (nb_annuler != -1)
+	{
+		sprintf(nb_annuler_txt, "%d", nb_annuler);
+		nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
+	}
+	else
+	{
+		sprintf(nb_annuler_txt, "∞");
+		nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
+	}
+
 
 	Mix_Music *musique; // Création du pointeur de type Mix_Music
 	musique = Mix_LoadMUS("son/musique_jeu.mp3"); // Chargement de la musique
@@ -84,9 +97,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 						*bouton = 1;
 						exit = 1;
 					}
-					else if (!end && nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
+					else if (!end && nbr_coups > 0 && y >= 150 && y < 214) // bouton annuler
 					{
-						if(nb_annuler > 0)
+						if (nb_annuler > 0)
 						{
 							chemin_joueur[nbr_coups] = '\0';
 							testeur_chemins(plateau_copie, size, chemin_joueur);
@@ -94,16 +107,19 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							plateau_copie = copie(plateau_initial, size);
 							nbr_coups--;
 							nb_annuler--;
+							sprintf(nb_annuler_txt, "%d", nb_annuler);
+							nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 							flip = true;
 						}
 						if (nb_annuler == -1)
 						{
-							printf("%d\n",nb_annuler );
 							chemin_joueur[nbr_coups] = '\0';
 							testeur_chemins(plateau_copie, size, chemin_joueur);
 							plateau = copie(plateau_copie, size);
 							plateau_copie = copie(plateau_initial, size);
 							nbr_coups--;
+							sprintf(nb_annuler_txt, "∞");
+							nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 							flip = true;
 						}
 					}
@@ -187,6 +203,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 			drawTexture(ecran, 500*(3/2.0)+40, 300, texte_rectangle);
 			drawTexture(ecran, 500*(3/2.0)+105, 330, valeur_nbr_coups);
 			drawTexture(ecran, size_window*(3/2.0)+40, 402, icone_son);
+			drawSquare(ecran, size_window*(3/2.0)+62, 185, 20, W); //clear nb_annuler
+			drawTexture(ecran, size_window*(3/2.0)+62, 185, nb_annuler_surf);
 			display_plateau(ecran, plateau, size, size_window, size_window*0.5-10, 20);
 			SDL_Flip(ecran);
 			SDL_FreeSurface(valeur_nbr_coups);
@@ -223,7 +241,7 @@ int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nb
 	return end;
 }
 
-void game_choice (int size, int difficulte, int *nb_coups_max, int *nb_annuler)
+void game_choice(int size, int difficulte, int *nb_coups_max, int *nb_annuler)
 {
 	*nb_coups_max += 5/difficulte; //Facile = +5, Normal = +2, Expert = +1
 
