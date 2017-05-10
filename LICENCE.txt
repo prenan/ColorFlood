@@ -178,7 +178,6 @@
    Copyright 2017 THOR
    Copyright 2016 Freepik Flaticon Basic License (Miscellaneous Elements)
    Copyright 2014 TheFatRat - Unity
-   Copyright 2010 Mike Koenig - Click On (License Attribution 3.0)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

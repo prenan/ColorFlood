@@ -1,6 +1,7 @@
 #include "menu.h"
 
-void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
+
+void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
 {
 	TTF_Font *police_petite = TTF_OpenFont("orkney.ttf", 20);
 	RGB G = {51, 51, 51};
@@ -71,10 +72,11 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
 	free_space(plateau_sol, background_size);
 	
-	Mix_Music *musique; // création du pointeur de type Mix_Music
-	musique = Mix_LoadMUS("son/musique_menu.mp3"); // chargement de la musique
+	// gestion du son
+	Mix_Music *background_music;
+	background_music = Mix_LoadMUS("son/menu.mp3");
 	Mix_VolumeMusic(30);
-	Mix_PlayMusic(musique, -1);
+	Mix_PlayMusic(background_music, -1);
 
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
@@ -105,7 +107,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 				{
 					int x = event.button.x;
 					int y = event.button.y;
-					if (x >= 308 && x < 352)
+					if (x >= 308 && x < 352) // boutons plus ou moins
 					{
 						if (y >= 88 && y < 132 && compteur < 24)
 							compteur++;
@@ -113,7 +115,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 							compteur--;
 						flip = true;
 					}
-					if (y >= 264 && y < 318)
+					if (y >= 264 && y < 318) // boutons niveau
 					{
 						if (x >= 44 && x < 132 )
 							niveau = 1;
@@ -123,7 +125,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 							niveau = 3;
 						flip = true;
 					}
-					else if (x >= 176 && x < 264 && y >= 352 && y < 440)
+					else if (x >= 176 && x < 264 && y >= 352 && y < 440) // bouton jouer
 					{
 						*size = compteur;
 						*difficulte = niveau;
@@ -160,7 +162,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 			display_plateau(ecran, plateau, background_size, size_window, 0, 0);
 			sprintf(compteur_txt, "Taille : %2d", compteur);
 			taille_jeu = TTF_RenderUTF8_Blended(police_moyenne, compteur_txt, couleur_texte_G);
-			niveau_du_jeu(niveau, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
+			display_niveau(niveau, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
 			drawTexture(ecran, 41, 5, nom_jeu);
 			drawTexture(ecran, 78, 100, taille_jeu);
 			drawTexture(ecran, 125, 195, niveau_jeu);
@@ -191,6 +193,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 	SDL_FreeSurface(icone_plus);
 	SDL_FreeSurface(icone_moins);
 	SDL_FreeSurface(icone_jouer);
-	Mix_FreeMusic(musique);
+	Mix_FreeMusic(background_music);
+
 	return ecran;
 }

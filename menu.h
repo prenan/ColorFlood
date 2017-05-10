@@ -1,3 +1,10 @@
+/**
+ * \file menu.h
+ * \brief Gestion du menu et de son affichage
+ * \author THOR
+ * \date mai 2017
+ */
+
 #include <unistd.h>
 #include <math.h>
 #include <SDL/SDL.h>
@@ -10,8 +17,9 @@
 #ifndef MENU_H
 #define MENU_H
 
+
 /**
- * \fn void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)
+ * \fn void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)
  * \brief Affichage du choix du niveau du jeu
  *
  * \param niveau Niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
@@ -20,7 +28,7 @@
  * \param size Taille du jeu (grille size*size)
  * \param couleur_texte_W, couleur_texte_G La couleur du texte (W pour blanc, G pour gris)
  */
-void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
+void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
 
 /**
  * \fn SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
@@ -33,5 +41,6 @@ void niveau_du_jeu(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Sur
  * \return La surface, ie. l'écran de la fenêtre du menu 
  */
 SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
+
 
 #endif
