@@ -309,19 +309,17 @@ SDL_Surface *initialize_screen(int size_window)
 void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte)
 {
 	SDL_Surface *colorbox, *solution, *nbr_coups, *valeur_nbr_coups;
-	SDL_Surface *menu, *rejouer, *annuler, *exit, *son;
-	SDL_Surface *taille, *niveau;
+	SDL_Surface *menu, *rejouer, *annuler, *exit, *son, *choix_jeu;
 	SDL_Color texteNoir = {0, 0, 0, 42};
-	char taille_txt[20], niveau_txt[20];
+	char choix_jeu_txt[20];
 	
-	sprintf(taille_txt, "Taille : %2d", size);
 	if (difficulte == 1)
-		sprintf(niveau_txt, "%s", "Facile");
+		sprintf(choix_jeu_txt, "Taille %2d (Facile)", size);
 	if (difficulte == 2)
-		sprintf(niveau_txt, "%s", "Normal");
+		sprintf(choix_jeu_txt, "Taille %2d (Normal)", size);
 	if (difficulte == 3)
-		sprintf(niveau_txt, "%s", "Expert");
-
+		sprintf(choix_jeu_txt, "Taille %2d (Expert)", size);
+	
 	colorbox = TTF_RenderUTF8_Blended(police, "Color Box", texteNoir);
 	nbr_coups = TTF_RenderUTF8_Blended(police, "Nombre de coup(s) ", texteNoir);
 	valeur_nbr_coups = TTF_RenderUTF8_Blended(police, nbr_coups_texte, texteNoir);
@@ -331,8 +329,7 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte
 	solution = TTF_RenderUTF8_Blended(police, "Solution", texteNoir);
 	son = TTF_RenderUTF8_Blended(police, "Son", texteNoir);
 	exit = TTF_RenderUTF8_Blended(police, "Exit", texteNoir);
-	taille = TTF_RenderUTF8_Blended(police, taille_txt, texteNoir);
-	niveau = TTF_RenderUTF8_Blended(police, niveau_txt, texteNoir);
+	choix_jeu = TTF_RenderUTF8_Blended(police, choix_jeu_txt, texteNoir);
 
 	drawTexture(ecran, 80, 520, colorbox);
 	drawTexture(ecran, 500*(3/2.0)+40, 300, nbr_coups);
@@ -343,8 +340,7 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte
 	drawTexture(ecran, 882, 217, solution);
 	drawTexture(ecran, 804, 468, son);
 	drawTexture(ecran, 902, 468, exit);
-	drawTexture(ecran, 0, 0, taille);
-	drawTexture(ecran, 0, 20, niveau);
+	drawTexture(ecran, 405, 520, choix_jeu);
 	
 	SDL_FreeSurface(colorbox);
 	SDL_FreeSurface(nbr_coups);
@@ -355,8 +351,7 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte
 	SDL_FreeSurface(solution);
 	SDL_FreeSurface(son);
 	SDL_FreeSurface(exit);
-	SDL_FreeSurface(taille);
-	SDL_FreeSurface(niveau);
+	SDL_FreeSurface(choix_jeu);
 }
 
 void color_box(SDL_Surface *ecran, int size_window)
@@ -519,7 +514,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				{
 					system("xdg-open https://www.facebook.com/ThorStrasbourg/");
 				}
-				else if (x >= 923 && x < 988 && y >= 587 && y < 609) // bouton like
+				else if (x >= 923 && x < 988 && y >= 587 && y < 609) // bouton donate
 				{
 					system("xdg-open http://bit.ly/2r0peQG");
 				}
