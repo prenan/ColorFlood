@@ -517,11 +517,11 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 				}
 				else if (x >= 875 && x < 908 && y >= 580 && y < 613) // bouton like
 				{
-					system("xdg-open https://facebook.com/unistra/");
+					system("xdg-open https://www.facebook.com/ThorStrasbourg/");
 				}
 				else if (x >= 923 && x < 988 && y >= 587 && y < 609) // bouton like
 				{
-					system("xdg-open http://www.cts-strasbourg.eu/");
+					system("xdg-open http://bit.ly/2r0peQG");
 				}
 				else if (x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+200))
 				{

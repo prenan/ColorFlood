@@ -32,7 +32,7 @@ int main()
 	/*fin d'initialisation de la SDL*/ 
 
 	/*icône de la fenêtre*/
-	icone_colorflood = SDL_LoadBMP("img/colorflood.bmp");
+	icone_colorflood = SDL_LoadBMP("img/thor.bmp");
 	SDL_WM_SetIcon(icone_colorflood, NULL);
 	SDL_FreeSurface(icone_colorflood);
 	
