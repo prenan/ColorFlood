@@ -75,7 +75,7 @@ SDL_Surface *initialize_screen(int size_window)
 {
 	SDL_Surface *ecran;
 	SDL_Surface *icone_menu, *icone_rejouer, *icone_solveur, *icone_annuler;
-	SDL_Surface *icone_son, *icone_exit, *icone_like, *icone_donate;
+	SDL_Surface *icone_son, *icone_exit, *icone_like, *icone_donate, *icone_thor;
 	RGB init_screen = {255, 255, 255};	// blanc
 
 	ecran = SDL_SetVideoMode(2*size_window, size_window+120, 32, SDL_HWSURFACE);
@@ -90,6 +90,7 @@ SDL_Surface *initialize_screen(int size_window)
 	icone_exit = SDL_LoadBMP("img/exit.bmp");
 	icone_like = SDL_LoadBMP("img/like.bmp");
 	icone_donate = SDL_LoadBMP("img/donate.bmp");
+	icone_thor = SDL_LoadBMP("img/thorc.bmp");
 
 	drawTexture(ecran, size_window*(3/2.0)+40, 25, icone_menu);
 	drawTexture(ecran, size_window*(3/2.0)+135, 25, icone_rejouer);
@@ -97,8 +98,9 @@ SDL_Surface *initialize_screen(int size_window)
 	drawTexture(ecran, size_window*(3/2.0)+135, 150, icone_solveur);
 	drawTexture(ecran, size_window*(3/2.0)+40, 402, icone_son);
 	drawTexture(ecran, size_window*(3/2.0)+135, 400, icone_exit);
-	drawTexture(ecran, 875, 580, icone_like);
-	drawTexture(ecran, 923, 587, icone_donate);
+	drawTexture(ecran, 915, 560, icone_thor);
+	drawTexture(ecran, 873, 561, icone_like);
+	drawTexture(ecran, 855, 594, icone_donate);
 
 	SDL_FreeSurface(icone_menu);
 	SDL_FreeSurface(icone_rejouer);
@@ -108,6 +110,7 @@ SDL_Surface *initialize_screen(int size_window)
 	SDL_FreeSurface(icone_exit);
 	SDL_FreeSurface(icone_like);
 	SDL_FreeSurface(icone_donate);
+	SDL_FreeSurface(icone_thor);
 
 	return ecran;
 }

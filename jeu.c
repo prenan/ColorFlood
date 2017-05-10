@@ -140,13 +140,13 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 						flip = true;
 					}
 				}
-				else if (x >= 875 && x < 908 && y >= 580 && y < 613) // bouton like
+				else if (x >= 873 && x < 906 && y >= 561 && y < 594) // bouton like
 				{
 					system("xdg-open https://www.facebook.com/ThorStrasbourg/");
 				}
-				else if (x >= 923 && x < 988 && y >= 587 && y < 609) // bouton donate
+				else if (x >= 855 && x < 920 && y >= 594 && y < 616) // bouton donate
 				{
-					system("xdg-open http://bit.ly/2r0peQG");
+					system("xdg-open https://goo.gl/5G3T5P");
 				}
 				else if (x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+200))
 				{
@@ -155,7 +155,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 						*bouton = 2;
 						exit = 1;
 					}
-					else if (!end && y >= 150 && y < 214 && (nbr_coups_max-nbr_coups) < 15) // bouton solution
+					else if (!end && y >= 150 && y < 214 && (nbr_coups_max-nbr_coups) < 24) // bouton solution
 					{
 						solveur = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
 						drawTexture(ecran, 80, 550, solveur);
