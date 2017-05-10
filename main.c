@@ -60,7 +60,7 @@ int main()
 				initialize_text(ecran, police_petite, nbr_coups_texte, size, difficulte);
 				display_plateau(ecran, plateau, size, size_window, size_window*0.5-10, 20);
 
-				loop_game(ecran, plateau, size, nbr_coups_max, nbr_coups_texte, police_petite, police_moyenne, size_window, &bouton, &out);
+				loop_game(ecran, plateau, size, nbr_coups_max, nb_annuler, nbr_coups_texte, police_petite, police_moyenne, size_window, &bouton, &out);
 
 				plateau = plateau_copie;
 			} while (bouton == 2 && out != 1);

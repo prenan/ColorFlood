@@ -12,13 +12,14 @@
 
 
 /**
- * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
+ * \fn int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coup_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
  * \brief Boucle du jeu
  *
  * \param ecran L'écran de la fenêtre en cours
  * \param plateau Grille en cours
  * \param size Taille du jeu (grille size*size)
  * \param nbr_coups_max Le nombre de coups maximum autorisés
+ * \param nb_annuler Le nombre de retour en arrière possible (annuler)
  * \param nbr_coup_texte Le texte pour afficher le nb de coups restants
  * \param police_moyenne, police_grande Différentes polices du texte
  * \param size_window Taille de la fenêtre
@@ -26,7 +27,7 @@
  * \param out Pointeur ??
  * \return Le nombre de coups en cours
  */
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coup_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out);
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coup_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out);
 
 /**
  * \fn int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coup, int nbr_coups_max, TTF_Font *police);

@@ -1,6 +1,6 @@
 #include "jeu.h"
 
-int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
+int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
 	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end;
 	char ancienne_couleur, *chemin_solveur, chemin_joueur[100];
@@ -86,12 +86,16 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, c
 					}
 					else if (!end && nbr_coups > 0 && y >= 150 && y < 214)// bouton annuler
 					{
-						chemin_joueur[nbr_coups] = '\0';
-						testeur_chemins(plateau_copie, size, chemin_joueur);
-						plateau = copie(plateau_copie, size);
-						plateau_copie = copie(plateau_initial, size);
-						nbr_coups--;
-						flip = true;
+						if(nb_annuler > 0)
+						{
+							chemin_joueur[nbr_coups] = '\0';
+							testeur_chemins(plateau_copie, size, chemin_joueur);
+							plateau = copie(plateau_copie, size);
+							plateau_copie = copie(plateau_initial, size);
+							nbr_coups--;
+							nb_annuler--;
+							flip = true;
+						}
 					}
 					else if (y >= 402 && y < 467) // bouton son
 					{				
@@ -219,10 +223,10 @@ void game_choice (int size, int difficulte, int *nb_coups_max, int *nb_annuler)
 	}
 	if (difficulte == 2)
 	{
-		*nb_annuler = size%5 + 1;
+		*nb_annuler = size/5 + 1;
 	}
 	if (difficulte == 3)
 	{
-		*nb_annuler = size%6;
+		*nb_annuler = size/6;
 	}
 }
