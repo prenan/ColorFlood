@@ -96,6 +96,16 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							nb_annuler--;
 							flip = true;
 						}
+						if (nb_annuler == -1)
+						{
+							printf("%d\n",nb_annuler );
+							chemin_joueur[nbr_coups] = '\0';
+							testeur_chemins(plateau_copie, size, chemin_joueur);
+							plateau = copie(plateau_copie, size);
+							plateau_copie = copie(plateau_initial, size);
+							nbr_coups--;
+							flip = true;
+						}
 					}
 					else if (y >= 402 && y < 467) // bouton son
 					{				
