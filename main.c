@@ -8,7 +8,7 @@
 
 int main()
 {
-	int size_window = 500, size = 0, difficulte = 0, nbr_coups_max = 0, bouton, out;
+	int size_window = 500, size = 0, difficulte = 0, nbr_coups_max = 0, nb_annuler, bouton, out;
 	char nbr_coups_texte[50];
 
 	SDL_Surface *ecran = NULL, *icone_colorflood = NULL;
@@ -51,8 +51,8 @@ int main()
 		{
 			grille plateau = random_grille(size), plateau_sol = copie(plateau, size), plateau_copie;
 			solution_rapide(plateau_sol, size, &nbr_coups_max);	// utile pour le niveau de difficulté
-			nbr_coups_max += 5/difficulte; // niveau de difficulté
-			
+			game_choice(size, difficulte, &nbr_coups_max, &nb_annuler);
+
 			do {
 				plateau_copie = copie(plateau, size);
 				

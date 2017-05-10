@@ -208,3 +208,21 @@ int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nb
 	SDL_FreeSurface(texte_denouement);
 	return end;
 }
+
+void game_choice (int size, int difficulte, int *nb_coups_max, int *nb_annuler)
+{
+	*nb_coups_max += 5/difficulte; //Facile = +5, Normal = +2, Expert = +1
+
+	if (difficulte == 1)
+	{
+		*nb_annuler = -1;
+	}
+	if (difficulte == 2)
+	{
+		*nb_annuler = size%5 + 1;
+	}
+	if (difficulte == 3)
+	{
+		*nb_annuler = size%6;
+	}
+}
