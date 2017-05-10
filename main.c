@@ -1,6 +1,8 @@
 #include "fichier.h"
 #include "grille.h"
 #include "SDL.h"
+#include "jeu.h"
+#include "menu.h"
 #include "solveur.h"
 
 
