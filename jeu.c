@@ -1,5 +1,6 @@
 #include "jeu.h"
 
+
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
 	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end;
@@ -210,9 +211,12 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 			SDL_FreeSurface(valeur_nbr_coups);
 		}
 	}
+	free_space(plateau_copie, size);
+	free_space(plateau_initial, size);
 	SDL_FreeSurface(rectangle);
 	SDL_FreeSurface(icone_son);
 	SDL_FreeSurface(texte_rectangle);
+	SDL_FreeSurface(nb_annuler_surf);
 	Mix_FreeMusic(musique);
 	return nbr_coups;
 }

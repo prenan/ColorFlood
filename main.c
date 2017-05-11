@@ -9,7 +9,7 @@
 int main()
 {
 	int size_window = 500, size = 0, difficulte = 0, nbr_coups_max = 0, nb_annuler, bouton, out;
-	char nbr_coups_texte[50];
+	char nbr_coups_texte[50], *chemin_rapide;
 
 	SDL_Surface *ecran = NULL, *icone_colorflood = NULL;
 	TTF_Font *police_petite = NULL, *police_moyenne = NULL, *police_grande = NULL;
@@ -49,12 +49,12 @@ int main()
 
 		if (size != 0)
 		{
-			grille plateau = random_grille(size), plateau_sol = copie(plateau, size), plateau_copie;
-			solution_rapide(plateau_sol, size, &nbr_coups_max);	// utile pour le niveau de difficulté
+			grille plateau = random_grille(size), plateau_sol = copie(plateau, size);
+			chemin_rapide = solution_rapide(plateau_sol, size, &nbr_coups_max);
 			game_choice(size, difficulte, &nbr_coups_max, &nb_annuler);
 
 			do {
-				plateau_copie = copie(plateau, size);
+				grille plateau_copie = copie(plateau, size);
 				
 				ecran = initialize_screen(size_window);
 				initialize_text(ecran, police_petite, nbr_coups_texte, size, difficulte);
@@ -63,11 +63,11 @@ int main()
 				loop_game(ecran, plateau, size, nbr_coups_max, nb_annuler, nbr_coups_texte, police_petite, police_moyenne, size_window, &bouton, &out);
 
 				plateau = plateau_copie;
+				//free_space(plateau_copie, size);
 			} while (bouton == 2 && out != 1);
-
+			free(chemin_rapide);
 			free_space(plateau, size);
 			free_space(plateau_sol, size);
-			/*free_space(plateau_copie, size); FAIT PLANTER LE MENU*/
 		}
 	} while (bouton == 1 && size != 0 && out != 1);
 

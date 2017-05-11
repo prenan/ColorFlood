@@ -147,7 +147,6 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 			else
 			{
 				free_space(plateau, background_size);
-				free(chemin);
 				i = 0;
 				plateau = random_grille(background_size);
 				grille plateau_sol = copie(plateau, background_size);
@@ -173,6 +172,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 			drawTexture(ecran, 308, 132, icone_moins);
 			drawTexture(ecran, 176, 352, icone_jouer);
 			SDL_Flip(ecran);
+			SDL_FreeSurface(taille_jeu);
 		}
 
 		unsigned long new_time = SDL_GetTicks();
@@ -184,8 +184,8 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 		time = new_time;
 	}
 	free_space(plateau, background_size);
+	free(chemin);
 	SDL_FreeSurface(nom_jeu);
-	SDL_FreeSurface(taille_jeu);
 	SDL_FreeSurface(niveau_jeu);
 	SDL_FreeSurface(facile);
 	SDL_FreeSurface(normal);
