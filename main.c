@@ -33,7 +33,8 @@ int main()
 	}
 	/*fin d'initialisation de la SDL*/ 
 
-	/*icône de la fenêtre*/
+	/*nom et icône de la fenêtre*/
+	SDL_WM_SetCaption("THOR | ColorFlood", NULL); // nom de la fenêtre
 	icone_colorflood = SDL_LoadBMP("img/thor.bmp");
 	SDL_WM_SetIcon(icone_colorflood, NULL);
 	SDL_FreeSurface(icone_colorflood);

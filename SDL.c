@@ -79,7 +79,6 @@ SDL_Surface *initialize_screen(int size_window)
 	RGB init_screen = {255, 255, 255};	// blanc
 
 	ecran = SDL_SetVideoMode(2*size_window, size_window+120, 32, SDL_HWSURFACE);
-	SDL_WM_SetCaption("ColorFlood (THOR)", NULL); // nom de la fenêtre
 	fillScreen(ecran, init_screen); // écran tout blanc
 	
 	icone_menu = SDL_LoadBMP("img/menu.bmp");

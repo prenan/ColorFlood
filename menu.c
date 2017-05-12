@@ -55,7 +55,6 @@ SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *p
 	char compteur_txt[50];
 
 	ecran = SDL_SetVideoMode(size_window, size_window, 32, SDL_HWSURFACE);
-	SDL_WM_SetCaption("Menu ColorFlood", NULL);
 
 	nom_jeu = TTF_RenderUTF8_Blended(police_grande, "ColorFlood", couleur_texte_G);
 	niveau_jeu = TTF_RenderUTF8_Blended(police_moyenne, "Niveau :", couleur_texte_G);
@@ -65,7 +64,7 @@ SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *p
 	icone_jouer = SDL_LoadBMP("img/jouer.bmp");
 
 	int time_between_moves = 875;
-	char* chemin = malloc(100*sizeof(char));
+	char* chemin = malloc(100*sizeof(char)); //problème sur Valgrind
 	grille plateau = random_grille(background_size), plateau_sol = copie(plateau, background_size);
 	chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
 	free_space(plateau_sol, background_size);
@@ -148,6 +147,7 @@ SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *p
 				i = 0;
 				plateau = random_grille(background_size);
 				grille plateau_sol = copie(plateau, background_size);
+				free(chemin);
 				chemin = solution_rapide(plateau_sol, background_size, nbr_coups_max);
 				free_space(plateau_sol, background_size);
 			}
@@ -171,6 +171,9 @@ SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *p
 			drawTexture(ecran, 176, 352, icone_jouer);
 			SDL_Flip(ecran);
 			SDL_FreeSurface(taille_jeu);
+			SDL_FreeSurface(facile);
+			SDL_FreeSurface(normal);
+			SDL_FreeSurface(expert);
 		}
 
 		unsigned long new_time = SDL_GetTicks();
@@ -185,9 +188,6 @@ SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *p
 	free(chemin);
 	SDL_FreeSurface(nom_jeu);
 	SDL_FreeSurface(niveau_jeu);
-	SDL_FreeSurface(facile);
-	SDL_FreeSurface(normal);
-	SDL_FreeSurface(expert);
 	SDL_FreeSurface(icone_plus);
 	SDL_FreeSurface(icone_moins);
 	SDL_FreeSurface(icone_jouer);
