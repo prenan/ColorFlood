@@ -89,11 +89,10 @@ SDL_Surface *initialize_screen(int size_window);
  *
  * \param ecran L'écran de la fenêtre en cours
  * \param police Police du texte
- * \param nbr_coup_texte Le texte pour afficher le nb de coups restants
  * \param size Taille du jeu (grille size*size)
  * \param difficulte Niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
  */
-void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte);
+void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficulte);
 
 /**
  * \fn void color_box(SDL_Surface *ecran,int size_window)

@@ -23,6 +23,7 @@
  * \brief Affichage du choix du niveau du jeu
  *
  * \param niveau Niveau du jeu choisi (1 pour facile, 2 pour normal, 3 pour expert)
+ * \param police_petite Police du texte
  * \param ecran L'écran du menu
  * \param facile, normal, expert Pointeurs du texte correspondant
  * \param size Taille du jeu (grille size*size)
@@ -34,7 +35,7 @@ void display_niveau(int niveau, TTF_Font *police_petite, SDL_Surface *ecran, SDL
  * \fn SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
  * \brief Affiche un menu pour choisir la taille du jeu 
  *
- * \param police_moyenne, police_grande Différentes polices du texte
+ * \param police_petite, police_moyenne, police_grande Différentes polices du texte
  * \param size Pointeur pour enregistrer la taille choisie
  * \param difficulte Pointeur pour enregistrer le niveau choisi
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé

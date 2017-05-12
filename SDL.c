@@ -115,9 +115,9 @@ SDL_Surface *initialize_screen(int size_window)
 	return ecran;
 }
 
-void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte)
+void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficulte)
 {
-	SDL_Surface *colorbox, *solution, *nbr_coups, *valeur_nbr_coups;
+	SDL_Surface *colorbox, *solution, *nbr_coups;
 	SDL_Surface *menu, *rejouer, *annuler, *exit, *son, *choix_jeu;
 	SDL_Color texteNoir = {0, 0, 0, 42};
 	char choix_jeu_txt[20];
@@ -130,8 +130,7 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte
 		sprintf(choix_jeu_txt, "Taille %2d (Expert)", size);
 	
 	colorbox = TTF_RenderUTF8_Blended(police, "Color Box", texteNoir);
-	nbr_coups = TTF_RenderUTF8_Blended(police, "Nombre de coup(s) ", texteNoir);
-	valeur_nbr_coups = TTF_RenderUTF8_Blended(police, nbr_coups_texte, texteNoir);
+	nbr_coups = TTF_RenderUTF8_Blended(police, "Nombre de coup(s)", texteNoir);
 	menu = TTF_RenderUTF8_Blended(police, "Menu", texteNoir);
 	rejouer = TTF_RenderUTF8_Blended(police, "Rejouer", texteNoir);
 	annuler = TTF_RenderUTF8_Blended(police, "Annuler", texteNoir);
@@ -142,7 +141,6 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte
 
 	drawTexture(ecran, 80, 520, colorbox);
 	drawTexture(ecran, 500*(3/2.0)+40, 300, nbr_coups);
-	drawTexture(ecran, 500*(3/2.0)+90, 330, valeur_nbr_coups);
 	drawTexture(ecran, 797, 95, menu);
 	drawTexture(ecran, 885, 95, rejouer);
 	drawTexture(ecran, 786, 217, annuler);
@@ -153,7 +151,6 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte
 	
 	SDL_FreeSurface(colorbox);
 	SDL_FreeSurface(nbr_coups);
-	SDL_FreeSurface(valeur_nbr_coups);
 	SDL_FreeSurface(menu);
 	SDL_FreeSurface(rejouer);
 	SDL_FreeSurface(annuler);
