@@ -14,7 +14,7 @@ int main()
 	SDL_Surface *ecran = NULL, *icone_colorflood = NULL;
 	TTF_Font *police_petite = NULL, *police_moyenne = NULL, *police_grande = NULL;
 
-	/*initialisation da la SDL*/
+	// initialisation da la SDL
 	const SDL_VideoInfo *info = NULL;
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -22,18 +22,18 @@ int main()
 		SDL_Quit();
 	}
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) // initialisation de l'API Mixer
-		printf("%s", Mix_GetError());
-
 	info = SDL_GetVideoInfo();
 	if(!info)
 	{
 		fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
 		SDL_Quit();
 	}
-	/*fin d'initialisation de la SDL*/ 
 
-	/*nom et icône de la fenêtre*/
+	// initialisation de l'API Mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+		printf("%s", Mix_GetError());
+
+	// nom et icône de la fenêtre
 	SDL_WM_SetCaption("THOR | ColorFlood", NULL); // nom de la fenêtre
 	icone_colorflood = SDL_LoadBMP("img/thor.bmp");
 	SDL_WM_SetIcon(icone_colorflood, NULL);
@@ -64,7 +64,6 @@ int main()
 				loop_game(ecran, plateau, size, nbr_coups_max, nb_annuler, nbr_coups_texte, police_petite, police_moyenne, size_window, &bouton, &out);
 
 				plateau = plateau_copie;
-				//free_space(plateau_copie, size);
 			} while (bouton == 2 && out != 1);
 			free(chemin_rapide);
 			free_space(plateau, size);
