@@ -8,7 +8,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	bool flip = true;
 	grille plateau_copie = copie(plateau, size);
 	grille plateau_initial = copie(plateau, size);
-	SDL_Surface *valeur_nbr_coups, *solveur, *texte_rectangle, *rectangle, *icone_son, *nb_annuler_surf;
+	SDL_Surface *valeur_nbr_coups, *solveur1, *solveur2, *texte_rectangle, *rectangle, *icone_son, *nb_annuler_surf;
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42};
 	RGB W = {255, 255, 255};	//blanc
@@ -18,17 +18,15 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	icone_son = SDL_LoadBMP("img/son.bmp");
 	texte_rectangle = TTF_RenderUTF8_Blended(police_petite, "Nombre de coups", texteNoir);
 	
+	sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
 	if (nb_annuler != -1)
 	{
 		sprintf(nb_annuler_txt, "%d", nb_annuler);
-		nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 	}
 	else
 	{
 		sprintf(nb_annuler_txt, "∞");
-		nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 	}
-
 
 	Mix_Music *musique; // Création du pointeur de type Mix_Music
 	musique = Mix_LoadMUS("son/musique_jeu.mp3"); // Chargement de la musique
@@ -109,7 +107,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							nbr_coups--;
 							nb_annuler--;
 							sprintf(nb_annuler_txt, "%d", nb_annuler);
-							nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 							flip = true;
 						}
 						if (nb_annuler == -1)
@@ -119,8 +116,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							plateau = copie(plateau_copie, size);
 							plateau_copie = copie(plateau_initial, size);
 							nbr_coups--;
-							sprintf(nb_annuler_txt, "∞");
-							nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 							flip = true;
 						}
 					}
@@ -158,18 +153,19 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 					}
 					else if (!end && y >= 150 && y < 214 && (nbr_coups_max-nbr_coups) < 24) // bouton solution
 					{
-						solveur = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
-						drawTexture(ecran, 80, 550, solveur);
+						solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
+						drawTexture(ecran, 80, 550, solveur1);
 						SDL_Flip(ecran);
+						SDL_FreeSurface(solveur1);
 
 						chemin_solveur = solveur_perf(plateau, size, &nbr_coups_min);
-						solveur = TTF_RenderUTF8_Blended(police_petite, "Solution possible :", texteNoir);
+						solveur2 = TTF_RenderUTF8_Blended(police_petite, "Solution possible :", texteNoir);
 						solveur_box(ecran, chemin_solveur, nbr_coups_min);
 
-						drawTexture(ecran, 80, 550, solveur);
+						drawTexture(ecran, 80, 550, solveur2);
 						drawTexture(ecran, size_window*(3/2.0)+40, 402, icone_son);
 						SDL_Flip(ecran);
-						SDL_FreeSurface(solveur);
+						SDL_FreeSurface(solveur2);
 						if(strlen(chemin_solveur) != 1)	// free ssi pas un char
 							free(chemin_solveur);
 						flip = true;
@@ -199,8 +195,8 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 		{
 			flip = false;
 			drawTexture(ecran, 500*(3/2.0)+23, 287, rectangle);
-			sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
 			valeur_nbr_coups = TTF_RenderUTF8_Blended(police_petite, nbr_coups_texte, texteNoir);
+			nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 			drawTexture(ecran, 500*(3/2.0)+40, 300, texte_rectangle);
 			drawTexture(ecran, 500*(3/2.0)+105, 330, valeur_nbr_coups);
 			drawTexture(ecran, size_window*(3/2.0)+40, 402, icone_son);
@@ -209,6 +205,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 			display_plateau(ecran, plateau, size, size_window, size_window*0.5-10, 20);
 			SDL_Flip(ecran);
 			SDL_FreeSurface(valeur_nbr_coups);
+			SDL_FreeSurface(nb_annuler_surf);
 		}
 	}
 	free_space(plateau_copie, size);
@@ -216,7 +213,6 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	SDL_FreeSurface(rectangle);
 	SDL_FreeSurface(icone_son);
 	SDL_FreeSurface(texte_rectangle);
-	SDL_FreeSurface(nb_annuler_surf);
 	Mix_FreeMusic(musique);
 	return nbr_coups;
 }
