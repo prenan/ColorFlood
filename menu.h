@@ -28,7 +28,7 @@
  * \param size Taille du jeu (grille size*size)
  * \param couleur_texte_W, couleur_texte_G La couleur du texte (W pour blanc, G pour gris)
  */
-void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
+void display_niveau(int niveau, TTF_Font *police_petite, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G);
 
 /**
  * \fn SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
@@ -40,7 +40,7 @@ void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Su
  * \param nbr_coups_max Pointeur pour enregistrer le nombre de coups du chemin le plus court trouvé
  * \return La surface, ie. l'écran de la fenêtre du menu 
  */
-SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
+SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max);
 
 
 #endif

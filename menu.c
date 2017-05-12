@@ -1,9 +1,8 @@
 #include "menu.h"
 
 
-void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
+void display_niveau(int niveau, TTF_Font *police_petite, SDL_Surface *ecran, SDL_Surface **facile, SDL_Surface **normal, SDL_Surface **expert, SDL_Color couleur_texte_W, SDL_Color couleur_texte_G)		
 {
-	TTF_Font *police_petite = TTF_OpenFont("orkney.ttf", 20);
 	RGB G = {51, 51, 51};
 	RGB W = {255, 255, 255};
 	if (niveau == 1)	// niveau facile
@@ -42,11 +41,10 @@ void display_niveau(int niveau, SDL_Surface *ecran, SDL_Surface **facile, SDL_Su
 		*normal = TTF_RenderUTF8_Blended(police_petite, "Normal", couleur_texte_G); 
 		*expert = TTF_RenderUTF8_Blended(police_petite, "Expert", couleur_texte_W); 
 	}
-	TTF_CloseFont(police_petite);
 }
 
 
-SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max)
+SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max)
 {
 	SDL_Surface *ecran, *nom_jeu, *taille_jeu, *niveau_jeu, *facile, *normal, *expert, *icone_plus, *icone_moins, *icone_jouer;
 	SDL_Event event;
@@ -161,7 +159,7 @@ SDL_Surface *menu(TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, 
 			display_plateau(ecran, plateau, background_size, size_window, 0, 0);
 			sprintf(compteur_txt, "Taille : %2d", compteur);
 			taille_jeu = TTF_RenderUTF8_Blended(police_moyenne, compteur_txt, couleur_texte_G);
-			display_niveau(niveau, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
+			display_niveau(niveau, police_petite, ecran, &facile, &normal, &expert, couleur_texte_W, couleur_texte_G);
 			drawTexture(ecran, 41, 5, nom_jeu);
 			drawTexture(ecran, 78, 100, taille_jeu);
 			drawTexture(ecran, 125, 195, niveau_jeu);

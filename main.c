@@ -45,7 +45,7 @@ int main()
 	police_grande = TTF_OpenFont("orkney.ttf", 70);
 
 	do {
-		ecran = menu(police_moyenne, police_grande, &size, &difficulte, &nbr_coups_max);
+		ecran = menu(police_petite, police_moyenne, police_grande, &size, &difficulte, &nbr_coups_max);
 
 		if (size != 0)
 		{
