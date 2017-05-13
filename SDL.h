@@ -95,13 +95,13 @@ SDL_Surface *initialize_screen(int size_window);
 void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficulte);
 
 /**
- * \fn void color_box(SDL_Surface *ecran,int size_window)
+ * \fn void display_colorbox(SDL_Surface *ecran,int size_window)
  * \brief Barre latérale pour choisir la couleur pendant le jeu
  *
  * \param ecran L'écran de la fenêtre en cours
  * \param size_window Taille de la fenêtre
  */
-void color_box(SDL_Surface *ecran, int size_window);
+void display_colorbox(SDL_Surface *ecran, int size_window);
 
 /**
  * \fn void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
@@ -112,5 +112,6 @@ void color_box(SDL_Surface *ecran, int size_window);
  * \param nbr_coups_min La longueur du chemin
  */
 void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min);
+
 
 #endif

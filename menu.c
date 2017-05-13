@@ -50,6 +50,7 @@ void display_niveau(int niveau, TTF_Font *police_petite, SDL_Surface *ecran, SDL
 	SDL_FreeSurface(expert);
 }
 
+// menu_background()
 
 SDL_Surface *menu(TTF_Font *police_petite, TTF_Font *police_moyenne, TTF_Font *police_grande, int *size, int *difficulte, int *nbr_coups_max)
 {

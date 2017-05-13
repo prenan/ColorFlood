@@ -1,6 +1,5 @@
 #include "fichier.h"
 #include "grille.h"
-#include "SDL.h"
 #include "solveur.h"
 #include "math.h"
 

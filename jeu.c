@@ -1,35 +1,82 @@
 #include "jeu.h"
 
 
+void game_choice(int size, int difficulte, int *nb_coups_max, int *nb_annuler)
+{
+	*nb_coups_max += 5/difficulte; //Facile = +5, Normal = +2, Expert = +1
+
+	if (difficulte == 1)
+	{
+		*nb_annuler = -1;
+	}
+	if (difficulte == 2)
+	{
+		*nb_annuler = size/5 + 1;
+	}
+	if (difficulte == 3)
+	{
+		*nb_annuler = size/6;
+	}
+}
+
+int colorbox_choice(int nbr_coups, char ancienne_couleur, grille plateau, int size, int size_window, int y)
+{
+	if (ancienne_couleur != 'G' && y >= (size_window*(0.0/6)+20) && y < (size_window*(0.0/6)+84))
+	{
+		modif_color(0, 0, 'G', ancienne_couleur, plateau, size);
+		nbr_coups++;
+	}
+	if (ancienne_couleur != 'R' && y >= (size_window*(1.0/6)+20) && y < (size_window*(1.0/6)+84))
+	{
+		modif_color(0, 0, 'R', ancienne_couleur, plateau, size);
+		nbr_coups++;
+	}
+	if (ancienne_couleur != 'J' && y >= (size_window*(2.0/6)+20) && y < (size_window*(2.0/6)+84))
+	{
+		modif_color(0, 0, 'J', ancienne_couleur, plateau, size);
+		nbr_coups++;
+	}
+	if (ancienne_couleur != 'V' && y >= (size_window*(3.0/6)+20) && y < (size_window*(3.0/6)+84))
+	{
+		modif_color(0, 0, 'V', ancienne_couleur, plateau, size);
+		nbr_coups++;
+	}
+	if (ancienne_couleur != 'B' && y >= (size_window*(4.0/6)+20) && y < (size_window*(4.0/6)+84))
+	{
+		modif_color(0, 0, 'B', ancienne_couleur, plateau, size);
+		nbr_coups++;
+	}
+	if (ancienne_couleur != 'M' && y >= (size_window*(5.0/6)+20) && y < (size_window*(5.0/6)+84))
+	{
+		modif_color(0, 0, 'M', ancienne_couleur, plateau, size);
+		nbr_coups++;
+	}
+	return nbr_coups;
+}
+
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
 	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end;
 	char ancienne_couleur, *chemin_solveur, chemin_joueur[100], nb_annuler_txt[5];
 	bool flip = true;
-	grille plateau_copie = copie(plateau, size);
-	grille plateau_initial = copie(plateau, size);
+	grille plateau_copie = copie(plateau, size), plateau_initial = copie(plateau, size);
 	SDL_Surface *valeur_nbr_coups, *solveur1, *solveur2, *texte_rectangle, *rectangle, *icone_son, *nb_annuler_surf;
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42};
-	RGB W = {255, 255, 255};	//blanc
+	RGB W = {255, 255, 255};	// blanc
 
-	color_box(ecran, size_window);
+	display_colorbox(ecran, size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
 	icone_son = SDL_LoadBMP("img/son.bmp");
 	texte_rectangle = TTF_RenderUTF8_Blended(police_petite, "Nombre de coups", texteNoir);
-	
 	sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
 	if (nb_annuler != -1)
-	{
 		sprintf(nb_annuler_txt, "%d", nb_annuler);
-	}
 	else
-	{
 		sprintf(nb_annuler_txt, "∞");
-	}
 
 	Mix_Music *musique; // Création du pointeur de type Mix_Music
-	musique = Mix_LoadMUS("son/musique_jeu.mp3"); // Chargement de la musique
+	musique = Mix_LoadMUS("son/jeu.mp3"); // Chargement de la musique
 	Mix_VolumeMusic(30);
 	Mix_PlayMusic(musique, -1);
 
@@ -49,6 +96,17 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 			continuer = 0;
 			break;
 
+			case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_ESCAPE:
+				*out = 1;
+				continuer = 0;
+
+				default:
+				break;
+			}
+
 			case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
@@ -56,36 +114,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 				int y = event.button.y;				
 				if(!end && x >= (size_window/4.0-40) && x < (size_window/4.0+24))
 				{
-					if (ancienne_couleur != 'G' && y >= (size_window*(0.0/6)+20) && y < (size_window*(0.0/6)+84))
-					{
-						modif_color(0, 0, 'G', ancienne_couleur, plateau, size);
-						nbr_coups++;
-					}
-					if (ancienne_couleur != 'R' && y >= (size_window*(1.0/6)+20) && y < (size_window*(1.0/6)+84))
-					{
-						modif_color(0, 0, 'R', ancienne_couleur, plateau, size);
-						nbr_coups++;
-					}
-					if (ancienne_couleur != 'J' && y >= (size_window*(2.0/6)+20) && y < (size_window*(2.0/6)+84))
-					{
-						modif_color(0, 0, 'J', ancienne_couleur, plateau, size);
-						nbr_coups++;
-					}
-					if (ancienne_couleur != 'V' && y >= (size_window*(3.0/6)+20) && y < (size_window*(3.0/6)+84))
-					{
-						modif_color(0, 0, 'V', ancienne_couleur, plateau, size);
-						nbr_coups++;
-					}
-					if (ancienne_couleur != 'B' && y >= (size_window*(4.0/6)+20) && y < (size_window*(4.0/6)+84))
-					{
-						modif_color(0, 0, 'B', ancienne_couleur, plateau, size);
-						nbr_coups++;
-					}
-					if (ancienne_couleur != 'M' && y >= (size_window*(5.0/6)+20) && y < (size_window*(5.0/6)+84))
-					{
-						modif_color(0, 0, 'M', ancienne_couleur, plateau, size);
-						nbr_coups++;
-					}
+					nbr_coups = colorbox_choice(nbr_coups, ancienne_couleur, plateau, size, size_window, y);
 					flip = true;
 				}
 
@@ -137,13 +166,9 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 					}
 				}
 				else if (x >= 873 && x < 906 && y >= 561 && y < 594) // bouton like
-				{
 					system("xdg-open https://www.facebook.com/ThorStrasbourg/");
-				}
 				else if (x >= 855 && x < 920 && y >= 594 && y < 616) // bouton donate
-				{
 					system("xdg-open https://goo.gl/5G3T5P");
-				}
 				else if (x >= size_window*(3/2.0)+135 && x < (size_window*(3/2.0)+200))
 				{
 					if (y >= 25 && y < 89) // bouton rejouer
@@ -178,23 +203,13 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 				}
 			}
 			break;
-
-			case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-				case SDLK_ESCAPE:
-				*out = 1;
-				continuer = 0;
-
-				default:
-				break;
-			}
 		}
 
 		if (flip)
 		{
 			flip = false;
 			drawTexture(ecran, 500*(3/2.0)+23, 287, rectangle);
+			sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
 			valeur_nbr_coups = TTF_RenderUTF8_Blended(police_petite, nbr_coups_texte, texteNoir);
 			nb_annuler_surf = TTF_RenderUTF8_Blended(police_petite, nb_annuler_txt, texteNoir);
 			drawTexture(ecran, 500*(3/2.0)+40, 300, texte_rectangle);
@@ -239,22 +254,4 @@ int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nb
 	}
 	SDL_FreeSurface(texte_denouement);
 	return end;
-}
-
-void game_choice(int size, int difficulte, int *nb_coups_max, int *nb_annuler)
-{
-	*nb_coups_max += 5/difficulte; //Facile = +5, Normal = +2, Expert = +1
-
-	if (difficulte == 1)
-	{
-		*nb_annuler = -1;
-	}
-	if (difficulte == 2)
-	{
-		*nb_annuler = size/5 + 1;
-	}
-	if (difficulte == 3)
-	{
-		*nb_annuler = size/6;
-	}
 }

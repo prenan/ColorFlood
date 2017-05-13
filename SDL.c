@@ -159,7 +159,7 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficu
 	SDL_FreeSurface(choix_jeu);
 }
 
-void color_box(SDL_Surface *ecran, int size_window)
+void display_colorbox(SDL_Surface *ecran, int size_window)
 {
 	RGB V = {153, 255, 0};		// vert
 	RGB R = {204, 0, 51};		// rouge-rose

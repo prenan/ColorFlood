@@ -21,7 +21,6 @@ int main()
 		fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
 		SDL_Quit();
 	}
-
 	info = SDL_GetVideoInfo();
 	if(!info)
 	{
@@ -39,8 +38,8 @@ int main()
 	SDL_WM_SetIcon(icone_colorflood, NULL);
 	SDL_FreeSurface(icone_colorflood);
 	
+	// initialisation de SDL_ttf
 	TTF_Init();
-
 	police_petite = TTF_OpenFont("orkney.ttf", 20);
 	police_moyenne = TTF_OpenFont("orkney.ttf", 50);
 	police_grande = TTF_OpenFont("orkney.ttf", 70);
@@ -48,12 +47,12 @@ int main()
 	do {
 		ecran = menu(police_petite, police_moyenne, police_grande, &size, &difficulte, &nbr_coups_max);
 
-		if (size != 0)
+		if (size != 0) // condition de sortie du menu (échap ou fermer fenêtre)
 		{
+			game_choice(size, difficulte, &nbr_coups_max, &nb_annuler);
+			
 			grille plateau = random_grille(size), plateau_sol = copie(plateau, size);
 			chemin_rapide = solution_rapide(plateau_sol, size, &nbr_coups_max);
-			game_choice(size, difficulte, &nbr_coups_max, &nb_annuler);
-
 			do {
 				grille plateau_copie = copie(plateau, size);
 				
@@ -75,7 +74,6 @@ int main()
 	TTF_CloseFont(police_moyenne);
 	TTF_CloseFont(police_grande);
 	TTF_Quit();
-
 	SDL_Quit();
 
 	return 0;
