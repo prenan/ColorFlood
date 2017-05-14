@@ -104,14 +104,14 @@ void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficu
 void display_colorbox(SDL_Surface *ecran, int size_window);
 
 /**
- * \fn void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
+ * \fn void display_solveur(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
  * \brief Barre qui affiche le résultat du solveur
  *
  * \param ecran L'écran de la fenêtre en cours
  * \param chemin Le chemin trouvé par le solveur
  * \param nbr_coups_min La longueur du chemin
  */
-void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min);
+void display_solveur(SDL_Surface *ecran, char* chemin, int nbr_coups_min);
 
 
 #endif

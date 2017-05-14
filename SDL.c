@@ -176,7 +176,7 @@ void display_colorbox(SDL_Surface *ecran, int size_window)
 	drawSquare(ecran, size_window/4.0-40, size_window*(5.0/6)+20, (size_window-40)/6, M);	
 }
 
-void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
+void display_solveur(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 {
 	RGB W = {255, 255, 255};	//blanc
 	RGB V = {153, 255, 0};		// vert
@@ -201,7 +201,7 @@ void solveur_box(SDL_Surface *ecran, char* chemin, int nbr_coups_min)
 			drawSquare(ecran, 85+i*27, 580, 25, B);	
 		if (chemin[i] == 'M')
 			drawSquare(ecran, 85+i*27, 580, 25, M);	
-		if (chemin[i] == 'C')
+		if (chemin[i] == 'C') // permet de limiter l'affichage
 			i = nbr_coups_min;
 		i++;
 	}

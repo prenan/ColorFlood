@@ -180,7 +180,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 					else if (!end && y >= 150 && y < 214) // bouton solution
 					{
 						drawSquare(ecran, 80, 550, 500, W); // clear solveur
-						if ((nbr_coups_max-nbr_coups) < 18)
+						if ((nbr_coups_max-nbr_coups) < 18) // solution minimale
 						{
 							solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
 							drawTexture(ecran, 80, 550, solveur1);
@@ -188,32 +188,29 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							SDL_FreeSurface(solveur1);
 
 							chemin_solveur = solveur_perf(plateau, size, &nbr_coups_min);
-							solveur2 = TTF_RenderUTF8_Blended(police_petite, "Solution possible :", texteNoir);
-							solveur_box(ecran, chemin_solveur, nbr_coups_min);
+							solveur2 = TTF_RenderUTF8_Blended(police_petite, "Solution minimale possible :", texteNoir);
+							display_solveur(ecran, chemin_solveur, nbr_coups_min);
 							drawTexture(ecran, 80, 550, solveur2);
 							SDL_Flip(ecran);
 							SDL_FreeSurface(solveur2);
 							if(strlen(chemin_solveur) != 1)	// free ssi pas un char
 								free(chemin_solveur);
 						}
-						else if ((nbr_coups_max-nbr_coups) >= 18)
+						else if ((nbr_coups_max-nbr_coups) >= 18) // solution rapide (pas forcément minimale)
 						{
 							grille plateau_sol = copie(plateau,size);
 							chemin_solveur = solution_rapide(plateau_sol, size, &nbr_coups_min);
-							if(strlen(chemin_solveur) < 28)
-							{
-								solveur_box(ecran, chemin_solveur, nbr_coups_min);
-								solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solveur non-optimisé", texteNoir);
-							}
+							free_space(plateau_sol, size);
+							if (strlen(chemin_solveur) < 28)
+								solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solution possible :", texteNoir);
 							else
 							{
-								chemin_solveur[28]= 'C'; 
-								solveur_box(ecran, chemin_solveur, nbr_coups_min);
-								solveur1 = TTF_RenderUTF8_Blended(police_petite, "Début solveur non-optimisé", texteNoir);
+								chemin_solveur[28] = 'C'; 
+								solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solution possible (début) :", texteNoir);
 							}
+							display_solveur(ecran, chemin_solveur, nbr_coups_min);
 							drawTexture(ecran, 80, 550, solveur1);
 							SDL_Flip(ecran);
-							free_space(plateau_sol,size);
 							SDL_FreeSurface(solveur1);
 							if(strlen(chemin_solveur) != 1)	// free ssi pas un char
 								free(chemin_solveur);
