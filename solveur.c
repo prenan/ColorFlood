@@ -53,6 +53,62 @@ void comparateur_avancement(grille plateau, int size, int* valeur)
 	}
 }
 
+int couleurs_restantes(grille plateau, int size)
+{
+	int i, j, nb_couleur = 0;
+	int valeur[6]={0};
+	for (i=0 ; i < size ; i++)
+	{
+		for (j=0 ; j < size ; j++)
+		{
+			if( plateau[i][j] == 'B')
+				valeur[0]=1;
+			else if( plateau[i][j] == 'V')
+				valeur[1]=1;
+			else if( plateau[i][j] == 'R')
+				valeur[2]=1;
+			else if( plateau[i][j] == 'J')
+				valeur[3]=1;
+			else if( plateau[i][j] == 'M')
+				valeur[4]=1;
+			else if( plateau[i][j] == 'G')
+				valeur[5]=1;
+		}
+	}
+	for (i=0 ; i < 6 ; i++)
+		nb_couleur += valeur[i];
+	return nb_couleur;
+}
+
+void comparateur_avancement2(grille plateau, int size, int* valeur, int ancien_nb_couleur)
+{
+	char* couleurs = "BVRJMG";
+	char ancienne_couleur = plateau[0][0];
+	int i, j, k, nb_couleur;
+	for (i=0 ; i<6 ; i++)
+	{
+		valeur[i] = 0;
+		grille testeur = copie(plateau, size);
+		modif_color(0, 0, couleurs[i], ancienne_couleur, testeur, size);
+		modif_color(0, 0, 'C', couleurs[i], testeur, size);
+		nb_couleur = couleurs_restantes(testeur, size);
+		if (nb_couleur >= ancien_nb_couleur)
+		{
+			for(j=0 ; j<size ; j++)
+			{
+				for (k=0 ; k<size ; k++)
+				{
+					if(testeur[j][k] == 'C')
+					{
+						valeur[i]++;
+					}
+				}
+			}
+		}
+		free_space(testeur,size);
+	}
+}
+
 int minimum(int* tableau)
 {
 	int i, mini = tableau[0];
@@ -150,32 +206,61 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 	int i, j, k = 0, l = 0, min, valeur[6]={0};
 	char* couleurs[6] = {"B\0", "V\0", "R\0", "J\0", "M\0", "G\0"};
 	char** chemins_1 = malloc(5*sizeof(char*));
-	char** chemins_2 = malloc(5*sizeof(char*));
+	char** chemins_2 = malloc(sizeof(char*));
 	grille sol_plateau = NULL;
 
+	modif_color(0, 0, 'C', plateau[0][0], plateau, size);
+	int nb_couleur =  couleurs_restantes(plateau, size);
 	struct timeval deb, fin;
 	gettimeofday(&deb, 0);
-	comparateur_avancement(plateau, size, valeur);
+	comparateur_avancement2(plateau, size, valeur, nb_couleur);
 	min = minimum(valeur);
-	for (i=0 ; i<6 ; i++)
+	if(min != 0)
 	{
-		if (valeur[i]>min)
+		for (i=0 ; i<6 ; i++)
 		{
-			chemins_1[k] = couleurs[i];
-			sol_plateau = copie(plateau, size);
-			if (testeur_chemins(sol_plateau, size, chemins_1[k]) == 1)
+			if (valeur[i]>min)
 			{
-				char* solution = chemins_1[k];
-				*nbr_coups_min = strlen(solution);
-				free_c(chemins_1,k);
-				free_c(chemins_2,l);
+				chemins_1[k] = couleurs[i];
+				sol_plateau = copie(plateau, size);
+				if (testeur_chemins(sol_plateau, size, chemins_1[k]) == 1)
+				{
+					char* solution = chemins_1[k];
+					*nbr_coups_min = strlen(solution);
+					free_c(chemins_1,k);
+					free_c(chemins_2,l);
+					free_space(sol_plateau, size);
+					gettimeofday(&fin, 0);
+					printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
+					return solution;
+				}
 				free_space(sol_plateau, size);
-				gettimeofday(&fin, 0);
-				printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
-				return solution;
+				k++;
 			}
-			free_space(sol_plateau, size);
-			k++;
+		}
+	}
+	else
+	{
+		for (i=0 ; i < 6 ; i++)
+		{
+			if (valeur[i] == 0)
+			{
+				chemins_1[0] = couleurs[i];
+				sol_plateau = copie(plateau, size);
+				if (testeur_chemins(sol_plateau, size, chemins_1[0]) == 1)
+				{
+					char* solution = chemins_1[0];
+					*nbr_coups_min = strlen(solution);
+					free_c(chemins_1,0);
+					free_c(chemins_2,l);
+					free_space(sol_plateau, size);
+					gettimeofday(&fin, 0);
+					printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
+					return solution;
+				}
+				k++;
+				i=6;
+			}
 		}
 	}
 	while(1)
@@ -185,28 +270,58 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 		{
 			sol_plateau = copie(plateau, size);
 			testeur_chemins(sol_plateau,size, chemins_1[i]);
-			comparateur_avancement(sol_plateau, size, valeur);
+			modif_color(0, 0, 'C', sol_plateau[0][0], sol_plateau, size);
+			nb_couleur = couleurs_restantes(sol_plateau,size);
+			comparateur_avancement2(sol_plateau, size, valeur, nb_couleur);
 			min = minimum(valeur);
-			for (j=0 ; j<6 ; j++)
+			if(min != 0)
 			{
-				if (valeur[j]>min)
+				for (j=0 ; j<6 ; j++)
 				{
-					sol_plateau = copie(plateau, size);
-					chemins_2[l] = concatener(chemins_1[i], couleurs[j]);	
-					/*printf("%s\n", chemins_2[l]); */ //utile pour les tests
-					if (testeur_chemins(sol_plateau, size, chemins_2[l]) == 1)
+					if (valeur[j]>min)
 					{
-						char* solution = chemins_2[l];
-						*nbr_coups_min = strlen(solution);
-						//free_c(chemins_1, k);
-						free_c(chemins_2, l);
+						sol_plateau = copie(plateau, size);
+						chemins_2[l] = concatener(chemins_1[i], couleurs[j]);	
+						//printf("%s\n", chemins_2[l]);  utile pour les tests
+						if (testeur_chemins(sol_plateau, size, chemins_2[l]) == 1)
+						{
+							char* solution = chemins_2[l];
+							*nbr_coups_min = strlen(solution);
+							free_c(chemins_1, k-1);
+							free_c(chemins_2, l);
+							free_space(sol_plateau, size);
+							gettimeofday(&fin, 0);
+							printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
+							return solution;
+						}
 						free_space(sol_plateau, size);
-						gettimeofday(&fin, 0);
-						printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
-						return solution;
+						l++;
 					}
-					free_space(sol_plateau, size);
-					l++;
+				}
+			}
+			else
+			{
+				for (j=0 ; j<6 ; j++)
+				{
+					if (valeur[j] == 0)
+					{
+						sol_plateau = copie(plateau, size);
+						chemins_2[l] = concatener(chemins_1[i], couleurs[j]);
+						if (testeur_chemins(sol_plateau, size, chemins_2[l]) == 1)
+						{
+							char* solution = chemins_2[l];
+							*nbr_coups_min = strlen(solution);
+							free_c(chemins_1, k-1);
+							free_c(chemins_2, l);
+							free_space(sol_plateau, size);
+							gettimeofday(&fin, 0);
+							printf("Le solveur a mis %g seconde(s).\n", timeval_diff(deb, fin)); 
+							return solution;
+						}
+						free_space(sol_plateau, size);
+						l++;
+						j=6;
+					}
 				}
 			}
 		}
@@ -220,6 +335,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 	}
 	return 0;
 }
+
 
 void free_c(char** chemins, int k)
 {
