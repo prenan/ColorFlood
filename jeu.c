@@ -65,7 +65,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	SDL_Color texteNoir = {0, 0, 0, 42};
 	RGB W = {255, 255, 255};	// blanc
 
-	int time_between_moves = 1000;
+	int time_between_moves = 600;
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
 
@@ -230,7 +230,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 			}
 			break;
 		}
-		if( end == 2)
+		if (end == 2) // win
 		{
 			char chemin[6]= "BVRJMG";
 			if (time > time_next_move)
@@ -238,30 +238,30 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 				time_next_move = time + time_between_moves;
 				char couleur = chemin[i];
 				i++;
-				i= i%6;
+				i = i%6;
 				modif_color(0, 0, couleur, plateau[0][0], plateau, size);
 				flip = true;
 			}
 		}
-		if( end == 1)
+		if (end == 1) // game over
 		{
 			if (time > time_next_move)
 			{
-				for(j = 0; j < size ; j++)
+				for (j = 0; j < size ; j++)
 				{
 					for (k = 0; k < size ; k++)
 					{
-						if(plateau[j][k] == 'B')
+						if (plateau[j][k] == 'B')
 							plateau[j][k] = 'V';
-						else if(plateau[j][k] == 'V')
+						else if (plateau[j][k] == 'V')
 							plateau[j][k] = 'B';
-						if(plateau[j][k] == 'M')
+						if (plateau[j][k] == 'M')
 							plateau[j][k] = 'G';
-						else if(plateau[j][k] == 'G')
+						else if (plateau[j][k] == 'G')
 							plateau[j][k] = 'M';
-						if(plateau[j][k] == 'J')
+						if (plateau[j][k] == 'J')
 							plateau[j][k] = 'R';
-						else if(plateau[j][k] == 'R')
+						else if (plateau[j][k] == 'R')
 							plateau[j][k] = 'J';
 					}
 				}
@@ -271,7 +271,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 		}
 		unsigned long new_time = SDL_GetTicks();
 		unsigned long elapsed_time = new_time - time;
-		if(elapsed_time < 1000/60)
+		if (elapsed_time < 1000/60)
 		{
 			SDL_Delay(1000/60 - elapsed_time);
 		}
@@ -320,7 +320,7 @@ int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nb
 	else if (victoire == 1)
 	{
 		texte_denouement = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
-		drawTexture(ecran, 450, 230, texte_denouement);
+		drawTexture(ecran, 440, 230, texte_denouement);
 
 		SDL_Flip(ecran);
 		end = 2;
