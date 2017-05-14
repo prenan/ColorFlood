@@ -198,10 +198,25 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 						}
 						else if ((nbr_coups_max-nbr_coups) >= 18)
 						{
-							solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solveur non-optimisé", texteNoir);
+							grille plateau_sol = copie(plateau,size);
+							chemin_solveur = solution_rapide(plateau_sol, size, &nbr_coups_min);
+							if(strlen(chemin_solveur) < 28)
+							{
+								solveur_box(ecran, chemin_solveur, nbr_coups_min);
+								solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solveur non-optimisé", texteNoir);
+							}
+							else
+							{
+								chemin_solveur[28]= 'C'; 
+								solveur_box(ecran, chemin_solveur, nbr_coups_min);
+								solveur1 = TTF_RenderUTF8_Blended(police_petite, "Début solveur non-optimisé", texteNoir);
+							}
 							drawTexture(ecran, 80, 550, solveur1);
 							SDL_Flip(ecran);
+							free_space(plateau_sol,size);
 							SDL_FreeSurface(solveur1);
+							if(strlen(chemin_solveur) != 1)	// free ssi pas un char
+								free(chemin_solveur);
 						}
 						flip = true;
 					}
