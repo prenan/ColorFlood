@@ -278,6 +278,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 		time = new_time;
 
 		if (flip)
+		{
 			flip = false;
 			drawTexture(ecran, 500*(3/2.0)+23, 287, rectangle);
 			sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
