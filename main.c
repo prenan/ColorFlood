@@ -49,10 +49,14 @@ int main()
 
 		if (size != 0) // condition de sortie du menu (échap ou fermer fenêtre)
 		{
-			game_choice(size, difficulte, &nbr_coups_max, &nb_annuler);
+
 			
 			grille plateau = random_grille(size), plateau_sol = copie(plateau, size);
+
 			chemin_rapide = solution_rapide(plateau_sol, size, &nbr_coups_max);
+
+			game_choice(size, difficulte, &nbr_coups_max, &nb_annuler);
+
 			do {
 				grille plateau_copie = copie(plateau, size);
 				

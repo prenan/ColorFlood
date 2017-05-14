@@ -79,6 +79,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	musique = Mix_LoadMUS("son/jeu.mp3"); // Chargement de la musique
 	Mix_VolumeMusic(30);
 	Mix_PlayMusic(musique, -1);
+	SDL_Flip(ecran);
 
 	while (continuer && exit == 0)
 	{
