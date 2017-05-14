@@ -56,7 +56,7 @@ int colorbox_choice(int nbr_coups, char ancienne_couleur, grille plateau, int si
 
 int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, int nb_annuler, char *nbr_coups_texte, TTF_Font *police_petite, TTF_Font *police_moyenne, int size_window, int *bouton, int *out)
 {
-	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end;
+	int continuer = 1, nbr_coups = 0, exit = 0, nbr_coups_min, son = 1, end, i = 0, j, k;
 	char ancienne_couleur, *chemin_solveur, chemin_joueur[100], nb_annuler_txt[5];
 	bool flip = true;
 	grille plateau_copie = copie(plateau, size), plateau_initial = copie(plateau, size);
@@ -64,6 +64,10 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	SDL_Event event;
 	SDL_Color texteNoir = {0, 0, 0, 42};
 	RGB W = {255, 255, 255};	// blanc
+
+	int time_between_moves = 1000;
+	unsigned long time = SDL_GetTicks();
+	unsigned long time_next_move = time + time_between_moves;
 
 	display_colorbox(ecran, size_window);
 	rectangle = SDL_LoadBMP("img/rectangle.bmp");
@@ -89,7 +93,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 
 		end = end_game(ecran, plateau, size, nbr_coups, nbr_coups_max, police_moyenne);
 
-		SDL_WaitEvent(&event);
+		SDL_PollEvent(&event);
 		switch (event.type)
 		{
 			case SDL_QUIT:
@@ -226,9 +230,54 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 			}
 			break;
 		}
+		if( end == 2)
+		{
+			char chemin[6]= "BVRJMG";
+			if (time > time_next_move)
+			{
+				time_next_move = time + time_between_moves;
+				char couleur = chemin[i];
+				i++;
+				i= i%6;
+				modif_color(0, 0, couleur, plateau[0][0], plateau, size);
+				flip = true;
+			}
+		}
+		if( end == 1)
+		{
+			if (time > time_next_move)
+			{
+				for(j = 0; j < size ; j++)
+				{
+					for (k = 0; k < size ; k++)
+					{
+						if(plateau[j][k] == 'B')
+							plateau[j][k] = 'V';
+						else if(plateau[j][k] == 'V')
+							plateau[j][k] = 'B';
+						if(plateau[j][k] == 'M')
+							plateau[j][k] = 'G';
+						else if(plateau[j][k] == 'G')
+							plateau[j][k] = 'M';
+						if(plateau[j][k] == 'J')
+							plateau[j][k] = 'R';
+						else if(plateau[j][k] == 'R')
+							plateau[j][k] = 'J';
+					}
+				}
+				time_next_move = time + time_between_moves;
+				flip = true;
+			}
+		}
+		unsigned long new_time = SDL_GetTicks();
+		unsigned long elapsed_time = new_time - time;
+		if(elapsed_time < 1000/60)
+		{
+			SDL_Delay(1000/60 - elapsed_time);
+		}
+		time = new_time;
 
 		if (flip)
-		{
 			flip = false;
 			drawTexture(ecran, 500*(3/2.0)+23, 287, rectangle);
 			sprintf(nbr_coups_texte, "%d/%d", nbr_coups, nbr_coups_max);
@@ -271,8 +320,9 @@ int end_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups, int nb
 	{
 		texte_denouement = TTF_RenderUTF8_Blended(police, "WIN", texteNoir);
 		drawTexture(ecran, 450, 230, texte_denouement);
+
 		SDL_Flip(ecran);
-		end = 1;
+		end = 2;
 	}
 	SDL_FreeSurface(texte_denouement);
 	return end;
