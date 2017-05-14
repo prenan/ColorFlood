@@ -127,14 +127,14 @@ char* solution_rapide(grille plateau, int size, int *nbr_coups)
 	char *couleurs = "BVRJMG", ancienne_couleur = plateau[0][0];
 	*nbr_coups = 0;
 
-	while(!if_flood(plateau, size))
+	while (!if_flood(plateau, size))
 	{
 		grille plateau_test = copie(plateau, size);
 		comparateur_avancement(plateau_test, size, valeur);
 
-		for(i=0; i<6; i++)
+		for (i=0; i<6; i++)
 		{
-			if(valeur[i]>max)
+			if (valeur[i]>max)
 			{
 				max=valeur[i];
 				place=i;
@@ -215,7 +215,7 @@ char* solveur_perf(grille plateau, int size, int *nbr_coups_min)
 	gettimeofday(&deb, 0);
 	comparateur_avancement2(plateau, size, valeur, nb_couleur);
 	min = minimum(valeur);
-	if(min != 0)
+	if (min != 0)
 	{
 		for (i=0 ; i<6 ; i++)
 		{

@@ -48,6 +48,8 @@ bool testeur_chemins(grille plateau, int size, char* chemin);
  */
 void comparateur_avancement(grille plateau, int size, int* valeur);
 
+void comparateur_avancement2(grille plateau, int size, int* valeur, int ancien_nb_couleur);
+
 /**
  * \fn int minimum(int* tableau)
  * \brief Trouve la valeur minimale du tableau
