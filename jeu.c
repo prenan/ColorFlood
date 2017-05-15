@@ -187,7 +187,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 					else if (!end && y >= 150 && y < 214) // bouton solution
 					{
 						drawSquare(ecran, 80, 550, 500, W); // clear solveur
-						if ((nbr_coups_max-nbr_coups) < 18) // solution minimale
+						if ((nbr_coups_max-nbr_coups) < 18 && size < 10) // solution minimale
 						{
 							solveur1 = TTF_RenderUTF8_Blended(police_petite, "Solveur en cours...", texteNoir);
 							drawTexture(ecran, 80, 550, solveur1);
@@ -203,7 +203,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							if(strlen(chemin_solveur) != 1)	// free ssi pas un char
 								free(chemin_solveur);
 						}
-						else if ((nbr_coups_max-nbr_coups) >= 18) // solution rapide (pas forcément minimale)
+						else if ((nbr_coups_max-nbr_coups) >= 18 || size >= 10) // solution rapide (pas forcément minimale)
 						{
 							grille plateau_sol = copie(plateau,size);
 							chemin_solveur = solution_rapide(plateau_sol, size, &nbr_coups_min);
