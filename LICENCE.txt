@@ -177,6 +177,7 @@
 
    Copyright 2017 THOR
    Copyright 2016 Freepik Flaticon Basic License (Miscellaneous Elements)
+   Copyright 2015 TheFatRat - Monody (feat. Laura Brehm)
    Copyright 2014 TheFatRat - Unity
 
    Licensed under the Apache License, Version 2.0 (the "License");
