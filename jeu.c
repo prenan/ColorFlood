@@ -66,6 +66,7 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 	RGB W = {255, 255, 255};	// blanc
 
 	int time_between_moves = 600;
+	int time_between_moves_son = 100;
 	unsigned long time = SDL_GetTicks();
 	unsigned long time_next_move = time + time_between_moves;
 
@@ -153,17 +154,19 @@ int loop_game(SDL_Surface *ecran, grille plateau, int size, int nbr_coups_max, i
 							flip = true;
 						}
 					}
-					else if (y >= 402 && y < 467) // bouton son
+					else if (time > time_next_move && y >= 402 && y < 467) // bouton son
 					{				
 						if (son == 1)
 						{
 							Mix_PauseMusic();
+							time_next_move = time + time_between_moves_son;
 							icone_son = SDL_LoadBMP("img/muet.bmp");
 							son = 0;
 						}
 						else
 						{
 							Mix_ResumeMusic();
+							time_next_move = time + time_between_moves_son;
 							icone_son = SDL_LoadBMP("img/son.bmp");
 							son = 1;
 						}
