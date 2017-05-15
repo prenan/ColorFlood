@@ -24,7 +24,7 @@
  *
  * \param size Taille du jeu (grille size*size)
  * \param difficulte Niveau choisi
- * \param nbr_coups_max Pointeur vers le nombre de coups maximum autorisés
+ * \param nb_coups_max Pointeur vers le nombre de coups maximum autorisés
  * \param nb_annuler Pointeur vers le nombre d'annulations possibles
  */
 void game_choice(int size, int difficulte, int *nb_coups_max, int *nb_annuler);
@@ -53,7 +53,7 @@ int colorbox_choice(int nbr_coups, char ancienne_couleur, grille plateau, int si
  * \param nbr_coups_max Le nombre de coups maximum autorisés
  * \param nb_annuler Le nombre de retour en arrière possible (annuler)
  * \param nbr_coup_texte Le texte pour afficher le nb de coups restants
- * \param police_moyenne, police_grande Différentes polices du texte
+ * \param police_petite, police_moyenne Différentes polices du texte
  * \param size_window Taille de la fenêtre
  * \param bouton Pointeur pour retourner au menu pendant le jeu
  * \param out Pointeur pour sortir du jeu et du menu (= quitter)
