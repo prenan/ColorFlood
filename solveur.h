@@ -48,6 +48,16 @@ bool testeur_chemins(grille plateau, int size, char* chemin);
  */
 void comparateur_avancement(grille plateau, int size, int* valeur);
 
+/**
+ * \fn void comparateur_avancement2(grille plateau, int size, int* valeur, int ancien_nb_couleur)
+ * \brief Remplit un tableau de valeurs avec le nombre de cases connexes pour chaque couleur et met un 0
+ 	si, en jouant cette couleur, celle-ci disparaît du jeu (en dehors de la tâche)
+ *
+ * \param plateau Grille en cours
+ * \param size Taille du jeu (grille size*size)
+ * \param ancien_nb_couleur Nombre de couleurs restantes (en dehors de celle de la tâche), au max 5
+ * \param valeur Tableau contenant le nombre de cases connexes pour chaque couleur
+ */
 void comparateur_avancement2(grille plateau, int size, int* valeur, int ancien_nb_couleur);
 
 /**
@@ -71,7 +81,7 @@ int minimum(int* tableau);
 char* solution_rapide(grille plateau, int size, int *nbr_coups);
 
 /**
- * \fn char* solveur_brut(grille plateau, int size, int *nbr_coups)
+ * \fn char* solveur_brut(grille plateau, int size, int *nbr_coups_min)
  * \brief Solveur : détermine un chemin le plus court pour terminer la partie (non-optimisé)
  *
  * \param plateau Grille en cours

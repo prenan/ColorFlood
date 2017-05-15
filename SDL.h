@@ -84,7 +84,7 @@ void display_plateau(SDL_Surface *ecran, grille plateau, int size, int size_wind
 SDL_Surface *initialize_screen(int size_window);
 
 /**
- * \fn void initialize_text(SDL_Surface *ecran, TTF_Font *police, char *nbr_coups_texte, int size, int difficulte)
+ * \fn void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficulte)
  * \brief Initialisation du texte pour les règles et le nombre de coups
  *
  * \param ecran L'écran de la fenêtre en cours
@@ -95,7 +95,7 @@ SDL_Surface *initialize_screen(int size_window);
 void initialize_text(SDL_Surface *ecran, TTF_Font *police, int size, int difficulte);
 
 /**
- * \fn void display_colorbox(SDL_Surface *ecran,int size_window)
+ * \fn void display_colorbox(SDL_Surface *ecran, int size_window)
  * \brief Barre latérale pour choisir la couleur pendant le jeu
  *
  * \param ecran L'écran de la fenêtre en cours
